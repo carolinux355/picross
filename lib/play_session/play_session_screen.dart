@@ -4,6 +4,8 @@
 
 import 'dart:async';
 
+import 'package:basic/play_session/play_session_bottom_bar_widget.dart';
+import 'package:basic/play_session/play_session_top_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
@@ -63,7 +65,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
         // by widgets below this one in the widget tree.
         ChangeNotifierProvider(
           create: (context) =>
-              LevelState(goal: widget.level.difficulty, onWin: _playerWon),
+              LevelState(level: widget.level, onWin: _playerWon),
         ),
       ],
       child: IgnorePointer(
@@ -80,31 +82,13 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
               // with a settings button on top, the actual play area
               // in the middle, and a back button at the bottom.
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: InkResponse(
-                      onTap: () => GoRouter.of(context).push('/settings'),
-                      child: Image.asset(
-                        'assets/images/settings.png',
-                        semanticLabel: 'Settings',
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  const Expanded(
-                    // The actual UI of the game.
-                    child: GameWidget(),
-                  ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: MyButton(
-                      onPressed: () => GoRouter.of(context).go('/play'),
-                      child: const Text('Back'),
-                    ),
-                  ),
+                  PlaySessionTopBarWidget(),
+                  //const Spacer(),
+                  Expanded(child: GameWidget()),
+                  //const Spacer(),
+                  PlaySessionBottomBarWidget(),
                 ],
               ),
               // This is the confetti animation that is overlaid on top of the
@@ -129,7 +113,6 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
     final score = Score(
       widget.level.number,
-      widget.level.difficulty,
       DateTime.now().difference(_startOfPlay),
     );
 

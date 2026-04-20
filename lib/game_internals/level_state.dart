@@ -2,31 +2,27 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:basic/level_selection/levels.dart';
 import 'package:flutter/foundation.dart';
 
-/// An extremely silly example of a game state.
+/// State for the active picross puzzle.
 ///
-/// Tracks only a single variable, [progress], and calls [onWin] when
-/// the value of [progress] reaches [goal].
+/// Tracks which tiles have been revealed by the player and whether the player has won yet
 class LevelState extends ChangeNotifier {
   final VoidCallback onWin;
+  final GameLevel level;
 
-  final int goal;
+  LevelState({required this.level, required this.onWin});
 
-  LevelState({required this.onWin, this.goal = 100});
+  List<int> revealedTiles = [];
 
-  int _progress = 0;
-
-  int get progress => _progress;
-
-  void setProgress(int value) {
-    _progress = value;
+  void revealTile(int index) {
+    revealedTiles.add(index);
+    checkWin();
     notifyListeners();
   }
 
-  void evaluate() {
-    if (_progress >= goal) {
-      onWin();
-    }
+  void checkWin() {
+    // todo: implement
   }
 }
