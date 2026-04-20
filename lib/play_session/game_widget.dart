@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../audio/audio_controller.dart';
-import '../audio/sounds.dart';
+//import '../audio/audio_controller.dart';
+//import '../audio/sounds.dart';
 import '../game_internals/level_state.dart';
 import '../level_selection/levels.dart';
 
@@ -22,7 +22,7 @@ class GameWidget extends StatelessWidget {
 
     return Expanded(
       child:
-        PicrossGrid(level: level),
+        PicrossGrid(level: level, levelState: levelState),
     );
   }
 }
@@ -32,9 +32,11 @@ class PicrossGrid extends StatelessWidget {
   const PicrossGrid({
     super.key,
     required this.level,
+    required this.levelState,
   });
 
   final GameLevel level;
+  final LevelState levelState;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class PicrossGrid extends StatelessWidget {
               ),
                     
               for (int i = 0; i < level.size.y; i++)
-                PicrossRow(level: level, row: i),
+                PicrossRow(level: level, levelState: levelState, row: i),
             ],
             ),
         ),
@@ -69,10 +71,12 @@ class PicrossRow extends StatelessWidget {
   const PicrossRow({
     super.key,
     required this.level,
+    required this.levelState,
     required this.row,
   });
 
   final GameLevel level;
+  final LevelState levelState;
   final int row;
 
   @override
@@ -85,7 +89,7 @@ class PicrossRow extends StatelessWidget {
           children: [
             HorizontalClueWidget(clues: level.getClueForRow(row)),
             for (int j = 0; j < level.size.x; j++)
-              PicrossCell(level: level, row: row, column: j),
+              PicrossCell(level: level, levelState: levelState, row: row, column: j),
           ],
         ),
       ],
@@ -171,25 +175,57 @@ class PicrossCell extends StatelessWidget {
   const PicrossCell({
     super.key,
     required this.level,
+    required this.levelState,
     required this.row,
     required this.column,
   });
 
   final GameLevel level;
+  final LevelState levelState;
   final int row;
   final int column;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey,
-      child: 
-        Container(
-          width: 49,
-          height: 49,
-          color: level.tiles[row * level.size.x + column] > 0 ? Colors.black : Colors.white,
-          margin: const EdgeInsets.all(1),
-        ),
+    var theme = Theme.of(context);
+
+    return GestureDetector(
+      onTap: () => _onTap(context),
+      child: Container(
+        color: Colors.grey,
+        child: 
+          Container(
+            width: 49,
+            height: 49,
+            color: _getColor(context, level, levelState),
+            margin: const EdgeInsets.all(1),
+            child: Column( // draw hidden state
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (!levelState.revealedTiles.contains(row * level.size.x + column))
+                  Icon(Icons.help, size: 20, color: theme.colorScheme.onSurface)
+              ],
+            )
+          ),
+      ),
     );
+  }
+
+  Color _getColor(BuildContext context, GameLevel level, LevelState levelState) {
+    var theme = Theme.of(context);
+    int index = row * level.size.x + column;
+    if (levelState.revealedTiles.contains(index)) {
+      return level.tiles[index] > 0 ? Colors.black : Colors.white;
+    } else {
+      return theme.colorScheme.inversePrimary;
+    }
+  }
+
+  void _onTap(BuildContext context) {
+    var levelState = context.read<LevelState>();
+    int index = row * level.size.x + column;
+    if (!levelState.revealedTiles.contains(index)) {
+      levelState.revealTile(index);
+    }
   }
 }

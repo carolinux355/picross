@@ -33,7 +33,7 @@ class _MyReveal extends StatelessWidget {
 
   final Color color;
 
-  final _slideTween = Tween(begin: const Offset(0, -1), end: Offset.zero);
+  final _slideTween = Tween(begin: const Offset(0, 1), end: Offset.zero);
 
   final _fadeTween = TweenSequence([
     TweenSequenceItem(tween: ConstantTween(0.0), weight: 1),

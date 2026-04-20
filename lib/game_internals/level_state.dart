@@ -18,11 +18,16 @@ class LevelState extends ChangeNotifier {
 
   void revealTile(int index) {
     revealedTiles.add(index);
-    checkWin();
+    _checkWin();
     notifyListeners();
   }
 
-  void checkWin() {
-    // todo: implement
+  void _checkWin() {
+    for (int i = 0; i < level.tiles.length; i++) {
+      if (level.tiles[i] > 0 && !revealedTiles.contains(i)) {
+        return;
+      }
+    }
+    onWin();
   }
 }
