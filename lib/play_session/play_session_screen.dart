@@ -33,12 +33,13 @@ class PlaySessionScreen extends StatefulWidget {
   const PlaySessionScreen(this.level, {super.key});
 
   @override
-  State<PlaySessionScreen> createState() => _PlaySessionScreenState();
+  State<PlaySessionScreen> createState() => PlaySessionScreenState();
 }
 
 enum PlayerSessionState { Playing, Celebrating, LostState, }
+enum PlayerSessionInputMode { Reveal, Mark }
 
-class _PlaySessionScreenState extends State<PlaySessionScreen> {
+class PlaySessionScreenState extends State<PlaySessionScreen> {
   static final _log = Logger('PlaySessionScreen');
 
   static const _celebrationDuration = Duration(milliseconds: 2000);
@@ -46,6 +47,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   static const _preCelebrationDuration = Duration(milliseconds: 500);
 
   static PlayerSessionState _playerSessionState = PlayerSessionState.Playing;
+  static PlayerSessionInputMode _playerSessionInputMode = PlayerSessionInputMode.Reveal;
 
   late DateTime _startOfPlay;
 
@@ -89,9 +91,9 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                 children: [
                   PlaySessionTopBarWidget(),
                   //const Spacer(),
-                  Expanded(child: GameWidget()),
+                  Expanded(child: GameWidget(playerSessionState: this,)),
                   //const Spacer(),
-                  PlaySessionBottomBarWidget(),
+                  PlaySessionBottomBarWidget(playerSessionState: this,),
                 ],
               ),
               // This is the confetti animation that is overlaid on top of the
@@ -169,5 +171,15 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     if (!mounted) return;
 
     GoRouter.of(context).go('/play/lost');
+  }
+
+  void setInputMode(PlayerSessionInputMode mode) {
+    setState(() {
+      _playerSessionInputMode = mode;
+    });
+  }
+
+  PlayerSessionInputMode getInputMode() {
+    return _playerSessionInputMode;
   }
 }

@@ -16,12 +16,24 @@ class LevelState extends ChangeNotifier {
   LevelState({required this.level, required this.onWin, required this.onLose});
 
   List<int> revealedTiles = [];
+  Map<int, bool> markedTiles = {};
 
   void revealTile(int index) {
     revealedTiles.add(index);
     _checkLose();
     _checkWin();
     notifyListeners();
+  }
+
+  void toggleMarking(int index) {
+    // todo: convert to set of flags (bitwise) to support multiple flag types
+    bool isMarked = markedTiles[index] == true;
+    markedTiles[index] = !isMarked;
+    notifyListeners();
+  }
+
+  bool isTileMarked(int index) {
+    return markedTiles[index] == true;
   }
 
   void _checkLose() {

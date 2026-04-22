@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:basic/play_session/play_session_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,17 +14,16 @@ import '../level_selection/levels.dart';
 /// This widget defines the game UI itself, without things like the settings
 /// button or the back button.
 class GameWidget extends StatelessWidget {
-  const GameWidget({super.key});
+  const GameWidget({super.key, required this.playerSessionState});
+
+  final PlaySessionScreenState playerSessionState;
 
   @override
   Widget build(BuildContext context) {
     final level = context.watch<GameLevel>();
     final levelState = context.watch<LevelState>();
 
-    return Expanded(
-      child:
-        PicrossGrid(level: level, levelState: levelState),
-    );
+    return PicrossGrid(level: level, levelState: levelState, playerSessionState: playerSessionState,);
   }
 }
 
@@ -33,10 +33,12 @@ class PicrossGrid extends StatelessWidget {
     super.key,
     required this.level,
     required this.levelState,
+    required this.playerSessionState,
   });
 
   final GameLevel level;
   final LevelState levelState;
+  final PlaySessionScreenState playerSessionState;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class PicrossGrid extends StatelessWidget {
             ),
                   
             for (int i = 0; i < level.size.y; i++)
-              PicrossRow(level: level, levelState: levelState, row: i),
+              PicrossRow(level: level, levelState: levelState, row: i, playerSessionState: playerSessionState,),
           ],
           ),
       ),
@@ -71,11 +73,13 @@ class PicrossRow extends StatelessWidget {
     required this.level,
     required this.levelState,
     required this.row,
+    required this.playerSessionState,
   });
 
   final GameLevel level;
   final LevelState levelState;
   final int row;
+  final PlaySessionScreenState playerSessionState;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +91,7 @@ class PicrossRow extends StatelessWidget {
           children: [
             HorizontalClueWidget(clues: level.getClueForRow(row)),
             for (int j = 0; j < level.size.x; j++)
-              PicrossCell(level: level, levelState: levelState, row: row, column: j),
+              PicrossCell(level: level, levelState: levelState, row: row, column: j, playerSessionState: playerSessionState,),
           ],
         ),
       ],
@@ -177,12 +181,14 @@ class PicrossCell extends StatelessWidget {
     required this.levelState,
     required this.row,
     required this.column,
+    required this.playerSessionState,
   });
 
   final GameLevel level;
   final LevelState levelState;
   final int row;
   final int column;
+  final PlaySessionScreenState playerSessionState;
 
   @override
   Widget build(BuildContext context) {
@@ -226,6 +232,17 @@ class PicrossCell extends StatelessWidget {
       );
     }
     else {
+      if (levelState.isTileMarked(index)) {
+        // draw marked state
+        return Container(
+          width: 49,
+          height: 49,
+          color: theme.colorScheme.secondary
+    ,
+          child: Icon(Icons.flag),
+        );
+      }
+      
       // draw hidden state
       return Container(
         width: 49,
@@ -239,7 +256,15 @@ class PicrossCell extends StatelessWidget {
     var levelState = context.read<LevelState>();
     int index = row * level.size.x + column;
     if (!levelState.revealedTiles.contains(index)) {
-      levelState.revealTile(index);
+      switch(playerSessionState.getInputMode()) {
+
+        case PlayerSessionInputMode.Reveal:
+          levelState.revealTile(index);
+
+        case PlayerSessionInputMode.Mark:
+          levelState.toggleMarking(index);
+
+      }
     }
   }
 }

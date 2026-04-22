@@ -18,7 +18,7 @@ class LevelGenerator {
     List<int> remainingIndexes = List.generate(totalTiles, (index) => index);
     remainingIndexes.shuffle();
     int numTiles = (((100-difficulty)/100) * totalTiles).toInt();
-    int numBombs = ((difficulty / 300) * totalTiles).toInt();
+    int numBombs = ((difficulty / 200) * totalTiles).toInt();
     _log.info("Generating level of size $totalTiles tiles and difficulty $difficulty with $numTiles filled and $numBombs bombs");
 
     for(int i = 0; i < numTiles; i++) {
@@ -39,6 +39,7 @@ class LevelGenerator {
       bombs: bombs,
     );
 
+    // debug log level
     for(int i = 0; i < height; i++){
       String row = "";
       for(int j = 0; j < width; j++) {

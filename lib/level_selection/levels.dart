@@ -19,6 +19,7 @@ const gameLevels = [
   ),
 ];
 
+// config data for a level
 class GameLevel {
   final int number; // indexing for player progres, may change logic to unlock levels in batches later
   final String levelId; // more flexible identifier for the level in case order changes
