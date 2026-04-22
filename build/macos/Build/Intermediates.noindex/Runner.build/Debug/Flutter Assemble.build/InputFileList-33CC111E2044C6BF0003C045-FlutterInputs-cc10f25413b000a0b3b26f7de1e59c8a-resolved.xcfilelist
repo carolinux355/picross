@@ -551,7 +551,7 @@
 /Users/caroline/.pub-cache/hosted/pub.dev/xdg_directories-1.1.0/lib/xdg_directories.dart
 /Users/caroline/.pub-cache/hosted/pub.dev/xml-6.6.1/LICENSE
 /Users/caroline/.pub-cache/hosted/pub.dev/yaml-3.1.3/LICENSE
-/Users/caroline/Documents/GitHub/Flutter/picross/DOES_NOT_EXIST_RERUN_FOR_WILDCARD821096112
+/Users/caroline/Documents/GitHub/Flutter/picross/DOES_NOT_EXIST_RERUN_FOR_WILDCARD624527664
 /Users/caroline/Documents/GitHub/Flutter/picross/assets/fonts/Permanent_Marker/PermanentMarker-Regular.ttf
 /Users/caroline/Documents/GitHub/Flutter/picross/assets/images/.DS_Store
 /Users/caroline/Documents/GitHub/Flutter/picross/assets/images/2x/back.png
@@ -602,6 +602,7 @@
 /Users/caroline/Documents/GitHub/Flutter/picross/lib/audio/audio_controller.dart
 /Users/caroline/Documents/GitHub/Flutter/picross/lib/audio/songs.dart
 /Users/caroline/Documents/GitHub/Flutter/picross/lib/audio/sounds.dart
+/Users/caroline/Documents/GitHub/Flutter/picross/lib/game_internals/level_generator.dart
 /Users/caroline/Documents/GitHub/Flutter/picross/lib/game_internals/level_state.dart
 /Users/caroline/Documents/GitHub/Flutter/picross/lib/game_internals/score.dart
 /Users/caroline/Documents/GitHub/Flutter/picross/lib/level_selection/level_selection_screen.dart
@@ -627,6 +628,7 @@
 /Users/caroline/Documents/GitHub/Flutter/picross/lib/style/my_transition.dart
 /Users/caroline/Documents/GitHub/Flutter/picross/lib/style/palette.dart
 /Users/caroline/Documents/GitHub/Flutter/picross/lib/style/responsive_screen.dart
+/Users/caroline/Documents/GitHub/Flutter/picross/lib/win_game/lost_game_screen.dart
 /Users/caroline/Documents/GitHub/Flutter/picross/lib/win_game/win_game_screen.dart
 /Users/caroline/Documents/GitHub/Flutter/picross/pubspec.yaml
 /Users/caroline/Flutter/flutter/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf

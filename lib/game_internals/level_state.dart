@@ -10,16 +10,29 @@ import 'package:flutter/foundation.dart';
 /// Tracks which tiles have been revealed by the player and whether the player has won yet
 class LevelState extends ChangeNotifier {
   final VoidCallback onWin;
+  final VoidCallback onLose;
   final GameLevel level;
 
-  LevelState({required this.level, required this.onWin});
+  LevelState({required this.level, required this.onWin, required this.onLose});
 
   List<int> revealedTiles = [];
 
   void revealTile(int index) {
     revealedTiles.add(index);
+    _checkLose();
     _checkWin();
     notifyListeners();
+  }
+
+  void _checkLose() {
+    for(var tile in level.bombs) {
+      if (!revealedTiles.contains(tile)) {
+        return;
+      }
+    }
+    
+    // lose if all bombs revealed
+    onLose();
   }
 
   void _checkWin() {

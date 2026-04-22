@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:basic/win_game/lost_game_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -35,10 +36,19 @@ final router = GoRouter(
             GoRoute(
               path: 'session/:level',
               pageBuilder: (context, state) {
-                final levelNumber = int.parse(state.pathParameters['level']!);
-                final level = gameLevels.singleWhere(
-                  (e) => e.number == levelNumber,
-                );
+                GameLevel level;
+                if (state.extra != null && state.extra is GameLevel) {
+                  level = state.extra! as GameLevel;
+                }
+                else {
+                  // else parse the level number from the URL and find the corresponding level data.
+                  // todo: will probably pick one or the other methods
+                  final levelNumber = int.parse(state.pathParameters['level']!);
+                  level = gameLevels.singleWhere(
+                    (e) => e.number == levelNumber,
+                  );
+                }
+                
                 return buildMyTransition<void>(
                   key: const ValueKey('level'),
                   color: context.watch<Palette>().backgroundPlaySession,
@@ -71,6 +81,22 @@ final router = GoRouter(
                   child: WinGameScreen(
                     score: score,
                     key: const Key('win game'),
+                  ),
+                );
+              },
+            ),
+            GoRoute(
+              path: 'lost',
+              redirect: (context, state) {
+                // Otherwise, do not redirect.
+                return null;
+              },
+              pageBuilder: (context, state) {
+                return buildMyTransition<void>(
+                  key: const ValueKey('lost'),
+                  color: context.watch<Palette>().backgroundPlaySession,
+                  child: LostGameScreen(
+                    key: const Key('lost game'),
                   ),
                 );
               },

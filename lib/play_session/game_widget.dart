@@ -42,26 +42,24 @@ class PicrossGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Expanded(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                spacing: 1,
-                children: [
-                  for (int i = 0; i < level.size.x; i++)
-                    VerticalClueWidget(clues: level.getClueForColumn(i)),
-                ],
-              ),
-                    
-              for (int i = 0; i < level.size.y; i++)
-                PicrossRow(level: level, levelState: levelState, row: i),
-            ],
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              spacing: 1,
+              children: [
+                for (int i = 0; i < level.size.x; i++)
+                  VerticalClueWidget(clues: level.getClueForColumn(i)),
+              ],
             ),
-        ),
+                  
+            for (int i = 0; i < level.size.y; i++)
+              PicrossRow(level: level, levelState: levelState, row: i),
+          ],
+          ),
       ),
     );
   }
@@ -110,11 +108,12 @@ class HorizontalClueWidget extends StatelessWidget {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary);
 
-    return Expanded(
+    return Container(
       child: Container(
         color: theme.colorScheme.tertiary,
         child: SizedBox(
           height: 50,
+          width: 100,
           child: Padding(
             padding: const EdgeInsets.only(right: 3.0),
             child: Row(
@@ -152,7 +151,7 @@ class VerticalClueWidget extends StatelessWidget {
       color: theme.colorScheme.tertiary,
       child: SizedBox(
         width: 50,
-        height: 50,
+        height: 100,
         child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: Column(
@@ -197,27 +196,42 @@ class PicrossCell extends StatelessWidget {
           Container(
             width: 49,
             height: 49,
-            color: _getColor(context, level, levelState),
             margin: const EdgeInsets.all(1),
-            child: Column( // draw hidden state
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (!levelState.revealedTiles.contains(row * level.size.x + column))
-                  Icon(Icons.help, size: 20, color: theme.colorScheme.onSurface)
-              ],
-            )
+            child: _drawTile(context,level,levelState),
           ),
       ),
     );
   }
 
-  Color _getColor(BuildContext context, GameLevel level, LevelState levelState) {
+  Widget _drawTile(BuildContext context, GameLevel level, LevelState levelState) {
     var theme = Theme.of(context);
+
     int index = row * level.size.x + column;
     if (levelState.revealedTiles.contains(index)) {
-      return level.tiles[index] > 0 ? Colors.black : Colors.white;
-    } else {
-      return theme.colorScheme.inversePrimary;
+      // draw bomb state
+      if (level.bombs.contains(index)){
+        return Container(
+          width: 49,
+          height: 49,
+          color: Colors.red,
+          child: const Icon(Icons.warning, color: Colors.white,),
+        );
+      }
+
+      // draw revealed tile
+      return Container(
+        width: 49,
+        height: 49,
+        color: level.tiles[index] > 0 ? Colors.black : Colors.white
+      );
+    }
+    else {
+      // draw hidden state
+      return Container(
+        width: 49,
+        height: 49,
+        color: theme.colorScheme.inversePrimary,
+        child: Icon(Icons.help),);
     }
   }
 

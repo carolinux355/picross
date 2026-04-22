@@ -36,6 +36,8 @@ class PlaySessionScreen extends StatefulWidget {
   State<PlaySessionScreen> createState() => _PlaySessionScreenState();
 }
 
+enum PlayerSessionState { Playing, Celebrating, LostState, }
+
 class _PlaySessionScreenState extends State<PlaySessionScreen> {
   static final _log = Logger('PlaySessionScreen');
 
@@ -43,7 +45,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   static const _preCelebrationDuration = Duration(milliseconds: 500);
 
-  bool _duringCelebration = false;
+  static PlayerSessionState _playerSessionState = PlayerSessionState.Playing;
 
   late DateTime _startOfPlay;
 
@@ -52,6 +54,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     super.initState();
 
     _startOfPlay = DateTime.now();
+    _playerSessionState = PlayerSessionState.Playing;
   }
 
   @override
@@ -65,12 +68,12 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
         // by widgets below this one in the widget tree.
         ChangeNotifierProvider(
           create: (context) =>
-              LevelState(level: widget.level, onWin: _playerWon),
+              LevelState(level: widget.level, onWin: _playerWon, onLose: _playerLost),
         ),
       ],
       child: IgnorePointer(
         // Ignore all input during the celebration animation.
-        ignoring: _duringCelebration,
+        ignoring: _playerSessionState != PlayerSessionState.Playing,
         child: Scaffold(
           backgroundColor: palette.backgroundPlaySession,
           // The stack is how you layer widgets on top of each other.
@@ -95,9 +98,19 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
               // game when the player wins.
               SizedBox.expand(
                 child: Visibility(
-                  visible: _duringCelebration,
+                  visible: _playerSessionState == PlayerSessionState.Celebrating,
                   child: IgnorePointer(
-                    child: Confetti(isStopped: !_duringCelebration),
+                    child: Confetti(isStopped: _playerSessionState != PlayerSessionState.Celebrating),
+                  ),
+                ),
+              ),
+              // This is the dark scrim overlay animation that is overlaid on top of the
+              // game when the player loses.
+              SizedBox.expand(
+                child: Visibility(
+                  visible: _playerSessionState == PlayerSessionState.LostState,
+                  child: IgnorePointer(
+                    child: Container(color: Colors.black.withAlpha(128)),
                   ),
                 ),
               ),
@@ -124,7 +137,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     if (!mounted) return;
 
     setState(() {
-      _duringCelebration = true;
+      _playerSessionState = PlayerSessionState.Celebrating;
     });
 
     final audioController = context.read<AudioController>();
@@ -135,5 +148,26 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     if (!mounted) return;
 
     GoRouter.of(context).go('/play/won', extra: {'score': score});
+  }
+
+  Future<void> _playerLost() async {
+    _log.info('Level ${widget.level.number} lost');
+
+    // Let the player see the game just after winning for a bit.
+    await Future<void>.delayed(_preCelebrationDuration);
+    if (!mounted) return;
+
+    setState(() {
+      _playerSessionState = PlayerSessionState.LostState;
+    });
+
+    final audioController = context.read<AudioController>();
+    audioController.playSfx(SfxType.huhsh);
+
+    /// Give the player some time to see the celebration animation.
+    await Future<void>.delayed(_celebrationDuration);
+    if (!mounted) return;
+
+    GoRouter.of(context).go('/play/lost');
   }
 }

@@ -4,6 +4,7 @@
 
 import 'dart:developer' as dev;
 
+import 'package:basic/game_internals/level_generator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
           Provider(create: (context) => SettingsController()),
           Provider(create: (context) => Palette()),
           ChangeNotifierProvider(create: (context) => PlayerProgress()),
+          Provider(create:(context) => LevelGenerator()),
           // Set up audio.
           ProxyProvider2<
             AppLifecycleStateNotifier,

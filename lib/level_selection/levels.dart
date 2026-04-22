@@ -14,7 +14,8 @@ const gameLevels = [
             0,1,1,1,0,0,
             0,1,0,1,0,1,
             0,1,1,1,0,0,
-            0,0,0,0,0,0]
+            0,0,0,0,0,0],
+    bombs: [5, 12, 23],
   ),
 ];
 
@@ -23,12 +24,14 @@ class GameLevel {
   final String levelId; // more flexible identifier for the level in case order changes
   final ConstantVector2<int> size;
   final List<int> tiles;
+  final List<int> bombs; // location of bomb tiles by index
 
   const GameLevel({
     required this.number,
     required this.levelId,
     required this.size,
-    required this.tiles
+    required this.tiles,
+    required this.bombs,
   });
 
   List<int> getClueForRow(int row) {
@@ -78,6 +81,11 @@ class GameLevel {
           currentClue = 0;
         }
       }
+    }
+
+    // add the final clue if the column ends with a clue
+    if (currentClue!= 0) {
+      clues.add(currentClue);
     }
 
     return clues;
