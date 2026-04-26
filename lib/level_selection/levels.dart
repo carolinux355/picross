@@ -19,6 +19,14 @@ const gameLevels = [
   ),
 ];
 
+class ClueData
+{
+  ClueData(this.tileClues, this.bombCount);
+
+  final List<int> tileClues;
+  final int bombCount;
+}
+
 // config data for a level
 class GameLevel {
   final int number; // indexing for player progres, may change logic to unlock levels in batches later
@@ -35,7 +43,7 @@ class GameLevel {
     required this.bombs,
   });
 
-  List<int> getClueForRow(int row) {
+  ClueData getClueForRow(int row) {
     int startingIndex = row * size.x;
     List<int> cluesRaw = tiles.getRange(startingIndex, startingIndex + size.x).toList();
     List<int> clues = [];
@@ -58,16 +66,34 @@ class GameLevel {
     if (currentClue!= 0) {
       clues.add(currentClue);
     }
-    return clues;
+
+    if (clues.isEmpty)
+    {
+      clues.add(0);
+    }
+
+    // get bombs in row
+    int bombCount = 0;
+    for (int i = startingIndex; i < startingIndex + size.x; i++) {
+      if (bombs.contains(i)){
+        bombCount++;
+      }
+    }
+
+    return ClueData(clues, bombCount);
   }
 
-  List<int> getClueForColumn(int column) {
+  ClueData getClueForColumn(int column) {
     int startingIndex = column;
     List<int> cluesRaw = [];
     List<int> clues = [];
 
+    int bombCount = 0;
     for (int i = 0; i < size.y; i++) {
       cluesRaw.add(tiles[startingIndex + i * size.x]);
+      if (bombs.contains(startingIndex + i * size.x)){
+        bombCount++;
+      }
     }
 
     // convert the raw tile data into clue data by counting consecutive 1s and adding to the clue list
@@ -89,6 +115,11 @@ class GameLevel {
       clues.add(currentClue);
     }
 
-    return clues;
+    if (clues.isEmpty)
+    {
+      clues.add(0);
+    }
+
+    return ClueData(clues, bombCount);
   }
 }

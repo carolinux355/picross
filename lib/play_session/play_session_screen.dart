@@ -36,8 +36,8 @@ class PlaySessionScreen extends StatefulWidget {
   State<PlaySessionScreen> createState() => PlaySessionScreenState();
 }
 
-enum PlayerSessionState { Playing, Celebrating, LostState, }
-enum PlayerSessionInputMode { Reveal, Mark }
+enum PlayerSessionState { playing, celebrating, lostState, }
+enum PlayerSessionInputMode { reveal, mark }
 
 class PlaySessionScreenState extends State<PlaySessionScreen> {
   static final _log = Logger('PlaySessionScreen');
@@ -46,8 +46,8 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
 
   static const _preCelebrationDuration = Duration(milliseconds: 500);
 
-  static PlayerSessionState _playerSessionState = PlayerSessionState.Playing;
-  static PlayerSessionInputMode _playerSessionInputMode = PlayerSessionInputMode.Reveal;
+  static PlayerSessionState _playerSessionState = PlayerSessionState.playing;
+  static PlayerSessionInputMode _playerSessionInputMode = PlayerSessionInputMode.reveal;
 
   late DateTime _startOfPlay;
 
@@ -56,7 +56,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
     super.initState();
 
     _startOfPlay = DateTime.now();
-    _playerSessionState = PlayerSessionState.Playing;
+    _playerSessionState = PlayerSessionState.playing;
   }
 
   @override
@@ -70,12 +70,12 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
         // by widgets below this one in the widget tree.
         ChangeNotifierProvider(
           create: (context) =>
-              LevelState(level: widget.level, onWin: _playerWon, onLose: _playerLost),
+              LevelState(level: widget.level, onWin: _playerWon, onLose: _playerLost, playerLives: 3),
         ),
       ],
       child: IgnorePointer(
         // Ignore all input during the celebration animation.
-        ignoring: _playerSessionState != PlayerSessionState.Playing,
+        ignoring: _playerSessionState != PlayerSessionState.playing,
         child: Scaffold(
           backgroundColor: palette.backgroundPlaySession,
           // The stack is how you layer widgets on top of each other.
@@ -100,9 +100,9 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
               // game when the player wins.
               SizedBox.expand(
                 child: Visibility(
-                  visible: _playerSessionState == PlayerSessionState.Celebrating,
+                  visible: _playerSessionState == PlayerSessionState.celebrating,
                   child: IgnorePointer(
-                    child: Confetti(isStopped: _playerSessionState != PlayerSessionState.Celebrating),
+                    child: Confetti(isStopped: _playerSessionState != PlayerSessionState.celebrating),
                   ),
                 ),
               ),
@@ -110,7 +110,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
               // game when the player loses.
               SizedBox.expand(
                 child: Visibility(
-                  visible: _playerSessionState == PlayerSessionState.LostState,
+                  visible: _playerSessionState == PlayerSessionState.lostState,
                   child: IgnorePointer(
                     child: Container(color: Colors.black.withAlpha(128)),
                   ),
@@ -139,7 +139,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
     if (!mounted) return;
 
     setState(() {
-      _playerSessionState = PlayerSessionState.Celebrating;
+      _playerSessionState = PlayerSessionState.celebrating;
     });
 
     final audioController = context.read<AudioController>();
@@ -160,7 +160,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
     if (!mounted) return;
 
     setState(() {
-      _playerSessionState = PlayerSessionState.LostState;
+      _playerSessionState = PlayerSessionState.lostState;
     });
 
     final audioController = context.read<AudioController>();

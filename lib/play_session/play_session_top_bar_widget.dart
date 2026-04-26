@@ -5,9 +5,6 @@
 import 'package:basic/style/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-
-import '../level_selection/levels.dart';
 
 /// This widget defines the game UI itself, without things like the settings
 /// button or the back button.
@@ -17,7 +14,6 @@ class PlaySessionTopBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final level = context.watch<GameLevel>();
 
     final titleTheme = theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.onPrimary);
 
@@ -33,7 +29,7 @@ class PlaySessionTopBarWidget extends StatelessWidget {
             ),
           ),
           Spacer(),
-          Text('Play Picross! Level: ${level.levelId}', style: titleTheme),
+          Text('Play Picross!', style: titleTheme),
           Spacer(),
           InkResponse(
             onTap: () => GoRouter.of(context).push('/settings'),

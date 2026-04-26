@@ -3,8 +3,10 @@
 // BSD-style license that can be found in the LICENSE file.
 
 //import 'package:basic/style/my_button.dart';
+import 'package:basic/game_internals/level_state.dart';
 import 'package:basic/play_session/play_session_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 //import 'package:go_router/go_router.dart';
 //import 'package:provider/provider.dart';
 
@@ -18,6 +20,7 @@ class PlaySessionBottomBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final levelState = context.watch<LevelState>();
 
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -25,12 +28,43 @@ class PlaySessionBottomBarWidget extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-            height: 50,
-            color: theme.colorScheme.secondary,
-            child: PlaySessionBottomBarInputWidget(playerSessionState: playerSessionState),
+            height: 100,
+            color: theme.colorScheme.surfaceContainer,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                children: [
+                  PlayerLivesCounterWidget(levelState: levelState,),
+                  Spacer(),
+                  PlaySessionBottomBarInputWidget(playerSessionState: playerSessionState),
+                ],
+              ),
+            ),
           ),
         )
       ]
+    );
+  }
+}
+
+class PlayerLivesCounterWidget extends StatelessWidget {
+  const PlayerLivesCounterWidget({
+    super.key,
+    required this.levelState
+  });
+
+  final LevelState levelState;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      spacing: 10,
+      children: [
+        for(int i = 0; i < levelState.playerLives; i++)
+          Icon(
+            Icons.circle, 
+            color: levelState.getLivesRemaining() > i ? Colors.blue : Colors.red,)
+      ],
     );
   }
 }
@@ -57,42 +91,40 @@ class PlaySessionBottomBarInputWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            spacing: 5,
-            children: [
-              Container(
-                width: 50,
-                height: 40,
-                child: ElevatedButton(
-                  style: inputMode == PlayerSessionInputMode.Reveal ? selectedStyle : unselectedStyle,
-                  onPressed: () {
-                    playerSessionState.setInputMode(PlayerSessionInputMode.Reveal);
-                  },
-                  child: Icon(
-                    Icons.square, 
-                    color: inputMode == PlayerSessionInputMode.Reveal ? theme.colorScheme.onPrimary : theme.colorScheme.primary,
-                  )
-                )
-              ),
-              Container(
-                width: 50,
-                height: 40, 
-                child: ElevatedButton(
-                  style: inputMode == PlayerSessionInputMode.Mark ? selectedStyle : unselectedStyle,
-                  onPressed: () {
-                    playerSessionState.setInputMode(PlayerSessionInputMode.Mark);
-                  },
-                  child: Icon(
-                    Icons.close,
-                    color: inputMode == PlayerSessionInputMode.Mark ? theme.colorScheme.onPrimary : theme.colorScheme.primary,
-                  )
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          spacing: 5,
+          children: [
+            SizedBox(
+              width: 50,
+              height: 40,
+              child: ElevatedButton(
+                style: inputMode == PlayerSessionInputMode.reveal ? selectedStyle : unselectedStyle,
+                onPressed: () {
+                  playerSessionState.setInputMode(PlayerSessionInputMode.reveal);
+                },
+                child: Icon(
+                  Icons.square, 
+                  color: inputMode == PlayerSessionInputMode.reveal ? theme.colorScheme.onPrimary : theme.colorScheme.primary,
                 )
               )
-            ],
-          ),
+            ),
+            SizedBox(
+              width: 50,
+              height: 40, 
+              child: ElevatedButton(
+                style: inputMode == PlayerSessionInputMode.mark ? selectedStyle : unselectedStyle,
+                onPressed: () {
+                  playerSessionState.setInputMode(PlayerSessionInputMode.mark);
+                },
+                child: Icon(
+                  Icons.close,
+                  color: inputMode == PlayerSessionInputMode.mark ? theme.colorScheme.onPrimary : theme.colorScheme.primary,
+                )
+              )
+            )
+          ],
         ),
       ]
     );

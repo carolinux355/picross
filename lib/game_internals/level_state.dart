@@ -12,14 +12,17 @@ class LevelState extends ChangeNotifier {
   final VoidCallback onWin;
   final VoidCallback onLose;
   final GameLevel level;
+  final int playerLives;
 
-  LevelState({required this.level, required this.onWin, required this.onLose});
+  LevelState({required this.level, required this.onWin, required this.onLose, required this.playerLives});
 
   List<int> revealedTiles = [];
   Map<int, bool> markedTiles = {};
+  int bombsRevealedCount = 0;
 
   void revealTile(int index) {
     revealedTiles.add(index);
+    _updateBombCounter(index);
     _checkLose();
     _checkWin();
     notifyListeners();
@@ -36,11 +39,20 @@ class LevelState extends ChangeNotifier {
     return markedTiles[index] == true;
   }
 
-  void _checkLose() {
-    for(var tile in level.bombs) {
-      if (!revealedTiles.contains(tile)) {
-        return;
+  int getLivesRemaining() {
+    return playerLives - bombsRevealedCount;
+  }
+
+  void _updateBombCounter(int index) {
+    if (level.bombs.contains(index)) {
+        bombsRevealedCount++;
       }
+  }
+
+  void _checkLose() {
+    // check if bomb count surpassed player's lives count
+    if (bombsRevealedCount < playerLives) {
+      return;
     }
     
     // lose if all bombs revealed

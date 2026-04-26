@@ -2,6 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:math';
+
 import 'package:basic/play_session/play_session_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +24,22 @@ class GameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final level = context.watch<GameLevel>();
     final levelState = context.watch<LevelState>();
+    double cellSize = _calculateCellSize(context, level);
 
-    return PicrossGrid(level: level, levelState: levelState, playerSessionState: playerSessionState,);
+    return PicrossGrid(level: level, levelState: levelState, playerSessionState: playerSessionState, cellSize: cellSize,);
+  }
+
+  double _calculateCellSize(BuildContext context, GameLevel level)
+  {
+    const double minSize = 30;
+    // get screen size and calculate cell size based on that and the level size, with some padding
+    var screenSize = MediaQuery.sizeOf(context);
+    var width = screenSize.width - 100;
+    var height = screenSize.height - 300;
+
+    var cellWidth = width / level.size.x;
+    var cellHeight = height / level.size.y;
+    return max(min(cellHeight, cellWidth), minSize);
   }
 }
 
@@ -34,35 +50,38 @@ class PicrossGrid extends StatelessWidget {
     required this.level,
     required this.levelState,
     required this.playerSessionState,
+    required this.cellSize,
   });
 
   final GameLevel level;
   final LevelState levelState;
   final PlaySessionScreenState playerSessionState;
+  final double cellSize;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 1.0),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
-              spacing: 1,
+              spacing: 2,
               children: [
                 for (int i = 0; i < level.size.x; i++)
-                  VerticalClueWidget(clues: level.getClueForColumn(i)),
+                  VerticalClueWidget(clueData: level.getClueForColumn(i), cellSize: cellSize),
               ],
             ),
-                  
-            for (int i = 0; i < level.size.y; i++)
-              PicrossRow(level: level, levelState: levelState, row: i, playerSessionState: playerSessionState,),
-          ],
           ),
-      ),
+                
+          for (int i = 0; i < level.size.y; i++)
+            PicrossRow(level: level, levelState: levelState, row: i, playerSessionState: playerSessionState, cellSize: cellSize),
+        ],
+        ),
     );
   }
 }
@@ -74,24 +93,28 @@ class PicrossRow extends StatelessWidget {
     required this.levelState,
     required this.row,
     required this.playerSessionState,
+    required this.cellSize,
   });
 
   final GameLevel level;
   final LevelState levelState;
   final int row;
   final PlaySessionScreenState playerSessionState;
+  final double cellSize;
 
   @override
   Widget build(BuildContext context) {
+    var clueData = level.getClueForRow(row);
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            HorizontalClueWidget(clues: level.getClueForRow(row)),
+            HorizontalClueWidget(clueData: clueData, cellSize: cellSize,),
             for (int j = 0; j < level.size.x; j++)
-              PicrossCell(level: level, levelState: levelState, row: row, column: j, playerSessionState: playerSessionState,),
+              PicrossCell(level: level, levelState: levelState, row: row, column: j, playerSessionState: playerSessionState, cellSize: cellSize),
+            //HorizontalBombCountClueEntry(clueData: clueData, cellSize: cellSize)
           ],
         ),
       ],
@@ -102,38 +125,110 @@ class PicrossRow extends StatelessWidget {
 class HorizontalClueWidget extends StatelessWidget {
   const HorizontalClueWidget({
     super.key,
-    required this.clues,
+    required this.clueData,
+    required this.cellSize,
   });
 
-  final List<int> clues;
+  final ClueData clueData;
+  final double cellSize;
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var textTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary);
+    var textTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary, fontSize: 18);
 
     return Container(
-      child: Container(
-        color: theme.colorScheme.tertiary,
-        child: SizedBox(
-          height: 50,
-          width: 100,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 3.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              spacing: 1,
-              children: [
-                if (clues.isEmpty)
-                  Text('0', textAlign: TextAlign.right, style: textTheme)
-                else
-                  for (var clue in clues)
-                    Text(clue.toString(), textAlign: TextAlign.right, style: textTheme),
+      color: theme.colorScheme.tertiary,
+      child: SizedBox(
+        height: cellSize,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0, right: 3.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                spacing: 1,
+                children: [
+                  for (int i = 0; i < clueData.tileClues.length; i++)
+                    HorizontalClueEntry(clue: clueData.tileClues[i], textTheme: textTheme, isLastClue: i == clueData.tileClues.length - 1),
                 ],
               ),
+            ],
           ),
         ),
-      )
+      ),
+    );
+  }
+}
+
+class HorizontalClueEntry extends StatelessWidget {
+  const HorizontalClueEntry({
+    super.key,
+    required this.clue,
+    required this.textTheme,
+    required this.isLastClue,
+  });
+
+  final int clue;
+  final TextStyle? textTheme;
+  final bool isLastClue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(clue.toString(), textAlign: TextAlign.right, style: textTheme),
+        if (!isLastClue)
+          Icon(Icons.circle, size: 4, color: textTheme?.color),
+      ],
+    );
+  }
+}
+
+class HorizontalBombCountClueEntry extends StatelessWidget {
+  const HorizontalBombCountClueEntry({
+    super.key,
+    required this.clueData,
+    required this.cellSize,
+  });
+
+  final ClueData clueData;
+  final double cellSize;
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var warningTextTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary, fontSize: 12);
+
+    return Container(
+      color: theme.colorScheme.tertiary,
+      child: SizedBox(
+        height: cellSize,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 0.0, right: 2.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                spacing: 1,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.warning, color: Colors.red, size: warningTextTheme?.fontSize ?? 12),
+                      Text(clueData.bombCount.toString(), style: warningTextTheme,)
+                    ],
+                  )
+                ],
+              ),
+              
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -141,33 +236,46 @@ class HorizontalClueWidget extends StatelessWidget {
 class VerticalClueWidget extends StatelessWidget {
   const VerticalClueWidget({
     super.key,
-    required this.clues,
+    required this.clueData,
+    required this.cellSize,
   });
 
-  final List<int> clues;
+  final ClueData clueData;
+  final double cellSize;
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var textTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary);
+    var textTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary, fontSize: 18);
+    var warningTextTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary, fontSize: 12);
 
     return Container(
       color: theme.colorScheme.tertiary,
       child: SizedBox(
-        width: 50,
-        height: 100,
+        width: cellSize,
         child: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+          padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            //spacing: 3,
             children: [
-              if (clues.isEmpty)
-                Text('0', textAlign: TextAlign.center, style: textTheme)
-              else
-                for (var clue in clues)
-                  Text(clue.toString(), textAlign: TextAlign.center, style: textTheme),
-              ],
-            ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  for (var clue in clueData.tileClues)
+                    Text(clue.toString(), textAlign: TextAlign.center, style: textTheme),
+                ],
+              ),
+              /*Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(Icons.warning, size: warningTextTheme?.fontSize ?? 12, color: Colors.red,),
+                  Text(clueData.bombCount.toString(), style: warningTextTheme)
+                ],
+              )*/
+            ],
+          ),
         ),
       )
     );
@@ -182,6 +290,7 @@ class PicrossCell extends StatelessWidget {
     required this.row,
     required this.column,
     required this.playerSessionState,
+    required this.cellSize,
   });
 
   final GameLevel level;
@@ -189,10 +298,11 @@ class PicrossCell extends StatelessWidget {
   final int row;
   final int column;
   final PlaySessionScreenState playerSessionState;
+  final double cellSize;
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+    Theme.of(context);
 
     return GestureDetector(
       onTap: () => _onTap(context),
@@ -200,16 +310,16 @@ class PicrossCell extends StatelessWidget {
         color: Colors.grey,
         child: 
           Container(
-            width: 49,
-            height: 49,
+            width: cellSize,
+            height: cellSize,
             margin: const EdgeInsets.all(1),
-            child: _drawTile(context,level,levelState),
+            child: _drawTile(context, level, levelState, cellSize),
           ),
       ),
     );
   }
 
-  Widget _drawTile(BuildContext context, GameLevel level, LevelState levelState) {
+  Widget _drawTile(BuildContext context, GameLevel level, LevelState levelState, double cellSize) {
     var theme = Theme.of(context);
 
     int index = row * level.size.x + column;
@@ -217,8 +327,8 @@ class PicrossCell extends StatelessWidget {
       // draw bomb state
       if (level.bombs.contains(index)){
         return Container(
-          width: 49,
-          height: 49,
+          width: cellSize,
+          height: cellSize,
           color: Colors.red,
           child: const Icon(Icons.warning, color: Colors.white,),
         );
@@ -226,8 +336,8 @@ class PicrossCell extends StatelessWidget {
 
       // draw revealed tile
       return Container(
-        width: 49,
-        height: 49,
+        width: cellSize,
+        height: cellSize,
         color: level.tiles[index] > 0 ? Colors.black : Colors.white
       );
     }
@@ -235,18 +345,17 @@ class PicrossCell extends StatelessWidget {
       if (levelState.isTileMarked(index)) {
         // draw marked state
         return Container(
-          width: 49,
-          height: 49,
-          color: theme.colorScheme.secondary
-    ,
+          width: cellSize,
+          height: cellSize,
+          color: theme.colorScheme.secondary,
           child: Icon(Icons.flag),
         );
       }
       
       // draw hidden state
       return Container(
-        width: 49,
-        height: 49,
+        width: cellSize,
+        height: cellSize,
         color: theme.colorScheme.inversePrimary,
         child: Icon(Icons.help),);
     }
@@ -258,10 +367,10 @@ class PicrossCell extends StatelessWidget {
     if (!levelState.revealedTiles.contains(index)) {
       switch(playerSessionState.getInputMode()) {
 
-        case PlayerSessionInputMode.Reveal:
+        case PlayerSessionInputMode.reveal:
           levelState.revealTile(index);
 
-        case PlayerSessionInputMode.Mark:
+        case PlayerSessionInputMode.mark:
           levelState.toggleMarking(index);
 
       }
