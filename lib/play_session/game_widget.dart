@@ -4,8 +4,10 @@
 
 import 'dart:math';
 
+import 'package:basic/play_session/game_gesture_manager.dart';
 import 'package:basic/play_session/play_session_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 //import '../audio/audio_controller.dart';
@@ -26,7 +28,14 @@ class GameWidget extends StatelessWidget {
     final levelState = context.watch<LevelState>();
     double cellSize = _calculateCellSize(context, level);
 
-    return PicrossGrid(level: level, levelState: levelState, playerSessionState: playerSessionState, cellSize: cellSize,);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Spacer(),
+        PicrossGrid(level: level, levelState: levelState, playerSessionState: playerSessionState, cellSize: cellSize,),
+        Spacer()
+      ],
+    );
   }
 
   double _calculateCellSize(BuildContext context, GameLevel level)
@@ -34,8 +43,32 @@ class GameWidget extends StatelessWidget {
     const double minSize = 30;
     // get screen size and calculate cell size based on that and the level size, with some padding
     var screenSize = MediaQuery.sizeOf(context);
-    var width = screenSize.width - 100;
-    var height = screenSize.height - 300;
+    var safeAreaPadding = MediaQuery.of(context).viewPadding;
+    var width = screenSize.width - safeAreaPadding.left - safeAreaPadding.right;
+    var height = screenSize.height - safeAreaPadding.top - safeAreaPadding.bottom;
+    height = height - 300;
+    int horizontalClueMaxCount = 0;
+    int verticalClueMaxCount = 0;
+    for(int i = 0; i < level.size.y; i++) {
+      var clue = level.getClueForRow(i);
+      if (clue.tileClues.length > horizontalClueMaxCount) {
+        horizontalClueMaxCount = clue.tileClues.length;
+      }
+    }
+
+    for(int i = 0; i < level.size.x; i++) {
+      var clue = level.getClueForColumn(i);
+      if (clue.tileClues.length > verticalClueMaxCount) {
+        verticalClueMaxCount = clue.tileClues.length;
+      }
+    }
+
+    // todo: magic number feeling but looks good
+    double horizontalClueOffset = horizontalClueMaxCount * 30 + 13;
+    double verticalClueOffset = verticalClueMaxCount * 30 + 13;
+
+    width = width - horizontalClueOffset;
+    height = height - verticalClueOffset;
 
     var cellWidth = width / level.size.x;
     var cellHeight = height / level.size.y;
@@ -61,9 +94,10 @@ class PicrossGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(0.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Padding(
             padding: const EdgeInsets.only(right: 1.0),
@@ -77,12 +111,58 @@ class PicrossGrid extends StatelessWidget {
               ],
             ),
           ),
-                
-          for (int i = 0; i < level.size.y; i++)
-            PicrossRow(level: level, levelState: levelState, row: i, playerSessionState: playerSessionState, cellSize: cellSize),
+          Row(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                spacing: 2,
+                children: [
+                  for (int i = 0; i < level.size.y; i++)
+                    HorizontalClueWidget(clueData: level.getClueForRow(i), cellSize: cellSize,),
+                ],
+              ),
+              GameGestureManager(
+                gridSize: level.size,
+                cellSize: cellSize + 2,
+                onTapReceived: _onTap,
+                onDragReceived: _onDragReceived,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    for (int i = 0; i < level.size.y; i++)
+                      PicrossRow(level: level, levelState: levelState, row: i, playerSessionState: playerSessionState, cellSize: cellSize),
+                  ]
+                ),
+              ),
+            ],
+          ),
         ],
-        ),
+      ),
     );
+  }
+
+  // gesture management
+  void _onTap(int index) {
+    if (!levelState.revealedTiles.contains(index)) {
+      switch(playerSessionState.getInputMode()) 
+      {
+        case PlayerSessionInputMode.reveal:
+          levelState.revealTile(index);
+
+        case PlayerSessionInputMode.mark:
+          levelState.toggleMarking(index);
+      }
+    }
+  }
+
+  void _onDragReceived(int index) {
+    // ignore if marked and in mark mode (only in drag mode)
+    if (levelState.isTileMarked(index) && playerSessionState.getInputMode() == PlayerSessionInputMode.mark) {
+      return;
+    }
+    _onTap(index);
   }
 }
 
@@ -104,14 +184,12 @@ class PicrossRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var clueData = level.getClueForRow(row);
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            HorizontalClueWidget(clueData: clueData, cellSize: cellSize,),
             for (int j = 0; j < level.size.x; j++)
               PicrossCell(level: level, levelState: levelState, row: row, column: j, playerSessionState: playerSessionState, cellSize: cellSize),
             //HorizontalBombCountClueEntry(clueData: clueData, cellSize: cellSize)
@@ -247,7 +325,7 @@ class VerticalClueWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary, fontSize: 18);
-    var warningTextTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary, fontSize: 12);
+    //var warningTextTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary, fontSize: 12);
 
     return Container(
       color: theme.colorScheme.tertiary,
@@ -282,7 +360,7 @@ class VerticalClueWidget extends StatelessWidget {
   }
 }
 
-class PicrossCell extends StatelessWidget {
+class PicrossCell extends StatefulWidget {
   const PicrossCell({
     super.key,
     required this.level,
@@ -290,7 +368,7 @@ class PicrossCell extends StatelessWidget {
     required this.row,
     required this.column,
     required this.playerSessionState,
-    required this.cellSize,
+    required this.cellSize, 
   });
 
   final GameLevel level;
@@ -301,31 +379,63 @@ class PicrossCell extends StatelessWidget {
   final double cellSize;
 
   @override
+  State<PicrossCell> createState() => _PicrossCellState();
+}
+
+class _PicrossCellState extends State<PicrossCell> {
+
+  final Logger logger = Logger('PicrossCellState');
+  bool didReceiveDrag = false;
+
+  @override
   Widget build(BuildContext context) {
     Theme.of(context);
 
-    return GestureDetector(
-      onTap: () => _onTap(context),
-      child: Container(
-        color: Colors.grey,
-        child: 
-          Container(
-            width: cellSize,
-            height: cellSize,
-            margin: const EdgeInsets.all(1),
-            child: _drawTile(context, level, levelState, cellSize),
-          ),
-      ),
+    return Container(
+      color: Colors.grey,
+      child: 
+        Container(
+          width: widget.cellSize,
+          height: widget.cellSize,
+          margin: const EdgeInsets.all(1),
+          child: _drawTile(context, widget.level, widget.levelState, widget.cellSize),
+        ),
     );
+
+    /*return Stack(
+      children: [
+        DragTarget<int>(
+          onWillAcceptWithDetails: (x) => _onDragReceived(x),
+          builder: (context, x, y) => Container(
+            color: Colors.grey,
+            child: 
+              Container(
+                width: widget.cellSize,
+                height: widget.cellSize,
+                margin: const EdgeInsets.all(1),
+                child: _drawTile(context, widget.level, widget.levelState, widget.cellSize),
+              ),
+          ),
+        ),
+        Draggable<int>(
+          data: widget.row,
+          dragAnchorStrategy: pointerDragAnchorStrategy,
+          feedback: Container(width: 30, height: 30, color:Colors.grey),
+          onDragStarted: () => _onTap(context),
+          onDragUpdate: (x) => _onDragUpdate(context, x),
+          child: Container(width: widget.cellSize, height: widget.cellSize, color: Colors.transparent),
+        ),
+      ]
+    );*/
   }
 
   Widget _drawTile(BuildContext context, GameLevel level, LevelState levelState, double cellSize) {
     var theme = Theme.of(context);
 
-    int index = row * level.size.x + column;
+    int index = widget.row * level.size.x + widget.column;
     if (levelState.revealedTiles.contains(index)) {
       // draw bomb state
-      if (level.bombs.contains(index)){
+      if (level.bombs.contains(index)) {
         return Container(
           width: cellSize,
           height: cellSize,
@@ -358,22 +468,6 @@ class PicrossCell extends StatelessWidget {
         height: cellSize,
         color: theme.colorScheme.inversePrimary,
         child: Icon(Icons.help),);
-    }
-  }
-
-  void _onTap(BuildContext context) {
-    var levelState = context.read<LevelState>();
-    int index = row * level.size.x + column;
-    if (!levelState.revealedTiles.contains(index)) {
-      switch(playerSessionState.getInputMode()) {
-
-        case PlayerSessionInputMode.reveal:
-          levelState.revealTile(index);
-
-        case PlayerSessionInputMode.mark:
-          levelState.toggleMarking(index);
-
-      }
     }
   }
 }

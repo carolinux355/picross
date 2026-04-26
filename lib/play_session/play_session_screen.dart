@@ -76,47 +76,49 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
       child: IgnorePointer(
         // Ignore all input during the celebration animation.
         ignoring: _playerSessionState != PlayerSessionState.playing,
-        child: Scaffold(
-          backgroundColor: palette.backgroundPlaySession,
-          // The stack is how you layer widgets on top of each other.
-          // Here, it is used to overlay the winning confetti animation on top
-          // of the game.
-          body: Stack(
-            children: [
-              // This is the main layout of the play session screen,
-              // with a settings button on top, the actual play area
-              // in the middle, and a back button at the bottom.
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  PlaySessionTopBarWidget(),
-                  //const Spacer(),
-                  Expanded(child: GameWidget(playerSessionState: this,)),
-                  //const Spacer(),
-                  PlaySessionBottomBarWidget(playerSessionState: this,),
-                ],
-              ),
-              // This is the confetti animation that is overlaid on top of the
-              // game when the player wins.
-              SizedBox.expand(
-                child: Visibility(
-                  visible: _playerSessionState == PlayerSessionState.celebrating,
-                  child: IgnorePointer(
-                    child: Confetti(isStopped: _playerSessionState != PlayerSessionState.celebrating),
+        child: SafeArea(
+          child: Scaffold(
+            backgroundColor: palette.backgroundPlaySession,
+            // The stack is how you layer widgets on top of each other.
+            // Here, it is used to overlay the winning confetti animation on top
+            // of the game.
+            body: Stack(
+              children: [
+                // This is the main layout of the play session screen,
+                // with a settings button on top, the actual play area
+                // in the middle, and a back button at the bottom.
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    PlaySessionTopBarWidget(),
+                    //const Spacer(),
+                    Expanded(child: GameWidget(playerSessionState: this,)),
+                    //const Spacer(),
+                    PlaySessionBottomBarWidget(playerSessionState: this,),
+                  ],
+                ),
+                // This is the confetti animation that is overlaid on top of the
+                // game when the player wins.
+                SizedBox.expand(
+                  child: Visibility(
+                    visible: _playerSessionState == PlayerSessionState.celebrating,
+                    child: IgnorePointer(
+                      child: Confetti(isStopped: _playerSessionState != PlayerSessionState.celebrating),
+                    ),
                   ),
                 ),
-              ),
-              // This is the dark scrim overlay animation that is overlaid on top of the
-              // game when the player loses.
-              SizedBox.expand(
-                child: Visibility(
-                  visible: _playerSessionState == PlayerSessionState.lostState,
-                  child: IgnorePointer(
-                    child: Container(color: Colors.black.withAlpha(128)),
+                // This is the dark scrim overlay animation that is overlaid on top of the
+                // game when the player loses.
+                SizedBox.expand(
+                  child: Visibility(
+                    visible: _playerSessionState == PlayerSessionState.lostState,
+                    child: IgnorePointer(
+                      child: Container(color: Colors.black.withAlpha(128)),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
