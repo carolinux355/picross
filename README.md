@@ -1,6 +1,6 @@
 # Design Doc
 
-This is a variant of a classic picross (nonogram) puzzle game using colors as part of the logic puzzle. Incorect guesses will result in a strike against the player's score and cause a region of the puzzle to revert to the standard black/white variant. Colored tiles can be collected as a resource that feeds into a meta loop.
+This is a variant of a classic picross (nonogram) puzzle game as a personal exercise learning Flutter and Dart. The gameplay uses procedurally generated picross puzzles and places "bomb" tiles across the board to punish the player for incorrect guesses. Completing a puzzle allows a player to collect resources from the map which will feed into a meta gameplay loop. 
 
 ### Sources
 
