@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+message TestMessage
+{
+	int32 int_test = 1;
+	bool bool_test = 2;
+}

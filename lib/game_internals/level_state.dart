@@ -67,4 +67,8 @@ class LevelState extends ChangeNotifier {
     }
     onWin();
   }
+
+  void _onPlayerWin() {
+        
+  }
 }

@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:basic/loading/loading_screen.dart';
 import 'package:basic/win_game/lost_game_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
@@ -20,7 +21,12 @@ import 'win_game/win_game_screen.dart';
 /// The router describes the game's navigational hierarchy, from the main
 /// screen through settings screens all the way to each individual level.
 final router = GoRouter(
+  initialLocation: '/loading',
   routes: [
+    GoRoute(
+      path: '/loading',
+      builder: (context, state) => const LoadingScreen(key: Key('loading')),
+    ),
     GoRoute(
       path: '/',
       builder: (context, state) => const MainMenuScreen(key: Key('main menu')),

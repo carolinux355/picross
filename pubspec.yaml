@@ -19,6 +19,8 @@ dependencies:
   logging: ^1.2.0
   provider: ^6.1.2
   shared_preferences: ^2.2.3
+  protobuf: ^6.0.0
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_lints: ^6.0.0

@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:basic/persistence/game_state.dart';
 import 'package:basic/play_session/play_session_bottom_bar_widget.dart';
 import 'package:basic/play_session/play_session_top_bar_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ import '../audio/sounds.dart';
 import '../game_internals/level_state.dart';
 import '../game_internals/score.dart';
 import '../level_selection/levels.dart';
-import '../player_progress/player_progress.dart';
 import '../style/confetti.dart';
 //import '../style/my_button.dart';
 import '../style/palette.dart';
@@ -127,14 +127,19 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
 
   Future<void> _playerWon() async {
     _log.info('Level ${widget.level.number} won');
+    
+    // todo: prefer to write to save data in a model class not here but ok for now
+    var gameStateManager = context.read<GameStateManager>();
+    var gameState = gameStateManager.gameState;
+    gameState.numLevelsPlayed++;
 
     final score = Score(
       widget.level.number,
       DateTime.now().difference(_startOfPlay),
     );
+    gameState.xp += score.score;
 
-    final playerProgress = context.read<PlayerProgress>();
-    playerProgress.setLevelReached(widget.level.number);
+    gameStateManager.save();
 
     // Let the player see the game just after winning for a bit.
     await Future<void>.delayed(_preCelebrationDuration);

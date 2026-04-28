@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
-import '../player_progress/player_progress.dart';
 import '../style/my_button.dart';
 import '../style/palette.dart';
 import '../style/responsive_screen.dart';
@@ -23,7 +22,6 @@ class LevelSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
-    final playerProgress = context.watch<PlayerProgress>();
     final levelGenerator = context.watch<LevelGenerator>();
     final random = Random();
 
@@ -51,8 +49,7 @@ class LevelSelectionScreen extends StatelessWidget {
                   for (final level in gameLevels)
                     ListTile(
                       enabled:
-                          playerProgress.highestLevelReached >=
-                          level.number - 1,
+                          true,
                       onTap: () {
                         final audioController = context.read<AudioController>();
                         audioController.playSfx(SfxType.buttonTap);
