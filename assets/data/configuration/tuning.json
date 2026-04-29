@@ -1,0 +1,8 @@
+{
+	"id": "tuning",
+	"components": {
+		"tuning": {
+			"world_ids": ["world_01","world_02","world_03","world_04","world_05","world_06"]
+		}
+	}
+}

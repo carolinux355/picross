@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+import "Configuration/ComponentSet.proto";
+
+message BaseMessage
+{
+	string id = 1;
+	ComponentSet components = 2;
+}

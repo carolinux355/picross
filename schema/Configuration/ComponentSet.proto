@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "Configuration/Components/LevelDifficultyComponent.proto";
+import "Configuration/Components/TuningComponent.proto";
+
+message ComponentSet
+{
+	LevelDifficultyComponent level_difficulty = 1;
+	TuningComponent tuning = 2;
+}

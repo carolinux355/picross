@@ -1,0 +1,15 @@
+{
+	"id": "world_02",
+	"components": {
+		"level_difficulty": {
+			"size_range": {
+				"min": 5,
+				"max": 8
+			},
+			"difficulty_range": {
+				"min": 20,
+				"max": 40
+			}
+		}
+	}
+}

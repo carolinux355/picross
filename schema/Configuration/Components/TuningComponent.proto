@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+//import "Configuration/Utils.proto";
+
+message TuningComponent
+{
+	repeated string world_ids = 1;
+}

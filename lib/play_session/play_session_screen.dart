@@ -4,7 +4,7 @@
 
 import 'dart:async';
 
-import 'package:basic/persistence/game_state.dart';
+import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/play_session/play_session_bottom_bar_widget.dart';
 import 'package:basic/play_session/play_session_top_bar_widget.dart';
 import 'package:flutter/material.dart';

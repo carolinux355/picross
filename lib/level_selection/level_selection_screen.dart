@@ -4,6 +4,8 @@
 
 import 'dart:math';
 
+import 'package:basic/configuration/game_data_manager.dart';
+import 'package:basic/constants.dart';
 import 'package:basic/game_internals/level_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -24,6 +26,8 @@ class LevelSelectionScreen extends StatelessWidget {
     final palette = context.watch<Palette>();
     final levelGenerator = context.watch<LevelGenerator>();
     final random = Random();
+    final gameData = context.read<GameDataManager>();
+    final tuningData = gameData.getData(Constants.TUNING_CONFIG_ID)!.components.tuning;
 
     return Scaffold(
       backgroundColor: palette.backgroundLevelSelection,
@@ -46,35 +50,25 @@ class LevelSelectionScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  for (final level in gameLevels)
+                  for (final worldId in tuningData.worldIds)
                     ListTile(
                       enabled:
                           true,
                       onTap: () {
                         final audioController = context.read<AudioController>();
                         audioController.playSfx(SfxType.buttonTap);
+                        var difficultyConfig = gameData.getData(worldId)!.components.levelDifficulty;
+                        int sizeX = random.nextInt(difficultyConfig.sizeRange.max - difficultyConfig.sizeRange.min) + difficultyConfig.sizeRange.min;
+                        int sizeY = random.nextInt(difficultyConfig.sizeRange.max - difficultyConfig.sizeRange.min) + difficultyConfig.sizeRange.min;
+                        int difficulty = random.nextInt(difficultyConfig.difficultyRange.max - difficultyConfig.difficultyRange.min) + difficultyConfig.difficultyRange.min;
+                        var generatedLevel = levelGenerator.generateLevel(width: sizeX, height: sizeY, difficulty: difficulty);
 
                         GoRouter.of(
                           context,
-                        ).go('/play/session/${level.number}');
+                        ).go('/play/session/generated', extra: generatedLevel);
                       },
-                      leading: Text(level.number.toString()),
-                      title: Text('Level #${level.number}'),
-                    ),
-                  
-                  // button for playing randomly generated level
-                  ListTile(
-                      enabled: true,
-                      onTap: () {
-                        final audioController = context.read<AudioController>();
-                        audioController.playSfx(SfxType.buttonTap);
-
-                        GoRouter.of(
-                          context,
-                        ).go('/play/session/generated', extra: levelGenerator.generateLevel(width: random.nextInt(5) + 5, height: random.nextInt(5) + 5, difficulty: random.nextInt(99) + 1));
-                      },
-                      leading: Text("Generated"),
-                      title: Text('Generated Level'),
+                      leading: Text('World'),
+                      title: Text(worldId),
                     ),
                 ],
               ),

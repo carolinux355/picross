@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+import "Configuration/Utils.proto";
+
+message LevelDifficultyComponent
+{
+	IntegerRange size_range = 1;
+	IntegerRange difficulty_range = 2;
+}

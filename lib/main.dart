@@ -4,10 +4,10 @@
 
 import 'dart:developer' as dev;
 
+import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/game_internals/level_generator.dart';
-import 'package:basic/loading/loading_screen.dart';
 import 'package:basic/loading/service_provider.dart';
-import 'package:basic/persistence/game_state.dart';
+import 'package:basic/persistence/game_state_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -62,6 +62,7 @@ class MyApp extends StatelessWidget {
               Provider(create: (context) => SettingsController()),
               Provider(create: (context) => LevelGenerator()),
               Provider(create: (context) => GameStateManager()),
+              Provider(create: (context) => GameDataManager()),
               Provider(create: (context) => ServiceProvider()),
               ProxyProvider2<AppLifecycleStateNotifier,SettingsController,AudioController>(
                 create: (context) => AudioController(),
