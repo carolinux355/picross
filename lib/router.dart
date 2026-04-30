@@ -42,18 +42,7 @@ final router = GoRouter(
             GoRoute(
               path: 'session/:level',
               pageBuilder: (context, state) {
-                GameLevel level;
-                if (state.extra != null && state.extra is GameLevel) {
-                  level = state.extra! as GameLevel;
-                }
-                else {
-                  // else parse the level number from the URL and find the corresponding level data.
-                  // todo: will probably pick one or the other methods
-                  final levelNumber = int.parse(state.pathParameters['level']!);
-                  level = gameLevels.singleWhere(
-                    (e) => e.number == levelNumber,
-                  );
-                }
+                GameLevel level = state.extra! as GameLevel;
                 
                 return buildMyTransition<void>(
                   key: const ValueKey('level'),

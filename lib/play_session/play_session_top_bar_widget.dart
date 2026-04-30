@@ -29,7 +29,14 @@ class PlaySessionTopBarWidget extends StatelessWidget {
             ),
           ),
           Spacer(),
-          Text('Play Picross!', style: titleTheme),
+          Text('Play Picross!', 
+            style: TextStyle(
+              fontFamily: 'Permanent Marker',
+              fontSize: 24,
+              height: 1,
+              color: titleTheme?.color
+            ),
+          ),
           Spacer(),
           InkResponse(
             onTap: () => GoRouter.of(context).push('/settings'),

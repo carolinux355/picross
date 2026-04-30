@@ -1,15 +1,13 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:basic/constants.dart';
 import 'package:basic/generated/configuration/BaseMessage.pb.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
-import 'package:path_provider/path_provider.dart';
 
 class GameDataManager {
   late String filePath;
   final Logger logger = Logger('GameDataManager');
-  final Map<String, BaseMessage> _data = Map<String, BaseMessage>();
+  final Map<String, BaseMessage> _data = <String, BaseMessage>{};
 
   GameDataManager() {
     initialize();

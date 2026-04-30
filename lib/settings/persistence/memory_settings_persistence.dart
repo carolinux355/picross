@@ -15,6 +15,8 @@ class MemoryOnlySettingsPersistence implements SettingsPersistence {
 
   String playerName = 'Player';
 
+  bool autoFillOn = true;
+
   @override
   Future<bool> getAudioOn({required bool defaultValue}) async => audioOn;
 
@@ -38,4 +40,10 @@ class MemoryOnlySettingsPersistence implements SettingsPersistence {
 
   @override
   Future<void> saveSoundsOn(bool value) async => soundsOn = value;
+  
+  @override
+  Future<bool> getAutoFillOn({required bool defaultValue}) async => autoFillOn;
+  
+  @override
+  Future<void> saveAutoFillOn(bool value) async => autoFillOn = value;
 }

@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/play_session/play_session_bottom_bar_widget.dart';
 import 'package:basic/play_session/play_session_top_bar_widget.dart';
+import 'package:basic/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
@@ -62,6 +63,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
   @override
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
+    final settingsController = context.watch<SettingsController>();
 
     return MultiProvider(
       providers: [
@@ -70,7 +72,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
         // by widgets below this one in the widget tree.
         ChangeNotifierProvider(
           create: (context) =>
-              LevelState(level: widget.level, onWin: _playerWon, onLose: _playerLost, playerLives: 3),
+              LevelState(level: widget.level, onWin: _playerWon, onLose: _playerLost, playerLives: 3, settingsController: settingsController),
         ),
       ],
       child: IgnorePointer(
@@ -126,7 +128,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
   }
 
   Future<void> _playerWon() async {
-    _log.info('Level ${widget.level.number} won');
+    _log.info('Level won');
     
     // todo: prefer to write to save data in a model class not here but ok for now
     var gameStateManager = context.read<GameStateManager>();
@@ -134,7 +136,6 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
     gameState.numLevelsPlayed++;
 
     final score = Score(
-      widget.level.number,
       DateTime.now().difference(_startOfPlay),
     );
     gameState.xp += score.score;
@@ -160,7 +161,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
   }
 
   Future<void> _playerLost() async {
-    _log.info('Level ${widget.level.number} lost');
+    _log.info('Level lost');
 
     // Let the player see the game just after winning for a bit.
     await Future<void>.delayed(_preCelebrationDuration);

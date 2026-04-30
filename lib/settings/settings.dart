@@ -35,6 +35,9 @@ class SettingsController {
   /// Whether or not the music is on.
   ValueNotifier<bool> musicOn = ValueNotifier(true);
 
+  /// Whether or not autofill is on.
+  ValueNotifier<bool> autoFillOn = ValueNotifier(true);
+
   /// Creates a new instance of [SettingsController] backed by [store].
   ///
   /// By default, settings are persisted using [LocalStorageSettingsPersistence]
@@ -65,6 +68,11 @@ class SettingsController {
     _store.saveSoundsOn(soundsOn.value);
   }
 
+  void toggleAutoFillOn() {
+    autoFillOn.value = !autoFillOn.value;
+    _store.saveAutoFillOn(autoFillOn.value);
+  }
+
   /// Asynchronously loads values from the injected persistence store.
   Future<void> _loadStateFromPersistence() async {
     final loadedValues = await Future.wait([
@@ -84,6 +92,7 @@ class SettingsController {
           .getMusicOn(defaultValue: true)
           .then((value) => musicOn.value = value),
       _store.getPlayerName().then((value) => playerName.value = value),
+      _store.getAutoFillOn(defaultValue: true).then((value) => autoFillOn.value = value),
     ]);
 
     _log.fine(() => 'Loaded settings: $loadedValues');

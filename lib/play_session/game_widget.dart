@@ -433,6 +433,8 @@ class _PicrossCellState extends State<PicrossCell> {
     var theme = Theme.of(context);
 
     int index = widget.row * level.size.x + widget.column;
+
+    // draw bombs
     if (levelState.revealedTiles.contains(index)) {
       // draw bomb state
       if (level.bombs.contains(index)) {
@@ -443,7 +445,20 @@ class _PicrossCellState extends State<PicrossCell> {
           child: const Icon(Icons.warning, color: Colors.white,),
         );
       }
+    }
 
+    // draw disabled tiles
+    if (levelState.disabledTiles.contains(index)) {
+      return Container(
+          width: cellSize,
+          height: cellSize,
+          color: Colors.blueGrey,
+          child: const Icon(Icons.done, color: Colors.white,),
+        );
+    }
+
+    // draw revealed tile
+    if (levelState.revealedTiles.contains(index)) {
       // draw revealed tile
       return Container(
         width: cellSize,

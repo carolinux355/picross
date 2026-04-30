@@ -8,13 +8,11 @@ class Score {
 
   final Duration duration;
 
-  final int level;
-
-  factory Score(int level, Duration duration) {
-    return Score._(1000, duration, level);
+  factory Score(Duration duration) {
+    return Score._(1000, duration);
   }
 
-  const Score._(this.score, this.duration, this.level);
+  const Score._(this.score, this.duration);
 
   String get formattedTime {
     final buf = StringBuffer();
@@ -40,5 +38,5 @@ class Score {
   }
 
   @override
-  String toString() => 'Score<$score,$formattedTime,$level>';
+  String toString() => 'Score<$score,$formattedTime>';
 }

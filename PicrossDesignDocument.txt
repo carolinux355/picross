@@ -1,0 +1,23 @@
+﻿Picross Design Document
+
+Summary:
+
+A seafaring adventure charting new maps across the ocean. Complete picross puzzles to map out locations for treasure and resources, avoiding dangerous encounters like krakens and pirates. Upgrade your ship and hire crew to make your seafaring dreams come true.
+
+Story:
+
+You’re a young sailor/pirate with a beat up dinghy ready to make a name for yourself. Name your ship and set sail in the nearby waters, gathering goods to bring back to harbor and sell.
+
+Picross Mechanics:
+
+Puzzles can be hand written or procedurally generated, increasing in difficulty the further out you sail from the harbor. The player chooses to reveal tiles based on the grid clues, trying to locate colored tiles and avoid white. Several white tiles will contain “bombs” or dangerous encounters that damage the ship. Too much damage and the ship has to return to harbor for repairs (which take time or can be rushed with premium currency). Revealed tiles can drop rewards ranging from a tiny amount of coins to rare treasure chests. Powerups can be used to make solving easier, such as “reveal tile”, “reveal row/column”, “locate bomb”, etc. The grid will auto-disable tiles once a row or column is solved, there is no undoing a tap, a reveal is a confirmation of correctness.
+
+Meta Game:
+
+Your ship lives in the harbor of a small port town. Your job is to explore the seas and bring back resources for the town. As you gain XP by completing levels the town will level up and offer more things to you such as items for sale or new features to interact with, such as buildings that can act as a crafting loop input (eg give raw wood and receive planks).
+NPCs in town will offer quests for you to complete as well, requesting specific resources, or asking you to find people or locations out in the sea (eg my brother went missing I think he’s stranded on an island). Completing quests offers rewards like coins or rare resources, and XP. There are story quests as well as generated tasks posted on a bulletin board.
+You can use coins and raw resources to upgrade your ship. Larger ships have more lives when exploring (can sustain more damage) and have room for more crew mates. You have the option to hire specific characters onto your ship to help with tasks, such as a cook who can make meals that offer boosts, a fisherman to catch fish for you, people to swab the deck to increase morale (mechanic tbd), an engineer to repair the ship faster, etc. Crew can be upgraded as well to get better at their jobs. 
+
+Progression:
+
+The world map will be split into sub-regions which unlock progressively as the player levels up. Each region has a distinct visual character and unique resources that can only be found there. The picross puzzles increase in difficulty as well the later they unlock. The unique resources gives the player a reason to revisit old locations. Each region also has a progress bar indicating how “mapped out” the region is, ie the more you explore the more progress you make. A fully maxed out region can be explored much more safely (fewer or no bombs) or you can specify which resources you’re looking for and guarantee the puzzle will drop those. 

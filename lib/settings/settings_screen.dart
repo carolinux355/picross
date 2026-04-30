@@ -55,6 +55,14 @@ class SettingsScreen extends StatelessWidget {
                 onSelected: settings.toggleMusicOn,
               ),
             ),
+            ValueListenableBuilder<bool>(
+              valueListenable: settings.autoFillOn,
+              builder: (context, autoFillOn, child) => _SettingsLine(
+                'Auto Fill Enabled',
+                Icon(autoFillOn ? Icons.grid_3x3_sharp : Icons.grid_goldenratio),
+                onSelected: settings.toggleAutoFillOn,
+              ),
+            ),
             _SettingsLine(
               'Reset progress',
               const Icon(Icons.delete),

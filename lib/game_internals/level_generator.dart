@@ -41,8 +41,6 @@ class LevelGenerator {
     }
 
     var level = GameLevel(
-      number: -1,
-      levelId: "generated",
       size: ConstantVector2(width, height),
       tiles: tiles,
       bombs: bombs,

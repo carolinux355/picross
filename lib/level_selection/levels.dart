@@ -4,21 +4,6 @@
 
 import 'package:basic/math/constant_vector.dart';
 
-// some placeholder levels hardcoded for now, todo: migrate to a config file and read from disc
-const gameLevels = [
-  GameLevel(
-    number: 1,
-    levelId: "1",
-    size: ConstantVector2(6,5),
-    tiles: [0,0,0,0,0,0,
-            0,1,1,1,0,0,
-            0,1,0,1,0,1,
-            0,1,1,1,0,0,
-            0,0,0,0,0,0],
-    bombs: [5, 12, 23],
-  ),
-];
-
 class ClueData
 {
   ClueData(this.tileClues, this.bombCount);
@@ -29,15 +14,11 @@ class ClueData
 
 // config data for a level
 class GameLevel {
-  final int number; // indexing for player progres, may change logic to unlock levels in batches later
-  final String levelId; // more flexible identifier for the level in case order changes
   final ConstantVector2<int> size;
   final List<int> tiles;
   final List<int> bombs; // location of bomb tiles by index
 
   const GameLevel({
-    required this.number,
-    required this.levelId,
     required this.size,
     required this.tiles,
     required this.bombs,
