@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message AssetComponent
+{
+	string sprite = 1;
+}

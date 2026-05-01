@@ -1,7 +1,10 @@
 syntax = "proto3";
 
+import "Persistence/InventoryState.proto";
+
 message GameState
 {
 	int32 num_levels_played = 1;
 	int32 xp = 2;
+	InventoryState inventory = 3;
 }

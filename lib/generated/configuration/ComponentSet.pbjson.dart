@@ -35,6 +35,22 @@ const ComponentSet$json = {
       '6': '.TuningComponent',
       '10': 'tuning'
     },
+    {
+      '1': 'resource',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.ResourceComponent',
+      '10': 'resource'
+    },
+    {
+      '1': 'asset',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.AssetComponent',
+      '10': 'asset'
+    },
   ],
 };
 
@@ -42,4 +58,5 @@ const ComponentSet$json = {
 final $typed_data.Uint8List componentSetDescriptor = $convert.base64Decode(
     'CgxDb21wb25lbnRTZXQSRAoQbGV2ZWxfZGlmZmljdWx0eRgBIAEoCzIZLkxldmVsRGlmZmljdW'
     'x0eUNvbXBvbmVudFIPbGV2ZWxEaWZmaWN1bHR5EigKBnR1bmluZxgCIAEoCzIQLlR1bmluZ0Nv'
-    'bXBvbmVudFIGdHVuaW5n');
+    'bXBvbmVudFIGdHVuaW5nEi4KCHJlc291cmNlGAMgASgLMhIuUmVzb3VyY2VDb21wb25lbnRSCH'
+    'Jlc291cmNlEiUKBWFzc2V0GAQgASgLMg8uQXNzZXRDb21wb25lbnRSBWFzc2V0');

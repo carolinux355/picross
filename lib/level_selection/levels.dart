@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:basic/generated/configuration/Grant.pb.dart';
 import 'package:basic/math/constant_vector.dart';
 
 class ClueData
@@ -17,11 +18,13 @@ class GameLevel {
   final ConstantVector2<int> size;
   final List<int> tiles;
   final List<int> bombs; // location of bomb tiles by index
+  final Map<int, List<Grant>> rewards; // locations of rewards
 
   const GameLevel({
     required this.size,
     required this.tiles,
     required this.bombs,
+    required this.rewards
   });
 
   ClueData getClueForRow(int row) {

@@ -25,8 +25,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
     
     var serviceProvider = context.watch<ServiceProvider>();
     Future serviceProviderInitListener = serviceProvider.initializeProvidersAsync(context);
+    var goRouter = GoRouter.of(context);
     serviceProviderInitListener.then((_) {
-      GoRouter.of(context).go('/');
+      goRouter.go('/');
     });
 
     return Scaffold(

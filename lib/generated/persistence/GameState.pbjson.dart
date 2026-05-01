@@ -21,10 +21,19 @@ const GameState$json = {
   '2': [
     {'1': 'num_levels_played', '3': 1, '4': 1, '5': 5, '10': 'numLevelsPlayed'},
     {'1': 'xp', '3': 2, '4': 1, '5': 5, '10': 'xp'},
+    {
+      '1': 'inventory',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.InventoryState',
+      '10': 'inventory'
+    },
   ],
 };
 
 /// Descriptor for `GameState`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List gameStateDescriptor = $convert.base64Decode(
     'CglHYW1lU3RhdGUSKgoRbnVtX2xldmVsc19wbGF5ZWQYASABKAVSD251bUxldmVsc1BsYXllZB'
-    'IOCgJ4cBgCIAEoBVICeHA=');
+    'IOCgJ4cBgCIAEoBVICeHASLQoJaW52ZW50b3J5GAMgASgLMg8uSW52ZW50b3J5U3RhdGVSCWlu'
+    'dmVudG9yeQ==');

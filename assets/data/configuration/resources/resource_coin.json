@@ -1,0 +1,9 @@
+{
+	"id": "resource_coin",
+	"components": {
+		"asset": {
+			"sprite": "assets/icons/coin_01.png"
+		},
+		"resource": {}
+	}
+}

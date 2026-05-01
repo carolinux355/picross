@@ -36,8 +36,10 @@ flutter:
     - assets/images/
     - assets/music/
     - assets/sfx/
+    - assets/icons/
     - assets/data/configuration/
-    - assets/data/configuration/Worlds/
+    - assets/data/configuration/world/
+    - assets/data/configuration/resources/
 
   fonts:
     - family: Permanent Marker

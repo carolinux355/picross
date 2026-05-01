@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:basic/game_internals/level_state.dart';
+import 'package:basic/inventory/inventory_screen.dart';
 import 'package:basic/loading/loading_screen.dart';
 import 'package:basic/win_game/lost_game_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import 'game_internals/score.dart';
 import 'level_selection/level_selection_screen.dart';
 import 'level_selection/levels.dart';
 import 'main_menu/main_menu_screen.dart';
@@ -67,14 +68,13 @@ final router = GoRouter(
                 return null;
               },
               pageBuilder: (context, state) {
-                final map = state.extra! as Map<String, dynamic>;
-                final score = map['score'] as Score;
+                final levelCompleteState = state.extra! as LevelCompleteState;
 
                 return buildMyTransition<void>(
                   key: const ValueKey('won'),
                   color: context.watch<Palette>().backgroundPlaySession,
                   child: WinGameScreen(
-                    score: score,
+                    levelCompleteState: levelCompleteState,
                     key: const Key('win game'),
                   ),
                 );
@@ -102,6 +102,11 @@ final router = GoRouter(
           path: 'settings',
           builder: (context, state) =>
               const SettingsScreen(key: Key('settings')),
+        ),
+        GoRoute(
+          path: 'inventory',
+          builder: (context, state) =>
+              const InventoryScreen(key: Key('inventory')),
         ),
       ],
     ),

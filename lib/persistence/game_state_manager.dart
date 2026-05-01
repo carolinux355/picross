@@ -1,19 +1,21 @@
 import 'dart:io';
 import 'package:basic/constants.dart';
+import 'package:basic/game_internals/base_manager.dart';
 import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:basic/generated/persistence/GameState.pb.dart';
 
-class GameStateManager {
+class GameStateManager extends BaseManager {
+  @override List<Type> dependencies = [];
+
   late String filePath;
   late GameState gameState;
   final Logger logger = Logger('GameStateManager');
 
-  GameStateManager() {
-    initialize();
-  }
+  GameStateManager();
 
-  Future initialize() async {
+  @override
+  Future initialize(List<BaseManager> managers) async {
     filePath = await _getPersistentDataPath();
     gameState = (await _readGameState()) ?? GameState();
   }

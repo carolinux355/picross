@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:basic/generated/configuration/Grant.pb.dart';
 import 'package:basic/level_selection/levels.dart';
 import 'package:basic/math/constant_vector.dart';
 import 'package:logging/logging.dart';
@@ -25,6 +26,8 @@ class LevelGenerator {
     List<int> tiles = List.filled(totalTiles, 0);
     List<int> bombs = [];
     List<int> remainingIndexes = List.generate(totalTiles, (index) => index);
+    List<int> filledTiles = [];
+    Map<int, List<Grant>> rewards = {};
     remainingIndexes.shuffle();
     int numTiles = max(((100-difficulty)/100) * totalTiles, 3).toInt();
     int numBombs = max((difficulty / 150) * totalTiles, 1).toInt();
@@ -33,6 +36,7 @@ class LevelGenerator {
     for(int i = 0; i < numTiles; i++) {
       int index = remainingIndexes.removeLast();
       tiles[index] = 1;
+      filledTiles.add(index);
     }
 
     for(int i = 0; i < numBombs; i++) {
@@ -40,10 +44,21 @@ class LevelGenerator {
       bombs.add(index);
     }
 
+    for(int index in filledTiles) {
+      rewards[index] ??= [];
+      // todo: replace with loot table logic that scales with difficulty/world
+      rewards[index]!.add(Grant(
+        type: GrantType.GrantType_Resource,
+        id: 'resource_coin', 
+        amount: 1
+      ));
+    }
+
     var level = GameLevel(
       size: ConstantVector2(width, height),
       tiles: tiles,
       bombs: bombs,
+      rewards: rewards
     );
 
     // debug log level

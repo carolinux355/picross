@@ -5,4 +5,5 @@ syntax = "proto3";
 message TuningComponent
 {
 	repeated string world_ids = 1;
+	repeated string inventory_resources = 2;
 }

@@ -19,9 +19,12 @@ export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 class TuningComponent extends $pb.GeneratedMessage {
   factory TuningComponent({
     $core.Iterable<$core.String>? worldIds,
+    $core.Iterable<$core.String>? inventoryResources,
   }) {
     final result = create();
     if (worldIds != null) result.worldIds.addAll(worldIds);
+    if (inventoryResources != null)
+      result.inventoryResources.addAll(inventoryResources);
     return result;
   }
 
@@ -38,6 +41,7 @@ class TuningComponent extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'TuningComponent',
       createEmptyInstance: create)
     ..pPS(1, _omitFieldNames ? '' : 'worldIds')
+    ..pPS(2, _omitFieldNames ? '' : 'inventoryResources')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -61,6 +65,9 @@ class TuningComponent extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $pb.PbList<$core.String> get worldIds => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$core.String> get inventoryResources => $_getList(1);
 }
 
 const $core.bool _omitFieldNames =

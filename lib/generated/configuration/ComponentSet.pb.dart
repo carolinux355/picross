@@ -14,7 +14,9 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'Components/AssetComponent.pb.dart' as $3;
 import 'Components/LevelDifficultyComponent.pb.dart' as $0;
+import 'Components/ResourceComponent.pb.dart' as $2;
 import 'Components/TuningComponent.pb.dart' as $1;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
@@ -23,10 +25,14 @@ class ComponentSet extends $pb.GeneratedMessage {
   factory ComponentSet({
     $0.LevelDifficultyComponent? levelDifficulty,
     $1.TuningComponent? tuning,
+    $2.ResourceComponent? resource,
+    $3.AssetComponent? asset,
   }) {
     final result = create();
     if (levelDifficulty != null) result.levelDifficulty = levelDifficulty;
     if (tuning != null) result.tuning = tuning;
+    if (resource != null) result.resource = resource;
+    if (asset != null) result.asset = asset;
     return result;
   }
 
@@ -47,6 +53,10 @@ class ComponentSet extends $pb.GeneratedMessage {
         subBuilder: $0.LevelDifficultyComponent.create)
     ..aOM<$1.TuningComponent>(2, _omitFieldNames ? '' : 'tuning',
         subBuilder: $1.TuningComponent.create)
+    ..aOM<$2.ResourceComponent>(3, _omitFieldNames ? '' : 'resource',
+        subBuilder: $2.ResourceComponent.create)
+    ..aOM<$3.AssetComponent>(4, _omitFieldNames ? '' : 'asset',
+        subBuilder: $3.AssetComponent.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -90,6 +100,28 @@ class ComponentSet extends $pb.GeneratedMessage {
   void clearTuning() => $_clearField(2);
   @$pb.TagNumber(2)
   $1.TuningComponent ensureTuning() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $2.ResourceComponent get resource => $_getN(2);
+  @$pb.TagNumber(3)
+  set resource($2.ResourceComponent value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasResource() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearResource() => $_clearField(3);
+  @$pb.TagNumber(3)
+  $2.ResourceComponent ensureResource() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $3.AssetComponent get asset => $_getN(3);
+  @$pb.TagNumber(4)
+  set asset($3.AssetComponent value) => $_setField(4, value);
+  @$pb.TagNumber(4)
+  $core.bool hasAsset() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAsset() => $_clearField(4);
+  @$pb.TagNumber(4)
+  $3.AssetComponent ensureAsset() => $_ensure(3);
 }
 
 const $core.bool _omitFieldNames =

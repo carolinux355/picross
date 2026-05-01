@@ -20,9 +20,17 @@ const TuningComponent$json = {
   '1': 'TuningComponent',
   '2': [
     {'1': 'world_ids', '3': 1, '4': 3, '5': 9, '10': 'worldIds'},
+    {
+      '1': 'inventory_resources',
+      '3': 2,
+      '4': 3,
+      '5': 9,
+      '10': 'inventoryResources'
+    },
   ],
 };
 
 /// Descriptor for `TuningComponent`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List tuningComponentDescriptor = $convert.base64Decode(
-    'Cg9UdW5pbmdDb21wb25lbnQSGwoJd29ybGRfaWRzGAEgAygJUgh3b3JsZElkcw==');
+    'Cg9UdW5pbmdDb21wb25lbnQSGwoJd29ybGRfaWRzGAEgAygJUgh3b3JsZElkcxIvChNpbnZlbn'
+    'RvcnlfcmVzb3VyY2VzGAIgAygJUhJpbnZlbnRvcnlSZXNvdXJjZXM=');

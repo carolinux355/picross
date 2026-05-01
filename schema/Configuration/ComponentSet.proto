@@ -2,9 +2,13 @@ syntax = "proto3";
 
 import "Configuration/Components/LevelDifficultyComponent.proto";
 import "Configuration/Components/TuningComponent.proto";
+import "Configuration/Components/ResourceComponent.proto";
+import "Configuration/Components/AssetComponent.proto";
 
 message ComponentSet
 {
 	LevelDifficultyComponent level_difficulty = 1;
 	TuningComponent tuning = 2;
+	ResourceComponent resource = 3;
+	AssetComponent asset = 4;
 }

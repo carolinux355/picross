@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message Grant
+{
+	GrantType type = 1;
+	string id = 2;
+	int32 amount = 3;
+}
+
+enum GrantType
+{
+	GrantType_Unset = 0;
+	GrantType_Resource = 1;
+}

@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/play_session/play_session_bottom_bar_widget.dart';
 import 'package:basic/play_session/play_session_top_bar_widget.dart';
@@ -16,10 +17,8 @@ import 'package:provider/provider.dart';
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
 import '../game_internals/level_state.dart';
-import '../game_internals/score.dart';
 import '../level_selection/levels.dart';
 import '../style/confetti.dart';
-//import '../style/my_button.dart';
 import '../style/palette.dart';
 import 'game_widget.dart';
 
@@ -50,13 +49,10 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
   static PlayerSessionState _playerSessionState = PlayerSessionState.playing;
   static PlayerSessionInputMode _playerSessionInputMode = PlayerSessionInputMode.reveal;
 
-  late DateTime _startOfPlay;
-
   @override
   void initState() {
     super.initState();
 
-    _startOfPlay = DateTime.now();
     _playerSessionState = PlayerSessionState.playing;
   }
 
@@ -64,6 +60,8 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
     final settingsController = context.watch<SettingsController>();
+    final grantManager = context.watch<GrantManager>();
+    final gameStateManager = context.watch<GameStateManager>();
 
     return MultiProvider(
       providers: [
@@ -72,7 +70,15 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
         // by widgets below this one in the widget tree.
         ChangeNotifierProvider(
           create: (context) =>
-              LevelState(level: widget.level, onWin: _playerWon, onLose: _playerLost, playerLives: 3, settingsController: settingsController),
+              LevelState(
+                level: widget.level, 
+                onWin: _playerWon, 
+                onLose: _playerLost, 
+                playerLives: 3, 
+                settingsController: settingsController, 
+                grantManager: grantManager,
+                gameStateManager: gameStateManager
+              ),
         ),
       ],
       child: IgnorePointer(
@@ -127,21 +133,9 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
     );
   }
 
-  Future<void> _playerWon() async {
+  Future<void> _playerWon(LevelCompleteState levelCompleteState) async {
     _log.info('Level won');
     
-    // todo: prefer to write to save data in a model class not here but ok for now
-    var gameStateManager = context.read<GameStateManager>();
-    var gameState = gameStateManager.gameState;
-    gameState.numLevelsPlayed++;
-
-    final score = Score(
-      DateTime.now().difference(_startOfPlay),
-    );
-    gameState.xp += score.score;
-
-    gameStateManager.save();
-
     // Let the player see the game just after winning for a bit.
     await Future<void>.delayed(_preCelebrationDuration);
     if (!mounted) return;
@@ -157,7 +151,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
     await Future<void>.delayed(_celebrationDuration);
     if (!mounted) return;
 
-    GoRouter.of(context).go('/play/won', extra: {'score': score});
+    GoRouter.of(context).go('/play/won', extra: levelCompleteState);
   }
 
   Future<void> _playerLost() async {

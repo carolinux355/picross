@@ -2,35 +2,53 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:basic/game_internals/score.dart';
+import 'package:basic/generated/configuration/Grant.pb.dart';
+import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/level_selection/levels.dart';
+import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/settings/settings.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
 
 /// State for the active picross puzzle.
 ///
 /// Tracks which tiles have been revealed by the player and whether the player has won yet
 class LevelState extends ChangeNotifier {
-  final VoidCallback onWin;
+  final Function(LevelCompleteState) onWin;
   final VoidCallback onLose;
   final GameLevel level;
   final int playerLives;
   final SettingsController settingsController;
+  final GrantManager grantManager;
+  final GameStateManager gameStateManager;
 
-  LevelState({required this.level, required this.onWin, required this.onLose, required this.playerLives, required this.settingsController});
+  final Logger logger = Logger('LevelState');
 
+  LevelState({required this.level, required this.onWin, required this.onLose, required this.playerLives, required this.settingsController, required this.grantManager, required this.gameStateManager}) {
+    _initialize();
+  }
+
+  late DateTime _startOfPlay;
   final List<int> revealedTiles = [];
   final Map<int, bool> _markedTiles = {};
   int _bombsRevealedCount = 0;
   final List<int> disabledTiles = [];
-  final Logger logger = Logger('LevelState');
+  final List<Grant> pendingRewards = [];
+
+  void _initialize() {
+    _startOfPlay = DateTime.now();
+    _checkAutoFill();
+    notifyListeners();
+  }
 
   void revealTile(int index) {
     if (disabledTiles.contains(index)) {
       return;
     }
     revealedTiles.add(index);
+    _grantPendingRewards(index);
     _updateBombCounter(index);
     _checkLose();
     _checkWin();
@@ -53,6 +71,18 @@ class LevelState extends ChangeNotifier {
     return playerLives - _bombsRevealedCount;
   }
 
+  void _grantPendingRewards(int index) {
+    // todo: persist and save in case game crashes
+    if (level.rewards.containsKey(index)) {
+      pendingRewards.addAll(level.rewards[index]!);
+    }
+  }
+
+  void _flushPendingRewards() {
+    grantManager.tryGrantList(pendingRewards);
+    pendingRewards.clear();
+  }
+
   void _updateBombCounter(int index) {
     if (level.bombs.contains(index)) {
       _bombsRevealedCount++;
@@ -72,10 +102,30 @@ class LevelState extends ChangeNotifier {
   void _checkWin() {
     for (int i = 0; i < level.tiles.length; i++) {
       if (level.tiles[i] > 0 && !revealedTiles.contains(i)) {
+        // not yet won
         return;
       }
     }
-    onWin();
+
+    // process win
+    final score = Score(
+      DateTime.now().difference(_startOfPlay),
+    );
+
+    LevelCompleteState levelCompleteState = LevelCompleteState(rewards: grantManager.consolidateGrants(pendingRewards), score: score);
+
+    // todo: prefer to write to save data in a model class not here but ok for now
+    var gameState = gameStateManager.gameState;
+    gameState.numLevelsPlayed++;
+    gameState.xp += score.score;
+
+    // grant rewards
+    _flushPendingRewards();
+
+    gameStateManager.save();
+
+    // callback to view
+    onWin(levelCompleteState);
   }
 
   // returns list of blank tiles to disable
@@ -127,12 +177,10 @@ class LevelState extends ChangeNotifier {
       return;
     }
     // try to auto mark tiles once a row or column is solved
-    bool didUpdate = false;
     for (int i = 0; i < level.size.y; i++){
       var tilesToFill = _checkRowForAutofill(i);
       if (tilesToFill != null && tilesToFill.isNotEmpty) {
-        didUpdate = true;
-        logger.info('found complete row $i');
+        //logger.info('found complete row $i');
         for (var tile in tilesToFill) {
           if (!disabledTiles.contains(tile)) {
             disabledTiles.add(tile);
@@ -144,8 +192,7 @@ class LevelState extends ChangeNotifier {
     for (int i = 0; i < level.size.x; i++){
       var tilesToFill = _checkColumnForAutofill(i);
       if (tilesToFill != null && tilesToFill.isNotEmpty) {
-        didUpdate = true;
-        logger.info('found completed column $i');
+        //logger.info('found completed column $i');
         for (var tile in tilesToFill) {
           if (!disabledTiles.contains(tile)) {
             disabledTiles.add(tile);
@@ -153,9 +200,12 @@ class LevelState extends ChangeNotifier {
         }
       }
     }
-
-    if (didUpdate) {
-      notifyListeners();
-    }
   }
+}
+
+class LevelCompleteState
+{
+  final List<Grant> rewards;
+  final Score score;
+  LevelCompleteState({required this.rewards, required this.score});
 }
