@@ -112,7 +112,7 @@ class LevelState extends ChangeNotifier {
       DateTime.now().difference(_startOfPlay),
     );
 
-    LevelCompleteState levelCompleteState = LevelCompleteState(rewards: grantManager.consolidateGrants(pendingRewards), score: score);
+    LevelCompleteState levelCompleteState = LevelCompleteState(rewards: grantManager.consolidateGrants(pendingRewards), score: score, worldId: level.worldId);
 
     // todo: prefer to write to save data in a model class not here but ok for now
     var gameState = gameStateManager.gameState;
@@ -207,5 +207,6 @@ class LevelCompleteState
 {
   final List<Grant> rewards;
   final Score score;
-  LevelCompleteState({required this.rewards, required this.score});
+  final String worldId;
+  LevelCompleteState({required this.rewards, required this.score, required this.worldId});
 }

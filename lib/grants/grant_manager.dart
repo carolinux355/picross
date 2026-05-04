@@ -45,7 +45,7 @@ class GrantManager extends BaseManager {
     }
 
     for (var kvp in grantMap.entries) {
-      consolidatedGrants.add(new Grant(type: GrantType.GrantType_Resource, id: kvp.key, amount: kvp.value));
+      consolidatedGrants.add(Grant(type: GrantType.GrantType_Resource, id: kvp.key, amount: kvp.value));
     }
     return consolidatedGrants;
   }

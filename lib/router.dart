@@ -4,6 +4,7 @@
 
 import 'package:basic/game_internals/level_state.dart';
 import 'package:basic/inventory/inventory_screen.dart';
+import 'package:basic/loading/level_generation_loading_screen.dart';
 import 'package:basic/loading/loading_screen.dart';
 import 'package:basic/win_game/lost_game_screen.dart';
 import 'package:flutter/foundation.dart';
@@ -108,6 +109,13 @@ final router = GoRouter(
           builder: (context, state) =>
               const InventoryScreen(key: Key('inventory')),
         ),
+        GoRoute(
+          path: 'levelgeneration',
+          builder: (context, state) {
+            final worldId = state.extra! as String;
+            return LevelGenerationLoadingScreen(key: Key('levelgeneration'), worldId: worldId);
+          }
+        )
       ],
     ),
   ],

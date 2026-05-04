@@ -10,7 +10,7 @@ class LevelGenerator {
 
   LevelGenerator();
 
-  GameLevel generateLevel({required int width, required int height, required int difficulty}) {
+  Future<GameLevel> generateLevel({required int width, required int height, required int difficulty, required String worldId}) async {
     
     final log = Logger('LevelGenerator');
     assert(difficulty >= 0 && difficulty <= 100);
@@ -58,7 +58,8 @@ class LevelGenerator {
       size: ConstantVector2(width, height),
       tiles: tiles,
       bombs: bombs,
-      rewards: rewards
+      rewards: rewards,
+      worldId: worldId
     );
 
     // debug log level

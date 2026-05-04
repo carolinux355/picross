@@ -2,11 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'dart:math';
-
 import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/constants.dart';
-import 'package:basic/game_internals/level_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +20,6 @@ class LevelSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
-    final levelGenerator = context.watch<LevelGenerator>();
-    final random = Random();
     final gameData = context.read<GameDataManager>();
     final tuningData = gameData.getData(Constants.TUNING_CONFIG_ID)!.components.tuning;
 
@@ -56,15 +51,10 @@ class LevelSelectionScreen extends StatelessWidget {
                       onTap: () {
                         final audioController = context.read<AudioController>();
                         audioController.playSfx(SfxType.buttonTap);
-                        var difficultyConfig = gameData.getData(worldId)!.components.levelDifficulty;
-                        int sizeX = random.nextInt(difficultyConfig.sizeRange.max - difficultyConfig.sizeRange.min) + difficultyConfig.sizeRange.min;
-                        int sizeY = random.nextInt(difficultyConfig.sizeRange.max - difficultyConfig.sizeRange.min) + difficultyConfig.sizeRange.min;
-                        int difficulty = random.nextInt(difficultyConfig.difficultyRange.max - difficultyConfig.difficultyRange.min) + difficultyConfig.difficultyRange.min;
-                        var generatedLevel = levelGenerator.generateLevel(width: sizeX, height: sizeY, difficulty: difficulty);
 
                         GoRouter.of(
                           context,
-                        ).go('/play/session/generated', extra: generatedLevel);
+                        ).go('/levelgeneration', extra: worldId);
                       },
                       leading: Text('World'),
                       title: Text(worldId),

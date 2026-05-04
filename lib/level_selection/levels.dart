@@ -19,12 +19,14 @@ class GameLevel {
   final List<int> tiles;
   final List<int> bombs; // location of bomb tiles by index
   final Map<int, List<Grant>> rewards; // locations of rewards
+  final String worldId; // config that was used to generate this level
 
   const GameLevel({
     required this.size,
     required this.tiles,
     required this.bombs,
-    required this.rewards
+    required this.rewards,
+    required this.worldId
   });
 
   ClueData getClueForRow(int row) {
