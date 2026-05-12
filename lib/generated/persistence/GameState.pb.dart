@@ -23,11 +23,13 @@ class GameState extends $pb.GeneratedMessage {
     $core.int? numLevelsPlayed,
     $core.int? xp,
     $0.InventoryState? inventory,
+    $core.int? playerLevel,
   }) {
     final result = create();
     if (numLevelsPlayed != null) result.numLevelsPlayed = numLevelsPlayed;
     if (xp != null) result.xp = xp;
     if (inventory != null) result.inventory = inventory;
+    if (playerLevel != null) result.playerLevel = playerLevel;
     return result;
   }
 
@@ -47,6 +49,7 @@ class GameState extends $pb.GeneratedMessage {
     ..aI(2, _omitFieldNames ? '' : 'xp')
     ..aOM<$0.InventoryState>(3, _omitFieldNames ? '' : 'inventory',
         subBuilder: $0.InventoryState.create)
+    ..aI(4, _omitFieldNames ? '' : 'playerLevel')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -95,6 +98,15 @@ class GameState extends $pb.GeneratedMessage {
   void clearInventory() => $_clearField(3);
   @$pb.TagNumber(3)
   $0.InventoryState ensureInventory() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $core.int get playerLevel => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set playerLevel($core.int value) => $_setSignedInt32(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasPlayerLevel() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPlayerLevel() => $_clearField(4);
 }
 
 const $core.bool _omitFieldNames =

@@ -4,6 +4,7 @@
 
 import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/constants.dart';
+import 'package:basic/requirements/requirement_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -45,20 +46,7 @@ class LevelSelectionScreen extends StatelessWidget {
               child: ListView(
                 children: [
                   for (final worldId in tuningData.worldIds)
-                    ListTile(
-                      enabled:
-                          true,
-                      onTap: () {
-                        final audioController = context.read<AudioController>();
-                        audioController.playSfx(SfxType.buttonTap);
-
-                        GoRouter.of(
-                          context,
-                        ).go('/levelgeneration', extra: worldId);
-                      },
-                      leading: Text('World'),
-                      title: Text(worldId),
-                    ),
+                    LevelSelectionWorldWidget(worldId: worldId),
                 ],
               ),
             ),
@@ -71,6 +59,40 @@ class LevelSelectionScreen extends StatelessWidget {
           child: const Text('Back'),
         ),
       ),
+    );
+  }
+}
+
+class LevelSelectionWorldWidget extends StatelessWidget {
+  const LevelSelectionWorldWidget({
+    super.key,
+    required this.worldId,
+  });
+
+  final String worldId;
+
+  @override
+  Widget build(BuildContext context) {
+    var gameDataManager = context.watch<GameDataManager>();
+    var requirementManager = context.watch<RequirementManager>();
+    var worldConfig = gameDataManager.getData(worldId);
+    bool isUnlocked = requirementManager.evaluateList(worldConfig!.components.feature.unlock);
+
+    return ListTile(
+      enabled:
+          true,
+      onTap: () {
+        if (isUnlocked) {
+          final audioController = context.read<AudioController>();
+          audioController.playSfx(SfxType.buttonTap);
+      
+          GoRouter.of(
+            context,
+          ).go('/levelgeneration', extra: worldId);
+        }
+      },
+      leading: isUnlocked ? Text('World') : Text('Locked'),
+      title: Text(worldId),
     );
   }
 }

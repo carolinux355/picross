@@ -21,6 +21,7 @@ dependencies:
   shared_preferences: ^2.2.3
   protobuf: ^6.0.0
   path_provider: ^2.1.5
+  restart_app: ^1.2.1
 
 dev_dependencies:
   flutter_lints: ^6.0.0
@@ -40,6 +41,7 @@ flutter:
     - assets/data/configuration/
     - assets/data/configuration/world/
     - assets/data/configuration/resources/
+    - assets/data/configuration/player_level_curves/
 
   fonts:
     - family: Permanent Marker

@@ -27,10 +27,20 @@ const TuningComponent$json = {
       '5': 9,
       '10': 'inventoryResources'
     },
+    {
+      '1': 'player_level_curve_id',
+      '3': 3,
+      '4': 1,
+      '5': 9,
+      '10': 'playerLevelCurveId'
+    },
+    {'1': 'xp_resource_id', '3': 4, '4': 1, '5': 9, '10': 'xpResourceId'},
   ],
 };
 
 /// Descriptor for `TuningComponent`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List tuningComponentDescriptor = $convert.base64Decode(
     'Cg9UdW5pbmdDb21wb25lbnQSGwoJd29ybGRfaWRzGAEgAygJUgh3b3JsZElkcxIvChNpbnZlbn'
-    'RvcnlfcmVzb3VyY2VzGAIgAygJUhJpbnZlbnRvcnlSZXNvdXJjZXM=');
+    'RvcnlfcmVzb3VyY2VzGAIgAygJUhJpbnZlbnRvcnlSZXNvdXJjZXMSMQoVcGxheWVyX2xldmVs'
+    'X2N1cnZlX2lkGAMgASgJUhJwbGF5ZXJMZXZlbEN1cnZlSWQSJAoOeHBfcmVzb3VyY2VfaWQYBC'
+    'ABKAlSDHhwUmVzb3VyY2VJZA==');

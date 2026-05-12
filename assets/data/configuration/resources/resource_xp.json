@@ -1,0 +1,9 @@
+{
+	"id": "resource_xp",
+	"components": {
+		"asset": {
+			"sprite": "assets/icons/starGold.png"
+		},
+		"resource": {}
+	}
+}

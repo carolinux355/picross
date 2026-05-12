@@ -440,6 +440,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "restart_app",
+      "rootUri": "file:///Users/caroline/.pub-cache/hosted/pub.dev/restart_app-1.8.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "shared_preferences",
       "rootUri": "file:///Users/caroline/.pub-cache/hosted/pub.dev/shared_preferences-2.5.5",
       "packageUri": "lib/",

@@ -51,6 +51,22 @@ const ComponentSet$json = {
       '6': '.AssetComponent',
       '10': 'asset'
     },
+    {
+      '1': 'player_level_curve',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.PlayerLevelCurveComponent',
+      '10': 'playerLevelCurve'
+    },
+    {
+      '1': 'feature',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.FeatureComponent',
+      '10': 'feature'
+    },
   ],
 };
 
@@ -59,4 +75,6 @@ final $typed_data.Uint8List componentSetDescriptor = $convert.base64Decode(
     'CgxDb21wb25lbnRTZXQSRAoQbGV2ZWxfZGlmZmljdWx0eRgBIAEoCzIZLkxldmVsRGlmZmljdW'
     'x0eUNvbXBvbmVudFIPbGV2ZWxEaWZmaWN1bHR5EigKBnR1bmluZxgCIAEoCzIQLlR1bmluZ0Nv'
     'bXBvbmVudFIGdHVuaW5nEi4KCHJlc291cmNlGAMgASgLMhIuUmVzb3VyY2VDb21wb25lbnRSCH'
-    'Jlc291cmNlEiUKBWFzc2V0GAQgASgLMg8uQXNzZXRDb21wb25lbnRSBWFzc2V0');
+    'Jlc291cmNlEiUKBWFzc2V0GAQgASgLMg8uQXNzZXRDb21wb25lbnRSBWFzc2V0EkgKEnBsYXll'
+    'cl9sZXZlbF9jdXJ2ZRgFIAEoCzIaLlBsYXllckxldmVsQ3VydmVDb21wb25lbnRSEHBsYXllck'
+    'xldmVsQ3VydmUSKwoHZmVhdHVyZRgGIAEoCzIRLkZlYXR1cmVDb21wb25lbnRSB2ZlYXR1cmU=');

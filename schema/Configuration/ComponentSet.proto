@@ -4,6 +4,8 @@ import "Configuration/Components/LevelDifficultyComponent.proto";
 import "Configuration/Components/TuningComponent.proto";
 import "Configuration/Components/ResourceComponent.proto";
 import "Configuration/Components/AssetComponent.proto";
+import "Configuration/Components/PlayerLevelCurveComponent.proto";
+import "Configuration/Components/FeatureComponent.proto";
 
 message ComponentSet
 {
@@ -11,4 +13,6 @@ message ComponentSet
 	TuningComponent tuning = 2;
 	ResourceComponent resource = 3;
 	AssetComponent asset = 4;
+	PlayerLevelCurveComponent player_level_curve = 5;
+	FeatureComponent feature = 6;
 }

@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:basic/game_internals/level_state.dart';
+import 'package:basic/main_menu/xp_widget.dart';
 import 'package:basic/style/reward_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -29,6 +30,11 @@ class WinGameScreen extends StatelessWidget {
         squarishMainArea: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Positioned(
+              top: 0,
+              left: 0,
+              child: XPWidget()
+            ),
             gap,
             const Center(
               child: Text(

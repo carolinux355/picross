@@ -1,0 +1,42 @@
+{
+	"id": "player_level_curve",
+	"components": {
+		"player_level_curve": {
+			"levels": {
+				"2": {
+					"level": 2,
+					"min_xp": 50,
+					"rewards": [
+						{
+							"type": "GrantType_Resource",
+							"id": "resource_coin",
+							"amount": 15
+						}
+					]
+				},
+				"3": {
+					"level": 3,
+					"min_xp": 200,
+					"rewards": [
+						{
+							"type": "GrantType_Resource",
+							"id": "resource_coin",
+							"amount": 15
+						}
+					]
+				},
+				"4": {
+					"level": 4,
+					"min_xp": 400,
+					"rewards": [
+						{
+							"type": "GrantType_Resource",
+							"id": "resource_coin",
+							"amount": 15
+						}
+					]
+				}
+			}
+		}
+	}
+}

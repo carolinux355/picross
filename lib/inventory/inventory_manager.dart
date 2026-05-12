@@ -38,6 +38,7 @@ class InventoryManager extends BaseManager
 
   void addResource(String resourceId, int amount) {
     gameStateManager.gameState.inventory.resources[resourceId] = getResourceCount(resourceId) + amount;
+    notifyListeners();
   }
 
 }

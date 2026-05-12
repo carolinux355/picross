@@ -6,6 +6,8 @@ import 'package:basic/game_internals/base_manager.dart';
 import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/inventory/inventory_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
+import 'package:basic/player_level/player_level_manager.dart';
+import 'package:basic/requirements/requirement_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +29,8 @@ class ServiceProvider {
     _registerManager(context.read<GameDataManager>());
     _registerManager(context.read<InventoryManager>());
     _registerManager(context.read<GrantManager>());
+    _registerManager(context.read<RequirementManager>());
+    _registerManager(context.read<PlayerLevelManager>());
 
     // sort managers to initialize in order of dependencies (need to check for circular dependencies)
     _initializationOrder.clear();
@@ -57,14 +61,23 @@ class ServiceProvider {
       }
     }
 
+    List<Future> futures = [];
     for (var kvp in _initializationOrder.entries) {
       logger.info('${kvp.key}: ${kvp.value}');
-      List<Future> futures = [];
       for (var manager in kvp.value) {
         futures.add(_initializeManager(manager));
       }
       await Future.wait(futures);
     }
+
+    futures.clear();
+    for(var manager in _registeredManagers) {
+      var f = manager.postInitialize(_registeredManagers);
+      if (f != null) {
+        futures.add(f);
+      }
+    }
+    await Future.wait(futures);
 
     await Future.delayed(Duration(seconds: 1));
     isLoading = false;

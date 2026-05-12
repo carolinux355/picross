@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+//import "Configuration/Utils.proto";
+import "Configuration/Grant.proto";
+
+message PlayerLevelCurveComponent
+{
+	map<string, PlayerLevelCurveLevel> levels = 1;
+}
+
+message PlayerLevelCurveLevel
+{
+	int32 min_xp = 1;
+	repeated Grant rewards = 2;
+	int32 level = 3; // for easy lookup
+}

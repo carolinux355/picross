@@ -10,12 +10,15 @@ import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/inventory/inventory_manager.dart';
 import 'package:basic/loading/service_provider.dart';
 import 'package:basic/persistence/game_state_manager.dart';
+import 'package:basic/player_level/player_level_manager.dart';
+import 'package:basic/requirements/requirement_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:restart_app/restart_app.dart';
 
 import 'app_lifecycle/app_lifecycle.dart';
 import 'audio/audio_controller.dart';
@@ -60,13 +63,16 @@ class MyApp extends StatelessWidget {
         builder: (context) {
           return MultiProvider(
             providers: [
+              // add new managers here, don't forget to also add to service provider for initialization!
               Provider(create: (context) => Palette()),
               Provider(create: (context) => SettingsController()),
               Provider(create: (context) => LevelGenerator()),
-              Provider(create: (context) => GameStateManager()),
-              Provider(create: (context) => GameDataManager()),
-              Provider(create: (context) => InventoryManager()),
-              Provider(create: (context) => GrantManager()),
+              ChangeNotifierProvider(create: (context) => GameStateManager()),
+              ChangeNotifierProvider(create: (context) => GameDataManager()),
+              ChangeNotifierProvider(create: (context) => InventoryManager()),
+              ChangeNotifierProvider(create: (context) => GrantManager()),
+              ChangeNotifierProvider(create: (context) => RequirementManager()),
+              ChangeNotifierProvider(create: (context) => PlayerLevelManager()),
               Provider(create: (context) => ServiceProvider()),
               ProxyProvider2<AppLifecycleStateNotifier,SettingsController,AudioController>(
                 create: (context) => AudioController(),
@@ -114,5 +120,9 @@ class MyApp extends StatelessWidget {
         }
       ),
     );
+  }
+
+  static void restartApp() {
+    Restart.restartApp();
   }
 }

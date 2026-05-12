@@ -11,4 +11,5 @@ enum GrantType
 {
 	GrantType_Unset = 0;
 	GrantType_Resource = 1;
+	GrantType_Xp = 2;
 }

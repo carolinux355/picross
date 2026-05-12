@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:basic/constants.dart';
 import 'package:basic/game_internals/base_manager.dart';
 import 'package:basic/generated/configuration/BaseMessage.pb.dart';
+import 'package:basic/generated/configuration/Components/TuningComponent.pb.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 
@@ -45,5 +46,9 @@ class GameDataManager extends BaseManager {
     }
 
     return null;
+  }
+
+  TuningComponent getTuning() {
+    return getData(Constants.TUNING_CONFIG_ID)!.components.tuning;
   }
 }

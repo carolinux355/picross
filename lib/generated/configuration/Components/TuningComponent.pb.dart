@@ -20,11 +20,16 @@ class TuningComponent extends $pb.GeneratedMessage {
   factory TuningComponent({
     $core.Iterable<$core.String>? worldIds,
     $core.Iterable<$core.String>? inventoryResources,
+    $core.String? playerLevelCurveId,
+    $core.String? xpResourceId,
   }) {
     final result = create();
     if (worldIds != null) result.worldIds.addAll(worldIds);
     if (inventoryResources != null)
       result.inventoryResources.addAll(inventoryResources);
+    if (playerLevelCurveId != null)
+      result.playerLevelCurveId = playerLevelCurveId;
+    if (xpResourceId != null) result.xpResourceId = xpResourceId;
     return result;
   }
 
@@ -42,6 +47,8 @@ class TuningComponent extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..pPS(1, _omitFieldNames ? '' : 'worldIds')
     ..pPS(2, _omitFieldNames ? '' : 'inventoryResources')
+    ..aOS(3, _omitFieldNames ? '' : 'playerLevelCurveId')
+    ..aOS(4, _omitFieldNames ? '' : 'xpResourceId')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -68,6 +75,24 @@ class TuningComponent extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $pb.PbList<$core.String> get inventoryResources => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.String get playerLevelCurveId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set playerLevelCurveId($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasPlayerLevelCurveId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPlayerLevelCurveId() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get xpResourceId => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set xpResourceId($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasXpResourceId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearXpResourceId() => $_clearField(4);
 }
 
 const $core.bool _omitFieldNames =

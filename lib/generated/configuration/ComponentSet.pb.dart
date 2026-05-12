@@ -15,7 +15,9 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'Components/AssetComponent.pb.dart' as $3;
+import 'Components/FeatureComponent.pb.dart' as $5;
 import 'Components/LevelDifficultyComponent.pb.dart' as $0;
+import 'Components/PlayerLevelCurveComponent.pb.dart' as $4;
 import 'Components/ResourceComponent.pb.dart' as $2;
 import 'Components/TuningComponent.pb.dart' as $1;
 
@@ -27,12 +29,16 @@ class ComponentSet extends $pb.GeneratedMessage {
     $1.TuningComponent? tuning,
     $2.ResourceComponent? resource,
     $3.AssetComponent? asset,
+    $4.PlayerLevelCurveComponent? playerLevelCurve,
+    $5.FeatureComponent? feature,
   }) {
     final result = create();
     if (levelDifficulty != null) result.levelDifficulty = levelDifficulty;
     if (tuning != null) result.tuning = tuning;
     if (resource != null) result.resource = resource;
     if (asset != null) result.asset = asset;
+    if (playerLevelCurve != null) result.playerLevelCurve = playerLevelCurve;
+    if (feature != null) result.feature = feature;
     return result;
   }
 
@@ -57,6 +63,11 @@ class ComponentSet extends $pb.GeneratedMessage {
         subBuilder: $2.ResourceComponent.create)
     ..aOM<$3.AssetComponent>(4, _omitFieldNames ? '' : 'asset',
         subBuilder: $3.AssetComponent.create)
+    ..aOM<$4.PlayerLevelCurveComponent>(
+        5, _omitFieldNames ? '' : 'playerLevelCurve',
+        subBuilder: $4.PlayerLevelCurveComponent.create)
+    ..aOM<$5.FeatureComponent>(6, _omitFieldNames ? '' : 'feature',
+        subBuilder: $5.FeatureComponent.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -122,6 +133,29 @@ class ComponentSet extends $pb.GeneratedMessage {
   void clearAsset() => $_clearField(4);
   @$pb.TagNumber(4)
   $3.AssetComponent ensureAsset() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  $4.PlayerLevelCurveComponent get playerLevelCurve => $_getN(4);
+  @$pb.TagNumber(5)
+  set playerLevelCurve($4.PlayerLevelCurveComponent value) =>
+      $_setField(5, value);
+  @$pb.TagNumber(5)
+  $core.bool hasPlayerLevelCurve() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearPlayerLevelCurve() => $_clearField(5);
+  @$pb.TagNumber(5)
+  $4.PlayerLevelCurveComponent ensurePlayerLevelCurve() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  $5.FeatureComponent get feature => $_getN(5);
+  @$pb.TagNumber(6)
+  set feature($5.FeatureComponent value) => $_setField(6, value);
+  @$pb.TagNumber(6)
+  $core.bool hasFeature() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearFeature() => $_clearField(6);
+  @$pb.TagNumber(6)
+  $5.FeatureComponent ensureFeature() => $_ensure(5);
 }
 
 const $core.bool _omitFieldNames =

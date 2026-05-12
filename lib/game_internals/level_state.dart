@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/game_internals/score.dart';
 import 'package:basic/generated/configuration/Grant.pb.dart';
 import 'package:basic/grants/grant_manager.dart';
@@ -23,10 +24,20 @@ class LevelState extends ChangeNotifier {
   final SettingsController settingsController;
   final GrantManager grantManager;
   final GameStateManager gameStateManager;
+  final GameDataManager gameDataManager;
 
   final Logger logger = Logger('LevelState');
 
-  LevelState({required this.level, required this.onWin, required this.onLose, required this.playerLives, required this.settingsController, required this.grantManager, required this.gameStateManager}) {
+  LevelState({
+    required this.level, 
+    required this.onWin, 
+    required this.onLose, 
+    required this.playerLives, 
+    required this.settingsController, 
+    required this.grantManager, 
+    required this.gameStateManager, 
+    required this.gameDataManager
+  }) {
     _initialize();
   }
 
@@ -35,7 +46,7 @@ class LevelState extends ChangeNotifier {
   final Map<int, bool> _markedTiles = {};
   int _bombsRevealedCount = 0;
   final List<int> disabledTiles = [];
-  final List<Grant> pendingRewards = [];
+  List<Grant> pendingRewards = [];
 
   void _initialize() {
     _startOfPlay = DateTime.now();
@@ -81,6 +92,7 @@ class LevelState extends ChangeNotifier {
   void _flushPendingRewards() {
     grantManager.tryGrantList(pendingRewards);
     pendingRewards.clear();
+    notifyListeners();
   }
 
   void _updateBombCounter(int index) {
@@ -112,12 +124,18 @@ class LevelState extends ChangeNotifier {
       DateTime.now().difference(_startOfPlay),
     );
 
-    LevelCompleteState levelCompleteState = LevelCompleteState(rewards: grantManager.consolidateGrants(pendingRewards), score: score, worldId: level.worldId);
+    pendingRewards = grantManager.consolidateGrants(pendingRewards);
+    pendingRewards.add(Grant(
+      type: GrantType.GrantType_Xp,
+      id: gameDataManager.getTuning().xpResourceId,
+      amount: 5,
+    ));
+
+    LevelCompleteState levelCompleteState = LevelCompleteState(rewards: List.from(pendingRewards), score: score, worldId: level.worldId);
 
     // todo: prefer to write to save data in a model class not here but ok for now
     var gameState = gameStateManager.gameState;
     gameState.numLevelsPlayed++;
-    gameState.xp += score.score;
 
     // grant rewards
     _flushPendingRewards();

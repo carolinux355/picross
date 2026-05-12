@@ -2,6 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:basic/main.dart';
+import 'package:basic/persistence/game_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +23,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsController>();
     final palette = context.watch<Palette>();
+    final gameStateManager = context.watch<GameStateManager>();
 
     return Scaffold(
       backgroundColor: palette.backgroundSettings,
@@ -73,6 +76,8 @@ class SettingsScreen extends StatelessWidget {
                     content: Text('Player progress has been reset.'),
                   ),
                 );
+                gameStateManager.clearAllData();
+                MyApp.restartApp();
               },
             ),
             _gap,

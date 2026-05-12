@@ -42,4 +42,10 @@ class GameStateManager extends BaseManager {
     file.create();
     file.writeAsBytes(gameState.writeToBuffer());
   }
+
+  Future<void> clearAllData() async {
+    logger.info('clearing game data!');
+    final file = File(filePath);
+    file.delete();
+  }
 }

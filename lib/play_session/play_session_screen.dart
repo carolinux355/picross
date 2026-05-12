@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/play_session/play_session_bottom_bar_widget.dart';
@@ -62,6 +63,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
     final settingsController = context.watch<SettingsController>();
     final grantManager = context.watch<GrantManager>();
     final gameStateManager = context.watch<GameStateManager>();
+    final gameDataManager = context.watch<GameDataManager>();
 
     return MultiProvider(
       providers: [
@@ -77,7 +79,8 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
                 playerLives: 3, 
                 settingsController: settingsController, 
                 grantManager: grantManager,
-                gameStateManager: gameStateManager
+                gameStateManager: gameStateManager,
+                gameDataManager: gameDataManager
               ),
         ),
       ],

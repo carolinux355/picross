@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+message Requirement
+{
+	RequirementType type = 1;
+	string id = 2;
+	int32 amount = 3;
+	ComparisonType comparison = 4;
+}
+
+enum RequirementType
+{
+	RequirementType_Unset = 0;
+	RequirementType_PlayerLevel = 1;
+	RequirementType_Resource = 2;
+}
+
+enum ComparisonType
+{
+	ComparisonType_Invalid = 0;
+	ComparisonType_GreaterThan = 1;
+	ComparisonType_GreaterThanOrEqual = 2;
+	ComparisonType_LessThan = 3;
+	ComparisonType_LessThanOrEqual = 4;
+	ComparisonType_Equal = 5;
+}

@@ -1,6 +1,15 @@
 {
 	"id": "world_04",
 	"components": {
+		"feature": {
+			"unlock": [
+				{
+					"type": "RequirementType_PlayerLevel",
+					"comparison": "ComparisonType_GreaterThanOrEqual",
+					"amount": 4
+				}
+			]
+		},
 		"level_difficulty": {
 			"size_range": {
 				"min": 8,

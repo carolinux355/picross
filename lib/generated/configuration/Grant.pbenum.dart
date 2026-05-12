@@ -19,14 +19,17 @@ class GrantType extends $pb.ProtobufEnum {
       GrantType._(0, _omitEnumNames ? '' : 'GrantType_Unset');
   static const GrantType GrantType_Resource =
       GrantType._(1, _omitEnumNames ? '' : 'GrantType_Resource');
+  static const GrantType GrantType_Xp =
+      GrantType._(2, _omitEnumNames ? '' : 'GrantType_Xp');
 
   static const $core.List<GrantType> values = <GrantType>[
     GrantType_Unset,
     GrantType_Resource,
+    GrantType_Xp,
   ];
 
   static final $core.List<GrantType?> _byValue =
-      $pb.ProtobufEnum.$_initByValueList(values, 1);
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
   static GrantType? valueOf($core.int value) =>
       value < 0 || value >= _byValue.length ? null : _byValue[value];
 

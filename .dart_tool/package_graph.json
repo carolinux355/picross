@@ -14,6 +14,7 @@
         "path_provider",
         "protobuf",
         "provider",
+        "restart_app",
         "shared_preferences",
         "vector_math"
       ],
@@ -1002,6 +1003,15 @@
       "dependencies": [
         "collection",
         "hooks"
+      ]
+    },
+    {
+      "name": "restart_app",
+      "version": "1.8.3",
+      "dependencies": [
+        "flutter",
+        "flutter_web_plugins",
+        "web"
       ]
     }
   ],
