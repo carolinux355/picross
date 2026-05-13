@@ -13,6 +13,8 @@
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
+import 'package:protobuf/well_known_types/google/protobuf/duration.pb.dart'
+    as $0;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
@@ -22,6 +24,7 @@ class TuningComponent extends $pb.GeneratedMessage {
     $core.Iterable<$core.String>? inventoryResources,
     $core.String? playerLevelCurveId,
     $core.String? xpResourceId,
+    $0.Duration? lifeRefillDuration,
   }) {
     final result = create();
     if (worldIds != null) result.worldIds.addAll(worldIds);
@@ -30,6 +33,8 @@ class TuningComponent extends $pb.GeneratedMessage {
     if (playerLevelCurveId != null)
       result.playerLevelCurveId = playerLevelCurveId;
     if (xpResourceId != null) result.xpResourceId = xpResourceId;
+    if (lifeRefillDuration != null)
+      result.lifeRefillDuration = lifeRefillDuration;
     return result;
   }
 
@@ -49,6 +54,8 @@ class TuningComponent extends $pb.GeneratedMessage {
     ..pPS(2, _omitFieldNames ? '' : 'inventoryResources')
     ..aOS(3, _omitFieldNames ? '' : 'playerLevelCurveId')
     ..aOS(4, _omitFieldNames ? '' : 'xpResourceId')
+    ..aOM<$0.Duration>(5, _omitFieldNames ? '' : 'lifeRefillDuration',
+        subBuilder: $0.Duration.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -93,6 +100,17 @@ class TuningComponent extends $pb.GeneratedMessage {
   $core.bool hasXpResourceId() => $_has(3);
   @$pb.TagNumber(4)
   void clearXpResourceId() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $0.Duration get lifeRefillDuration => $_getN(4);
+  @$pb.TagNumber(5)
+  set lifeRefillDuration($0.Duration value) => $_setField(5, value);
+  @$pb.TagNumber(5)
+  $core.bool hasLifeRefillDuration() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearLifeRefillDuration() => $_clearField(5);
+  @$pb.TagNumber(5)
+  $0.Duration ensureLifeRefillDuration() => $_ensure(4);
 }
 
 const $core.bool _omitFieldNames =

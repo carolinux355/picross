@@ -34,6 +34,10 @@ class GrantManager extends BaseManager {
         gameStateManager.gameState.xp += grant.amount;
         playerLevelManager.onXpGranted();
         return true;
+
+      case GrantType.GrantType_MaxLivesIncrease:
+        gameStateManager.gameState.playerLives.maxLives += grant.amount;
+        return true;
     
     }
 

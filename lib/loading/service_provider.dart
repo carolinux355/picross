@@ -7,6 +7,7 @@ import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/inventory/inventory_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/player_level/player_level_manager.dart';
+import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:basic/requirements/requirement_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
@@ -31,6 +32,7 @@ class ServiceProvider {
     _registerManager(context.read<GrantManager>());
     _registerManager(context.read<RequirementManager>());
     _registerManager(context.read<PlayerLevelManager>());
+    _registerManager(context.read<PlayerLivesManager>());
 
     // sort managers to initialize in order of dependencies (need to check for circular dependencies)
     _initializationOrder.clear();
@@ -81,6 +83,8 @@ class ServiceProvider {
 
     await Future.delayed(Duration(seconds: 1));
     isLoading = false;
+
+    context.read<GameStateManager>().save();
   }
 
   void _registerManager(BaseManager manager) {

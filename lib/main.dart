@@ -11,6 +11,7 @@ import 'package:basic/inventory/inventory_manager.dart';
 import 'package:basic/loading/service_provider.dart';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/player_level/player_level_manager.dart';
+import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:basic/requirements/requirement_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider(create: (context) => GrantManager()),
               ChangeNotifierProvider(create: (context) => RequirementManager()),
               ChangeNotifierProvider(create: (context) => PlayerLevelManager()),
+              ChangeNotifierProvider(create: (context) => PlayerLivesManager()),
               Provider(create: (context) => ServiceProvider()),
               ProxyProvider2<AppLifecycleStateNotifier,SettingsController,AudioController>(
                 create: (context) => AudioController(),

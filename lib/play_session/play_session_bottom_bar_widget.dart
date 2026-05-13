@@ -5,6 +5,7 @@
 //import 'package:basic/style/my_button.dart';
 import 'package:basic/game_internals/level_state.dart';
 import 'package:basic/play_session/play_session_screen.dart';
+import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //import 'package:go_router/go_router.dart';
@@ -57,10 +58,11 @@ class PlayerLivesCounterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PlayerLivesManager playerLivesManager = context.watch<PlayerLivesManager>();
     return Row(
       spacing: 10,
       children: [
-        for(int i = 0; i < levelState.playerLives; i++)
+        for(int i = 0; i < playerLivesManager.getMaxLives(); i++)
           Icon(
             Icons.circle, 
             color: levelState.getLivesRemaining() > i ? Colors.blue : Colors.red,)

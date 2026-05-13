@@ -302,7 +302,6 @@ class HorizontalBombCountClueEntry extends StatelessWidget {
                   )
                 ],
               ),
-              
             ],
           ),
         ),
@@ -325,7 +324,6 @@ class VerticalClueWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary, fontSize: 18);
-    //var warningTextTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary, fontSize: 12);
 
     return Container(
       color: theme.colorScheme.tertiary,
@@ -345,13 +343,6 @@ class VerticalClueWidget extends StatelessWidget {
                     Text(clue.toString(), textAlign: TextAlign.center, style: textTheme),
                 ],
               ),
-              /*Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(Icons.warning, size: warningTextTheme?.fontSize ?? 12, color: Colors.red,),
-                  Text(clueData.bombCount.toString(), style: warningTextTheme)
-                ],
-              )*/
             ],
           ),
         ),
@@ -382,14 +373,36 @@ class PicrossCell extends StatefulWidget {
   State<PicrossCell> createState() => _PicrossCellState();
 }
 
-class _PicrossCellState extends State<PicrossCell> {
+class _PicrossCellState extends State<PicrossCell> with SingleTickerProviderStateMixin {
 
   final Logger logger = Logger('PicrossCellState');
-  bool didReceiveDrag = false;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+  bool _didReveal = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: Duration(milliseconds: 300),
+      vsync: this
+    );
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutSine));
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Theme.of(context);
+    int index = widget.row * widget.level.size.x + widget.column;
+    if (!_didReveal && widget.levelState.revealedTiles.contains(index)) {
+      _didReveal = true;
+      _animationController.forward();
+    }
 
     return Container(
       color: Colors.grey,
@@ -398,40 +411,54 @@ class _PicrossCellState extends State<PicrossCell> {
           width: widget.cellSize,
           height: widget.cellSize,
           margin: const EdgeInsets.all(1),
-          child: _drawTile(context, widget.level, widget.levelState, widget.cellSize),
-        ),
-    );
-
-    /*return Stack(
-      children: [
-        DragTarget<int>(
-          onWillAcceptWithDetails: (x) => _onDragReceived(x),
-          builder: (context, x, y) => Container(
-            color: Colors.grey,
-            child: 
-              Container(
-                width: widget.cellSize,
-                height: widget.cellSize,
-                margin: const EdgeInsets.all(1),
-                child: _drawTile(context, widget.level, widget.levelState, widget.cellSize),
-              ),
+          child: AnimatedBuilder(
+            animation: _animation, 
+            builder: (context, child) {
+              return Transform(
+                transform: Matrix4.rotationY(_animation.value * pi),
+                alignment: Alignment.center,
+                child: _animation.value < 0.5 ? _drawHiddenState(context, widget.level, widget.levelState, widget.cellSize) :
+                  _drawRevealedState(context, widget.level, widget.levelState, widget.cellSize)
+              );
+            }
           ),
         ),
-        Draggable<int>(
-          data: widget.row,
-          dragAnchorStrategy: pointerDragAnchorStrategy,
-          feedback: Container(width: 30, height: 30, color:Colors.grey),
-          onDragStarted: () => _onTap(context),
-          onDragUpdate: (x) => _onDragUpdate(context, x),
-          child: Container(width: widget.cellSize, height: widget.cellSize, color: Colors.transparent),
-        ),
-      ]
-    );*/
+    );
   }
 
-  Widget _drawTile(BuildContext context, GameLevel level, LevelState levelState, double cellSize) {
+  Widget _drawHiddenState(BuildContext context, GameLevel level, LevelState levelState, double cellSize) {
     var theme = Theme.of(context);
+    int index = widget.row * level.size.x + widget.column;
 
+    if (levelState.isTileMarked(index)) {
+        // draw marked state
+        return Container(
+          width: cellSize,
+          height: cellSize,
+          color: theme.colorScheme.secondary,
+          child: Icon(Icons.flag),
+        );
+      }
+
+    // draw disabled tiles
+    if (levelState.disabledTiles.contains(index)) {
+      return Container(
+          width: cellSize,
+          height: cellSize,
+          color: Colors.blueGrey,
+          child: const Icon(Icons.done, color: Colors.white,),
+        );
+    }
+      
+    // draw hidden state
+    return Container(
+      width: cellSize,
+      height: cellSize,
+      color: theme.colorScheme.inversePrimary,
+      child: Icon(Icons.help),);
+  }
+
+  Widget _drawRevealedState(BuildContext context, GameLevel level, LevelState levelState, double cellSize) {
     int index = widget.row * level.size.x + widget.column;
 
     // draw bombs
@@ -466,23 +493,7 @@ class _PicrossCellState extends State<PicrossCell> {
         color: level.tiles[index] > 0 ? Colors.black : Colors.white
       );
     }
-    else {
-      if (levelState.isTileMarked(index)) {
-        // draw marked state
-        return Container(
-          width: cellSize,
-          height: cellSize,
-          color: theme.colorScheme.secondary,
-          child: Icon(Icons.flag),
-        );
-      }
-      
-      // draw hidden state
-      return Container(
-        width: cellSize,
-        height: cellSize,
-        color: theme.colorScheme.inversePrimary,
-        child: Icon(Icons.help),);
-    }
+
+    return _drawHiddenState(context, level, levelState, cellSize);
   }
 }

@@ -35,6 +35,14 @@ const TuningComponent$json = {
       '10': 'playerLevelCurveId'
     },
     {'1': 'xp_resource_id', '3': 4, '4': 1, '5': 9, '10': 'xpResourceId'},
+    {
+      '1': 'life_refill_duration',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.Duration',
+      '10': 'lifeRefillDuration'
+    },
   ],
 };
 
@@ -43,4 +51,5 @@ final $typed_data.Uint8List tuningComponentDescriptor = $convert.base64Decode(
     'Cg9UdW5pbmdDb21wb25lbnQSGwoJd29ybGRfaWRzGAEgAygJUgh3b3JsZElkcxIvChNpbnZlbn'
     'RvcnlfcmVzb3VyY2VzGAIgAygJUhJpbnZlbnRvcnlSZXNvdXJjZXMSMQoVcGxheWVyX2xldmVs'
     'X2N1cnZlX2lkGAMgASgJUhJwbGF5ZXJMZXZlbEN1cnZlSWQSJAoOeHBfcmVzb3VyY2VfaWQYBC'
-    'ABKAlSDHhwUmVzb3VyY2VJZA==');
+    'ABKAlSDHhwUmVzb3VyY2VJZBJLChRsaWZlX3JlZmlsbF9kdXJhdGlvbhgFIAEoCzIZLmdvb2ds'
+    'ZS5wcm90b2J1Zi5EdXJhdGlvblISbGlmZVJlZmlsbER1cmF0aW9u');

@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 //import "Configuration/Utils.proto";
+import "google/protobuf/duration.proto";
 
 message TuningComponent
 {
@@ -8,4 +9,5 @@ message TuningComponent
 	repeated string inventory_resources = 2;
 	string player_level_curve_id = 3;
 	string xp_resource_id = 4;
+	google.protobuf.Duration life_refill_duration = 5;
 }

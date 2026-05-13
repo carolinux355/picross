@@ -1,13 +1,10 @@
-// Copyright 2022, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/game_internals/score.dart';
 import 'package:basic/generated/configuration/Grant.pb.dart';
 import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/level_selection/levels.dart';
 import 'package:basic/persistence/game_state_manager.dart';
+import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:basic/settings/settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +17,11 @@ class LevelState extends ChangeNotifier {
   final Function(LevelCompleteState) onWin;
   final VoidCallback onLose;
   final GameLevel level;
-  final int playerLives;
   final SettingsController settingsController;
   final GrantManager grantManager;
   final GameStateManager gameStateManager;
   final GameDataManager gameDataManager;
+  final PlayerLivesManager playerLivesManager;
 
   final Logger logger = Logger('LevelState');
 
@@ -32,11 +29,11 @@ class LevelState extends ChangeNotifier {
     required this.level, 
     required this.onWin, 
     required this.onLose, 
-    required this.playerLives, 
     required this.settingsController, 
     required this.grantManager, 
     required this.gameStateManager, 
-    required this.gameDataManager
+    required this.gameDataManager,
+    required this.playerLivesManager
   }) {
     _initialize();
   }
@@ -44,7 +41,6 @@ class LevelState extends ChangeNotifier {
   late DateTime _startOfPlay;
   final List<int> revealedTiles = [];
   final Map<int, bool> _markedTiles = {};
-  int _bombsRevealedCount = 0;
   final List<int> disabledTiles = [];
   List<Grant> pendingRewards = [];
 
@@ -79,7 +75,7 @@ class LevelState extends ChangeNotifier {
   }
 
   int getLivesRemaining() {
-    return playerLives - _bombsRevealedCount;
+    return playerLivesManager.getLives();
   }
 
   void _grantPendingRewards(int index) {
@@ -97,18 +93,16 @@ class LevelState extends ChangeNotifier {
 
   void _updateBombCounter(int index) {
     if (level.bombs.contains(index)) {
-      _bombsRevealedCount++;
+      // take away a player life
+      playerLivesManager.removeLives(1);
     }
   }
 
   void _checkLose() {
-    // check if bomb count surpassed player's lives count
-    if (_bombsRevealedCount < playerLives) {
-      return;
+    // check if player out of lives
+    if (playerLivesManager.getLives() <= 0) {
+      onLose();
     }
-    
-    // lose if all bombs revealed
-    onLose();
   }
 
   void _checkWin() {

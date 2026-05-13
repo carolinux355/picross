@@ -22,13 +22,14 @@ const GrantType$json = {
     {'1': 'GrantType_Unset', '2': 0},
     {'1': 'GrantType_Resource', '2': 1},
     {'1': 'GrantType_Xp', '2': 2},
+    {'1': 'GrantType_MaxLivesIncrease', '2': 3},
   ],
 };
 
 /// Descriptor for `GrantType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List grantTypeDescriptor = $convert.base64Decode(
     'CglHcmFudFR5cGUSEwoPR3JhbnRUeXBlX1Vuc2V0EAASFgoSR3JhbnRUeXBlX1Jlc291cmNlEA'
-    'ESEAoMR3JhbnRUeXBlX1hwEAI=');
+    'ESEAoMR3JhbnRUeXBlX1hwEAISHgoaR3JhbnRUeXBlX01heExpdmVzSW5jcmVhc2UQAw==');
 
 @$core.Deprecated('Use grantDescriptor instead')
 const Grant$json = {

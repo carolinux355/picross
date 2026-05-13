@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+message PlayerLivesState
+{
+	int32 num_lives = 1;
+	google.protobuf.Timestamp last_refill_time = 2;
+	int32 max_lives = 3;
+}

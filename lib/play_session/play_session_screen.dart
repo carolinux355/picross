@@ -9,6 +9,7 @@ import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/play_session/play_session_bottom_bar_widget.dart';
 import 'package:basic/play_session/play_session_top_bar_widget.dart';
+import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:basic/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -64,6 +65,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
     final grantManager = context.watch<GrantManager>();
     final gameStateManager = context.watch<GameStateManager>();
     final gameDataManager = context.watch<GameDataManager>();
+    final playerLivesManager = context.watch<PlayerLivesManager>();
 
     return MultiProvider(
       providers: [
@@ -76,7 +78,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
                 level: widget.level, 
                 onWin: _playerWon, 
                 onLose: _playerLost, 
-                playerLives: 3, 
+                playerLivesManager: playerLivesManager, 
                 settingsController: settingsController, 
                 grantManager: grantManager,
                 gameStateManager: gameStateManager,

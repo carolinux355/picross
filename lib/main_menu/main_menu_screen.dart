@@ -2,8 +2,9 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:basic/main_menu/xp_widget.dart';
 import 'package:basic/main_menu/main_scene.dart';
+import 'package:basic/shared_widgets/player_lives_widget.dart';
+import 'package:basic/shared_widgets/xp_widget.dart';
 import 'package:basic/style/responsive_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -48,12 +49,11 @@ class MainMenuScreenTopHUD extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Container(
-      child: Row(
-        children:[
-          XPWidget()
-        ]
-      ),
+    return Row(
+      children:[
+        XPWidget(),
+        PlayerLivesWidget()
+      ]
     );
   }
 }
@@ -156,21 +156,19 @@ class MainMenuScreenRightHUD extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children:[ 
-          MyButton(
-            onPressed: () => GoRouter.of(context).push('/inventory'),
-            child: const Text('Inventory'),
-          ),
-          _gap,
-          MyButton(
-            onPressed: () => GoRouter.of(context).push('/settings'),
-            child: const Text('Settings'),
-          ),
-        ]
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children:[ 
+        MyButton(
+          onPressed: () => GoRouter.of(context).push('/inventory'),
+          child: const Text('Inventory'),
+        ),
+        _gap,
+        MyButton(
+          onPressed: () => GoRouter.of(context).push('/settings'),
+          child: const Text('Settings'),
+        ),
+      ]
     );
   }
 

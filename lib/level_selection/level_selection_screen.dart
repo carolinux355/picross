@@ -3,7 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:basic/configuration/game_data_manager.dart';
-import 'package:basic/constants.dart';
+import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:basic/requirements/requirement_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -22,7 +22,7 @@ class LevelSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
     final gameData = context.read<GameDataManager>();
-    final tuningData = gameData.getData(Constants.TUNING_CONFIG_ID)!.components.tuning;
+    final tuningData = gameData.getTuning();
 
     return Scaffold(
       backgroundColor: palette.backgroundLevelSelection,
@@ -75,14 +75,16 @@ class LevelSelectionWorldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var gameDataManager = context.watch<GameDataManager>();
     var requirementManager = context.watch<RequirementManager>();
+    var playerLivesManager = context.watch<PlayerLivesManager>();
     var worldConfig = gameDataManager.getData(worldId);
     bool isUnlocked = requirementManager.evaluateList(worldConfig!.components.feature.unlock);
+    bool hasLives = playerLivesManager.getLives() > 0;
 
     return ListTile(
       enabled:
           true,
       onTap: () {
-        if (isUnlocked) {
+        if (isUnlocked && hasLives) {
           final audioController = context.read<AudioController>();
           audioController.playSfx(SfxType.buttonTap);
       
