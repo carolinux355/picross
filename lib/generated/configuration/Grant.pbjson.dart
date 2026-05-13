@@ -23,13 +23,15 @@ const GrantType$json = {
     {'1': 'GrantType_Resource', '2': 1},
     {'1': 'GrantType_Xp', '2': 2},
     {'1': 'GrantType_MaxLivesIncrease', '2': 3},
+    {'1': 'GrantType_LootTable', '2': 4},
   ],
 };
 
 /// Descriptor for `GrantType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List grantTypeDescriptor = $convert.base64Decode(
     'CglHcmFudFR5cGUSEwoPR3JhbnRUeXBlX1Vuc2V0EAASFgoSR3JhbnRUeXBlX1Jlc291cmNlEA'
-    'ESEAoMR3JhbnRUeXBlX1hwEAISHgoaR3JhbnRUeXBlX01heExpdmVzSW5jcmVhc2UQAw==');
+    'ESEAoMR3JhbnRUeXBlX1hwEAISHgoaR3JhbnRUeXBlX01heExpdmVzSW5jcmVhc2UQAxIXChNH'
+    'cmFudFR5cGVfTG9vdFRhYmxlEAQ=');
 
 @$core.Deprecated('Use grantDescriptor instead')
 const Grant$json = {
@@ -38,10 +40,19 @@ const Grant$json = {
     {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.GrantType', '10': 'type'},
     {'1': 'id', '3': 2, '4': 1, '5': 9, '10': 'id'},
     {'1': 'amount', '3': 3, '4': 1, '5': 5, '10': 'amount'},
+    {
+      '1': 'requirements',
+      '3': 4,
+      '4': 3,
+      '5': 11,
+      '6': '.Requirement',
+      '10': 'requirements'
+    },
   ],
 };
 
 /// Descriptor for `Grant`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List grantDescriptor = $convert.base64Decode(
     'CgVHcmFudBIeCgR0eXBlGAEgASgOMgouR3JhbnRUeXBlUgR0eXBlEg4KAmlkGAIgASgJUgJpZB'
-    'IWCgZhbW91bnQYAyABKAVSBmFtb3VudA==');
+    'IWCgZhbW91bnQYAyABKAVSBmFtb3VudBIwCgxyZXF1aXJlbWVudHMYBCADKAsyDC5SZXF1aXJl'
+    'bWVudFIMcmVxdWlyZW1lbnRz');

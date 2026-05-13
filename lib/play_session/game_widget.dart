@@ -430,24 +430,24 @@ class _PicrossCellState extends State<PicrossCell> with SingleTickerProviderStat
     var theme = Theme.of(context);
     int index = widget.row * level.size.x + widget.column;
 
-    if (levelState.isTileMarked(index)) {
-        // draw marked state
-        return Container(
-          width: cellSize,
-          height: cellSize,
-          color: theme.colorScheme.secondary,
-          child: Icon(Icons.flag),
-        );
-      }
-
     // draw disabled tiles
     if (levelState.disabledTiles.contains(index)) {
       return Container(
-          width: cellSize,
-          height: cellSize,
-          color: Colors.blueGrey,
-          child: const Icon(Icons.done, color: Colors.white,),
-        );
+        width: cellSize,
+        height: cellSize,
+        color: Colors.blueGrey,
+        child: const Icon(Icons.done, color: Colors.white,),
+      );
+    }
+
+    if (levelState.isTileMarked(index)) {
+      // draw marked state
+      return Container(
+        width: cellSize,
+        height: cellSize,
+        color: theme.colorScheme.secondary,
+        child: Icon(Icons.flag),
+      );
     }
       
     // draw hidden state

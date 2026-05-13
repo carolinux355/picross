@@ -67,6 +67,22 @@ const ComponentSet$json = {
       '6': '.FeatureComponent',
       '10': 'feature'
     },
+    {
+      '1': 'loot_table',
+      '3': 7,
+      '4': 1,
+      '5': 11,
+      '6': '.LootTableComponent',
+      '10': 'lootTable'
+    },
+    {
+      '1': 'world',
+      '3': 8,
+      '4': 1,
+      '5': 11,
+      '6': '.WorldComponent',
+      '10': 'world'
+    },
   ],
 };
 
@@ -77,4 +93,6 @@ final $typed_data.Uint8List componentSetDescriptor = $convert.base64Decode(
     'bXBvbmVudFIGdHVuaW5nEi4KCHJlc291cmNlGAMgASgLMhIuUmVzb3VyY2VDb21wb25lbnRSCH'
     'Jlc291cmNlEiUKBWFzc2V0GAQgASgLMg8uQXNzZXRDb21wb25lbnRSBWFzc2V0EkgKEnBsYXll'
     'cl9sZXZlbF9jdXJ2ZRgFIAEoCzIaLlBsYXllckxldmVsQ3VydmVDb21wb25lbnRSEHBsYXllck'
-    'xldmVsQ3VydmUSKwoHZmVhdHVyZRgGIAEoCzIRLkZlYXR1cmVDb21wb25lbnRSB2ZlYXR1cmU=');
+    'xldmVsQ3VydmUSKwoHZmVhdHVyZRgGIAEoCzIRLkZlYXR1cmVDb21wb25lbnRSB2ZlYXR1cmUS'
+    'MgoKbG9vdF90YWJsZRgHIAEoCzITLkxvb3RUYWJsZUNvbXBvbmVudFIJbG9vdFRhYmxlEiUKBX'
+    'dvcmxkGAggASgLMg8uV29ybGRDb21wb25lbnRSBXdvcmxk');

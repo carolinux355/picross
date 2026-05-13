@@ -42,6 +42,7 @@ flutter:
     - assets/data/configuration/world/
     - assets/data/configuration/resources/
     - assets/data/configuration/player_level_curves/
+    - assets/data/configuration/loot_tables/
 
   fonts:
     - family: Permanent Marker

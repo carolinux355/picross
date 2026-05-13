@@ -1,6 +1,9 @@
 {
 	"id": "world_01",
 	"components": {
+		"world": {
+			"loot_table_id": "loot_table_world_01"
+		},
 		"level_difficulty": {
 			"size_range": {
 				"min": 4,

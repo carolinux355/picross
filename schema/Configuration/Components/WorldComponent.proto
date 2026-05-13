@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message WorldComponent
+{
+	string loot_table_id = 1;
+}

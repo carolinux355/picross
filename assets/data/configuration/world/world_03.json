@@ -1,6 +1,9 @@
 {
 	"id": "world_03",
 	"components": {
+		"world": {
+			"loot_table_id": "loot_table_world_01"
+		},
 		"feature": {
 			"unlock": [
 				{

@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+import "Configuration/Grant.proto";
+
+message LootTableComponent
+{
+	repeated LootTableRoll rolls = 1;
+}
+
+message LootTableRoll
+{
+	LootTableType type = 1;
+	repeated LootTableOutcome outcomes = 2;
+}
+
+enum LootTableType
+{
+	LootTableType_Unset = 0;
+	LootTableType_WeightedRoll = 1; // select one from set with weighted roll
+	LootTableType_PercentChance = 2; // flip weighted coin for each item in set
+}
+
+message LootTableOutcome
+{
+	repeated Grant grants = 1;
+	int32 weight = 2;
+	float percent_chance = 3;
+}

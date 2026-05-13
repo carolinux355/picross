@@ -1,7 +1,7 @@
-import 'dart:math';
 
 import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/game_internals/level_generator.dart';
+import 'package:basic/loot_tables/loot_table_manager.dart';
 import 'package:basic/style/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -28,14 +28,10 @@ class _LevelGenerationLoadingScreen extends State<LevelGenerationLoadingScreen> 
   Widget build(BuildContext context) {
     var palette = context.watch<Palette>();
     var gameData = context.watch<GameDataManager>();
+    var lootTableManager = context.watch<LootTableManager>();
     var levelGenerator = context.watch<LevelGenerator>();
-    final random = Random();
-
-    var difficultyConfig = gameData.getData(widget.worldId)!.components.levelDifficulty;
-    int sizeX = random.nextInt(difficultyConfig.sizeRange.max - difficultyConfig.sizeRange.min) + difficultyConfig.sizeRange.min;
-    int sizeY = random.nextInt(difficultyConfig.sizeRange.max - difficultyConfig.sizeRange.min) + difficultyConfig.sizeRange.min;
-    int difficulty = random.nextInt(difficultyConfig.difficultyRange.max - difficultyConfig.difficultyRange.min) + difficultyConfig.difficultyRange.min;
-    var generatedLevel = levelGenerator.generateLevel(width: sizeX, height: sizeY, difficulty: difficulty, worldId: widget.worldId);
+    
+    var generatedLevel = levelGenerator.generateLevel(gameDataManager: gameData, lootTableManager: lootTableManager, worldId: widget.worldId);
 
     var goRouter = GoRouter.of(context);
     generatedLevel.then((result) {

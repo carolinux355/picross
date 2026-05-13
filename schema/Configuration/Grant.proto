@@ -1,10 +1,13 @@
 syntax = "proto3";
 
+import "Configuration/Requirement.proto";
+
 message Grant
 {
 	GrantType type = 1;
 	string id = 2;
 	int32 amount = 3;
+	repeated Requirement requirements = 4;
 }
 
 enum GrantType
@@ -13,4 +16,5 @@ enum GrantType
 	GrantType_Resource = 1;
 	GrantType_Xp = 2;
 	GrantType_MaxLivesIncrease = 3;
+	GrantType_LootTable = 4;
 }

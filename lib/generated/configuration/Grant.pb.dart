@@ -15,6 +15,7 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'Grant.pbenum.dart';
+import 'Requirement.pb.dart' as $0;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
@@ -25,11 +26,13 @@ class Grant extends $pb.GeneratedMessage {
     GrantType? type,
     $core.String? id,
     $core.int? amount,
+    $core.Iterable<$0.Requirement>? requirements,
   }) {
     final result = create();
     if (type != null) result.type = type;
     if (id != null) result.id = id;
     if (amount != null) result.amount = amount;
+    if (requirements != null) result.requirements.addAll(requirements);
     return result;
   }
 
@@ -49,6 +52,8 @@ class Grant extends $pb.GeneratedMessage {
         enumValues: GrantType.values)
     ..aOS(2, _omitFieldNames ? '' : 'id')
     ..aI(3, _omitFieldNames ? '' : 'amount')
+    ..pPM<$0.Requirement>(4, _omitFieldNames ? '' : 'requirements',
+        subBuilder: $0.Requirement.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -95,6 +100,9 @@ class Grant extends $pb.GeneratedMessage {
   $core.bool hasAmount() => $_has(2);
   @$pb.TagNumber(3)
   void clearAmount() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $pb.PbList<$0.Requirement> get requirements => $_getList(3);
 }
 
 const $core.bool _omitFieldNames =

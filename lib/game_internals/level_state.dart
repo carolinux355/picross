@@ -82,6 +82,11 @@ class LevelState extends ChangeNotifier {
     // todo: persist and save in case game crashes
     if (level.rewards.containsKey(index)) {
       pendingRewards.addAll(level.rewards[index]!);
+
+      // logging
+      for (var reward in level.rewards[index]!){
+        logger.info('found reward ${reward.id}:${reward.amount} at index $index');
+      }
     }
   }
 

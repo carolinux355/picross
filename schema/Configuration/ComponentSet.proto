@@ -6,6 +6,8 @@ import "Configuration/Components/ResourceComponent.proto";
 import "Configuration/Components/AssetComponent.proto";
 import "Configuration/Components/PlayerLevelCurveComponent.proto";
 import "Configuration/Components/FeatureComponent.proto";
+import "Configuration/Components/LootTableComponent.proto";
+import "Configuration/Components/WorldComponent.proto";
 
 message ComponentSet
 {
@@ -15,4 +17,6 @@ message ComponentSet
 	AssetComponent asset = 4;
 	PlayerLevelCurveComponent player_level_curve = 5;
 	FeatureComponent feature = 6;
+	LootTableComponent loot_table = 7;
+	WorldComponent world = 8;
 }

@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/generated/configuration/Grant.pb.dart';
 import 'package:basic/level_selection/levels.dart';
+import 'package:basic/loot_tables/loot_table_manager.dart';
 import 'package:basic/math/constant_vector.dart';
 import 'package:logging/logging.dart';
 
@@ -10,9 +12,17 @@ class LevelGenerator {
 
   LevelGenerator();
 
-  Future<GameLevel> generateLevel({required int width, required int height, required int difficulty, required String worldId}) async {
+  Future<GameLevel> generateLevel({required GameDataManager gameDataManager, required LootTableManager lootTableManager, required String worldId}) async {
     
     final log = Logger('LevelGenerator');
+    final random = Random();
+
+    var worldData = gameDataManager.getData(worldId);
+    var difficultyConfig = worldData!.components.levelDifficulty;
+    int width = random.nextInt(difficultyConfig.sizeRange.max - difficultyConfig.sizeRange.min) + difficultyConfig.sizeRange.min;
+    int height = random.nextInt(difficultyConfig.sizeRange.max - difficultyConfig.sizeRange.min) + difficultyConfig.sizeRange.min;
+    int difficulty = random.nextInt(difficultyConfig.difficultyRange.max - difficultyConfig.difficultyRange.min) + difficultyConfig.difficultyRange.min;
+
     assert(difficulty >= 0 && difficulty <= 100);
 
     // favor taller levels over wider ones since we're assuming portrait mode on a phone
@@ -44,14 +54,10 @@ class LevelGenerator {
       bombs.add(index);
     }
 
+    var lootTable = gameDataManager.getData(worldData.components.world.lootTableId)!.components.lootTable;
     for(int index in filledTiles) {
       rewards[index] ??= [];
-      // todo: replace with loot table logic that scales with difficulty/world
-      rewards[index]!.add(Grant(
-        type: GrantType.GrantType_Resource,
-        id: 'resource_coin', 
-        amount: 1
-      ));
+      rewards[index]!.addAll(lootTableManager.execute(lootTable));
     }
 
     var level = GameLevel(

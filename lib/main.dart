@@ -9,6 +9,7 @@ import 'package:basic/game_internals/level_generator.dart';
 import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/inventory/inventory_manager.dart';
 import 'package:basic/loading/service_provider.dart';
+import 'package:basic/loot_tables/loot_table_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/player_level/player_level_manager.dart';
 import 'package:basic/player_lives/player_lives_manager.dart';
@@ -75,6 +76,7 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider(create: (context) => RequirementManager()),
               ChangeNotifierProvider(create: (context) => PlayerLevelManager()),
               ChangeNotifierProvider(create: (context) => PlayerLivesManager()),
+              ChangeNotifierProvider(create: (context) => LootTableManager()),
               Provider(create: (context) => ServiceProvider()),
               ProxyProvider2<AppLifecycleStateNotifier,SettingsController,AudioController>(
                 create: (context) => AudioController(),

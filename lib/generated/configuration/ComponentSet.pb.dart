@@ -17,9 +17,11 @@ import 'package:protobuf/protobuf.dart' as $pb;
 import 'Components/AssetComponent.pb.dart' as $3;
 import 'Components/FeatureComponent.pb.dart' as $5;
 import 'Components/LevelDifficultyComponent.pb.dart' as $0;
+import 'Components/LootTableComponent.pb.dart' as $6;
 import 'Components/PlayerLevelCurveComponent.pb.dart' as $4;
 import 'Components/ResourceComponent.pb.dart' as $2;
 import 'Components/TuningComponent.pb.dart' as $1;
+import 'Components/WorldComponent.pb.dart' as $7;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
@@ -31,6 +33,8 @@ class ComponentSet extends $pb.GeneratedMessage {
     $3.AssetComponent? asset,
     $4.PlayerLevelCurveComponent? playerLevelCurve,
     $5.FeatureComponent? feature,
+    $6.LootTableComponent? lootTable,
+    $7.WorldComponent? world,
   }) {
     final result = create();
     if (levelDifficulty != null) result.levelDifficulty = levelDifficulty;
@@ -39,6 +43,8 @@ class ComponentSet extends $pb.GeneratedMessage {
     if (asset != null) result.asset = asset;
     if (playerLevelCurve != null) result.playerLevelCurve = playerLevelCurve;
     if (feature != null) result.feature = feature;
+    if (lootTable != null) result.lootTable = lootTable;
+    if (world != null) result.world = world;
     return result;
   }
 
@@ -68,6 +74,10 @@ class ComponentSet extends $pb.GeneratedMessage {
         subBuilder: $4.PlayerLevelCurveComponent.create)
     ..aOM<$5.FeatureComponent>(6, _omitFieldNames ? '' : 'feature',
         subBuilder: $5.FeatureComponent.create)
+    ..aOM<$6.LootTableComponent>(7, _omitFieldNames ? '' : 'lootTable',
+        subBuilder: $6.LootTableComponent.create)
+    ..aOM<$7.WorldComponent>(8, _omitFieldNames ? '' : 'world',
+        subBuilder: $7.WorldComponent.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -156,6 +166,28 @@ class ComponentSet extends $pb.GeneratedMessage {
   void clearFeature() => $_clearField(6);
   @$pb.TagNumber(6)
   $5.FeatureComponent ensureFeature() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  $6.LootTableComponent get lootTable => $_getN(6);
+  @$pb.TagNumber(7)
+  set lootTable($6.LootTableComponent value) => $_setField(7, value);
+  @$pb.TagNumber(7)
+  $core.bool hasLootTable() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearLootTable() => $_clearField(7);
+  @$pb.TagNumber(7)
+  $6.LootTableComponent ensureLootTable() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  $7.WorldComponent get world => $_getN(7);
+  @$pb.TagNumber(8)
+  set world($7.WorldComponent value) => $_setField(8, value);
+  @$pb.TagNumber(8)
+  $core.bool hasWorld() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearWorld() => $_clearField(8);
+  @$pb.TagNumber(8)
+  $7.WorldComponent ensureWorld() => $_ensure(7);
 }
 
 const $core.bool _omitFieldNames =
