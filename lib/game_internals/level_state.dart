@@ -78,6 +78,13 @@ class LevelState extends ChangeNotifier {
     return playerLivesManager.getLives();
   }
 
+  Grant? getRewardPreviewAtIndex(int index) {
+    if (level.rewards.containsKey(index) && level.rewards[index]!.isNotEmpty) {
+      return level.rewards[index]?[0];
+    }
+    return null;
+  }
+
   void _grantPendingRewards(int index) {
     // todo: persist and save in case game crashes
     if (level.rewards.containsKey(index)) {

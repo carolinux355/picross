@@ -88,7 +88,7 @@ class InventoryItemView extends StatelessWidget {
                 bottom: 0,
                 right: 0,
                 child: Text(
-                  '${inventoryManager.getResourceCount(resourceId)}', 
+                  '${resourceId}: ${inventoryManager.getResourceCount(resourceId)}', 
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Permanent Marker',

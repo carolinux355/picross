@@ -8,6 +8,9 @@
 					"type": "LootTableType_WeightedRoll",
 					"outcomes": [
 						{
+							"weight": 20
+						},
+						{
 							"weight": 10,
 							"grants": [
 								{
@@ -22,11 +25,32 @@
 							"grants": [
 								{
 									"type": "GrantType_Resource",
-									"id": "resource_coin",
-									"amount": 10
+									"id": "resource_stone",
+									"amount": 1
+								}
+							]
+						},
+						{
+							"weight": 1,
+							"grants": [
+								{
+									"type": "GrantType_Resource",
+									"id": "resource_wood",
+									"amount": 1
+								}
+							]
+						},
+						{
+							"weight": 1,
+							"grants": [
+								{
+									"type": "GrantType_Resource",
+									"id": "resource_gem_01",
+									"amount": 1
 								}
 							]
 						}
+						
 					]
 				}
 			]

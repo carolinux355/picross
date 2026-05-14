@@ -1,0 +1,9 @@
+{
+	"id": "resource_wood",
+	"components": {
+		"asset": {
+			"sprite": "assets/icons/coin_04.png"
+		},
+		"resource": {}
+	}
+}

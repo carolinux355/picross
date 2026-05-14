@@ -4,6 +4,8 @@
 
 import 'dart:math';
 
+import 'package:basic/configuration/game_data_manager.dart';
+import 'package:basic/generated/configuration/Grant.pb.dart';
 import 'package:basic/play_session/game_gesture_manager.dart';
 import 'package:basic/play_session/play_session_screen.dart';
 import 'package:flutter/material.dart';
@@ -484,16 +486,38 @@ class _PicrossCellState extends State<PicrossCell> with SingleTickerProviderStat
         );
     }
 
+    var grant = levelState.getRewardPreviewAtIndex(index);
     // draw revealed tile
     if (levelState.revealedTiles.contains(index)) {
       // draw revealed tile
       return Container(
         width: cellSize,
         height: cellSize,
-        color: level.tiles[index] > 0 ? Colors.black : Colors.white
+        color: level.tiles[index] > 0 ? const Color.fromARGB(255, 0, 21, 137) : Colors.white,
+        child: grant != null ? PicrossCellRewardPreview(grant: grant, cellSize: cellSize,) : null
       );
     }
 
     return _drawHiddenState(context, level, levelState, cellSize);
+  }
+}
+
+class PicrossCellRewardPreview extends StatelessWidget {
+  const PicrossCellRewardPreview({
+    super.key,
+    required this.grant,
+    required this.cellSize
+  });
+
+  final double cellSize;
+  final Grant grant;
+
+  @override
+  Widget build(BuildContext context) {
+    final gameData = context.read<GameDataManager>();
+    return Padding(
+      padding: EdgeInsetsGeometry.all(cellSize * 0.3),
+      child: Image.asset(gameData.getData(grant.id)!.components.asset.sprite)
+    );
   }
 }
