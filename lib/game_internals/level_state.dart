@@ -89,11 +89,6 @@ class LevelState extends ChangeNotifier {
     // todo: persist and save in case game crashes
     if (level.rewards.containsKey(index)) {
       pendingRewards.addAll(level.rewards[index]!);
-
-      // logging
-      for (var reward in level.rewards[index]!){
-        logger.info('found reward ${reward.id}:${reward.amount} at index $index');
-      }
     }
   }
 
@@ -204,7 +199,6 @@ class LevelState extends ChangeNotifier {
     for (int i = 0; i < level.size.y; i++){
       var tilesToFill = _checkRowForAutofill(i);
       if (tilesToFill != null && tilesToFill.isNotEmpty) {
-        //logger.info('found complete row $i');
         for (var tile in tilesToFill) {
           if (!disabledTiles.contains(tile)) {
             disabledTiles.add(tile);
@@ -216,7 +210,6 @@ class LevelState extends ChangeNotifier {
     for (int i = 0; i < level.size.x; i++){
       var tilesToFill = _checkColumnForAutofill(i);
       if (tilesToFill != null && tilesToFill.isNotEmpty) {
-        //logger.info('found completed column $i');
         for (var tile in tilesToFill) {
           if (!disabledTiles.contains(tile)) {
             disabledTiles.add(tile);

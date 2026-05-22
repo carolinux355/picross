@@ -502,7 +502,7 @@ class _PicrossCellState extends State<PicrossCell> with SingleTickerProviderStat
   }
 }
 
-class PicrossCellRewardPreview extends StatelessWidget {
+class PicrossCellRewardPreview extends StatefulWidget {
   const PicrossCellRewardPreview({
     super.key,
     required this.grant,
@@ -513,11 +513,37 @@ class PicrossCellRewardPreview extends StatelessWidget {
   final Grant grant;
 
   @override
+  State<PicrossCellRewardPreview> createState() => _PicrossCellRewardPreviewState();
+}
+
+class _PicrossCellRewardPreviewState extends State<PicrossCellRewardPreview> with SingleTickerProviderStateMixin {
+
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: Duration(milliseconds: 400),
+      vsync: this
+    );
+    _animation = Tween<double>(begin: 1, end: 0.3).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeOutBack));
+
+    _animationController.forward();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final gameData = context.read<GameDataManager>();
-    return Padding(
-      padding: EdgeInsetsGeometry.all(cellSize * 0.3),
-      child: Image.asset(gameData.getData(grant.id)!.components.asset.sprite)
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, listenable) { 
+        return Padding(
+          padding: EdgeInsetsGeometry.all(widget.cellSize * _animation.value),
+          child: Image.asset(gameData.getData(widget.grant.id)!.components.asset.sprite)
+        );
+      }
     );
   }
 }

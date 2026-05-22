@@ -4,8 +4,11 @@ import 'package:basic/game_internals/base_manager.dart';
 import 'package:basic/generated/configuration/Requirement.pb.dart';
 import 'package:basic/inventory/inventory_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
+import 'package:logging/logging.dart';
 
 class RequirementManager extends BaseManager {
+  
+  Logger logger = Logger('Requirement Manager');
   
   @override
   List<Type> dependencies = [GameDataManager, GameStateManager, InventoryManager];
@@ -21,20 +24,24 @@ class RequirementManager extends BaseManager {
     inventoryManager = managers.firstWhere((m) => m.runtimeType == InventoryManager) as InventoryManager;
   }
 
-  bool evaluate(Requirement requirement) {
+  bool evaluate(Requirement requirement, {ComparisonType defaultComparison = ComparisonType.ComparisonType_Invalid}) {
     int value = _getValue(requirement);
-    return _checkComparison(requirement, value);
+    return _checkComparison(requirement, value, defaultComparison: defaultComparison);
   }
 
-  bool evaluateList(List<Requirement> requirements) {
+  bool evaluateList(List<Requirement> requirements, {ComparisonType defaultComparison = ComparisonType.ComparisonType_Invalid}) {
 
     for (var req in requirements) {
-      if (!evaluate(req)) {
+      if (!evaluate(req, defaultComparison: defaultComparison)) {
         return false;
       }
     }
 
     return true;
+  }
+
+  bool evaluateCosts(List<Requirement> costs) {
+    return evaluateList(costs, defaultComparison: ComparisonType.ComparisonType_GreaterThanOrEqual);
   }
 
   int _getValue(Requirement requirement) {
@@ -52,10 +59,14 @@ class RequirementManager extends BaseManager {
     return 0;
   }
 
-  bool _checkComparison(Requirement requirement, int value) {
-    switch (requirement.comparison) {
+  bool _checkComparison(Requirement requirement, int value, {ComparisonType defaultComparison = ComparisonType.ComparisonType_Invalid}) {
+    ComparisonType comparisonType = requirement.comparison;
+    if (requirement.comparison == ComparisonType.ComparisonType_Invalid && defaultComparison != ComparisonType.ComparisonType_Invalid) {
+      comparisonType = defaultComparison;
+    }
+    switch (comparisonType) {
       case ComparisonType.ComparisonType_Invalid:
-        return false;
+        throw Exception('invalid comparison type!');
 
       case ComparisonType.ComparisonType_Equal:
         return value == requirement.amount;
@@ -73,5 +84,24 @@ class RequirementManager extends BaseManager {
         return value <= requirement.amount;
     }
     return false;
+  }
+
+  bool consumeCost(List<Requirement> requirements) {
+    if (!evaluateCosts(requirements)){
+      return false;
+    }
+
+    for (var requirement in requirements) {
+      _consumeCost(requirement);
+    }
+    return true;
+  }
+
+  void _consumeCost(Requirement requirement) {
+    if (requirement.type != RequirementType.RequirementType_Resource) {
+      throw Exception('Cannot consume non-resource requirement ${requirement.type}:${requirement.id}:${requirement.amount}!');
+    }
+
+    inventoryManager.removeResource(requirement.id, requirement.amount);
   }
 }

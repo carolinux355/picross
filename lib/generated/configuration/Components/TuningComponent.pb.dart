@@ -25,6 +25,7 @@ class TuningComponent extends $pb.GeneratedMessage {
     $core.String? playerLevelCurveId,
     $core.String? xpResourceId,
     $0.Duration? lifeRefillDuration,
+    $core.Iterable<$core.String>? initialShips,
   }) {
     final result = create();
     if (worldIds != null) result.worldIds.addAll(worldIds);
@@ -35,6 +36,7 @@ class TuningComponent extends $pb.GeneratedMessage {
     if (xpResourceId != null) result.xpResourceId = xpResourceId;
     if (lifeRefillDuration != null)
       result.lifeRefillDuration = lifeRefillDuration;
+    if (initialShips != null) result.initialShips.addAll(initialShips);
     return result;
   }
 
@@ -56,6 +58,7 @@ class TuningComponent extends $pb.GeneratedMessage {
     ..aOS(4, _omitFieldNames ? '' : 'xpResourceId')
     ..aOM<$0.Duration>(5, _omitFieldNames ? '' : 'lifeRefillDuration',
         subBuilder: $0.Duration.create)
+    ..pPS(6, _omitFieldNames ? '' : 'initialShips')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -111,6 +114,9 @@ class TuningComponent extends $pb.GeneratedMessage {
   void clearLifeRefillDuration() => $_clearField(5);
   @$pb.TagNumber(5)
   $0.Duration ensureLifeRefillDuration() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  $pb.PbList<$core.String> get initialShips => $_getList(5);
 }
 
 const $core.bool _omitFieldNames =

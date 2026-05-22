@@ -40,8 +40,7 @@ class LootTableManager extends BaseManager {
   void _executeRoll(LootTableRoll roll, List<Grant> results) {
     switch (roll.type) {
       case LootTableType.LootTableType_Unset:
-        logger.info('unset loot table type!');
-        break;
+        throw Exception('unset loot table type!');
 
       case LootTableType.LootTableType_PercentChance:
         for (var outcome in roll.outcomes) {

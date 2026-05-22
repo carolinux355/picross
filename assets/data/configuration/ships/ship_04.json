@@ -1,0 +1,8 @@
+{
+	"id": "ship_04",
+	"components": {
+		"asset": {
+			"sprite": "assets/images/ship_04.png"
+		}
+	}
+}

@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message UpgradeState
+{
+	string current_id = 1;
+}

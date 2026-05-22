@@ -121,7 +121,7 @@ class PlaySessionBottomBarInputWidget extends StatelessWidget {
                   playerSessionState.setInputMode(PlayerSessionInputMode.mark);
                 },
                 child: Icon(
-                  Icons.close,
+                  Icons.flag,
                   color: inputMode == PlayerSessionInputMode.mark ? theme.colorScheme.onPrimary : theme.colorScheme.primary,
                 )
               )

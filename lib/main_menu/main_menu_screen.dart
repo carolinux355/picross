@@ -21,23 +21,32 @@ class MainMenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
-      body: ResponsiveScreen(
-        rectangularMenuArea: Container(),
-        squarishMainArea: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:[ 
-            Expanded(
-              child: Stack(
-                children: [
-                  MainMenuScreenCenterContainer(),
-                  MainMenuScreenTopHUD(),
-                ],
-              ),
+      body: Stack(
+        children: [
+          Positioned(
+            bottom: 0,
+            child: Image.asset('assets/images/background_harbor.png',
+              fit: BoxFit.fill,
             ),
-            MainMenuScreenBottomHUD(),
-          ]
-        ),
+          ),
+          ResponsiveScreen(
+            rectangularMenuArea: Container(),
+            squarishMainArea: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:[ 
+                Expanded(
+                  child: Stack(
+                    children: [
+                      MainMenuScreenCenterContainer(),
+                      MainMenuScreenTopHUD(),
+                    ],
+                  ),
+                ),
+                MainMenuScreenBottomHUD(),
+              ]
+            ),
+          ),
+        ]
       ),
     );
   }

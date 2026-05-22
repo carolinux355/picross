@@ -21,6 +21,7 @@ import 'Components/LootTableComponent.pb.dart' as $6;
 import 'Components/PlayerLevelCurveComponent.pb.dart' as $4;
 import 'Components/ResourceComponent.pb.dart' as $2;
 import 'Components/TuningComponent.pb.dart' as $1;
+import 'Components/UpgradableComponent.pb.dart' as $8;
 import 'Components/WorldComponent.pb.dart' as $7;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
@@ -35,6 +36,7 @@ class ComponentSet extends $pb.GeneratedMessage {
     $5.FeatureComponent? feature,
     $6.LootTableComponent? lootTable,
     $7.WorldComponent? world,
+    $8.UpgradableComponent? upgradable,
   }) {
     final result = create();
     if (levelDifficulty != null) result.levelDifficulty = levelDifficulty;
@@ -45,6 +47,7 @@ class ComponentSet extends $pb.GeneratedMessage {
     if (feature != null) result.feature = feature;
     if (lootTable != null) result.lootTable = lootTable;
     if (world != null) result.world = world;
+    if (upgradable != null) result.upgradable = upgradable;
     return result;
   }
 
@@ -78,6 +81,8 @@ class ComponentSet extends $pb.GeneratedMessage {
         subBuilder: $6.LootTableComponent.create)
     ..aOM<$7.WorldComponent>(8, _omitFieldNames ? '' : 'world',
         subBuilder: $7.WorldComponent.create)
+    ..aOM<$8.UpgradableComponent>(9, _omitFieldNames ? '' : 'upgradable',
+        subBuilder: $8.UpgradableComponent.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -188,6 +193,17 @@ class ComponentSet extends $pb.GeneratedMessage {
   void clearWorld() => $_clearField(8);
   @$pb.TagNumber(8)
   $7.WorldComponent ensureWorld() => $_ensure(7);
+
+  @$pb.TagNumber(9)
+  $8.UpgradableComponent get upgradable => $_getN(8);
+  @$pb.TagNumber(9)
+  set upgradable($8.UpgradableComponent value) => $_setField(9, value);
+  @$pb.TagNumber(9)
+  $core.bool hasUpgradable() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearUpgradable() => $_clearField(9);
+  @$pb.TagNumber(9)
+  $8.UpgradableComponent ensureUpgradable() => $_ensure(8);
 }
 
 const $core.bool _omitFieldNames =

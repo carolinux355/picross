@@ -6,7 +6,8 @@
 			"inventory_resources": ["resource_coin","resource_wood","resource_stone","resource_gem_01"],
 			"player_level_curve_id": "player_level_curve",
 			"xp_resource_id": "resource_xp",
-			"life_refill_duration": "30s"
+			"life_refill_duration": "1800s",
+			"initial_ships": ["ship_01"]
 		}
 	}
 }

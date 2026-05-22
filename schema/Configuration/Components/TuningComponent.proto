@@ -10,4 +10,5 @@ message TuningComponent
 	string player_level_curve_id = 3;
 	string xp_resource_id = 4;
 	google.protobuf.Duration life_refill_duration = 5;
+	repeated string initial_ships = 6;
 }

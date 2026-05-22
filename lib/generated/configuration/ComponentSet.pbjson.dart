@@ -83,6 +83,14 @@ const ComponentSet$json = {
       '6': '.WorldComponent',
       '10': 'world'
     },
+    {
+      '1': 'upgradable',
+      '3': 9,
+      '4': 1,
+      '5': 11,
+      '6': '.UpgradableComponent',
+      '10': 'upgradable'
+    },
   ],
 };
 
@@ -95,4 +103,5 @@ final $typed_data.Uint8List componentSetDescriptor = $convert.base64Decode(
     'cl9sZXZlbF9jdXJ2ZRgFIAEoCzIaLlBsYXllckxldmVsQ3VydmVDb21wb25lbnRSEHBsYXllck'
     'xldmVsQ3VydmUSKwoHZmVhdHVyZRgGIAEoCzIRLkZlYXR1cmVDb21wb25lbnRSB2ZlYXR1cmUS'
     'MgoKbG9vdF90YWJsZRgHIAEoCzITLkxvb3RUYWJsZUNvbXBvbmVudFIJbG9vdFRhYmxlEiUKBX'
-    'dvcmxkGAggASgLMg8uV29ybGRDb21wb25lbnRSBXdvcmxk');
+    'dvcmxkGAggASgLMg8uV29ybGRDb21wb25lbnRSBXdvcmxkEjQKCnVwZ3JhZGFibGUYCSABKAsy'
+    'FC5VcGdyYWRhYmxlQ29tcG9uZW50Ugp1cGdyYWRhYmxl');

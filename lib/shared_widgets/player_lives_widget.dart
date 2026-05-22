@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:basic/player_lives/player_lives_manager.dart';
+import 'package:basic/utils/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -78,7 +79,7 @@ class _TimerDisplayWidgetState extends State<TimerDisplayWidget> {
     }
     return Container(
       color: Colors.blueGrey,
-      child: Text('${_timeUntilRefill?.inSeconds}')
+      child: Text(TimeUtils.formatTime(_timeUntilRefill!))
     );
   }
 

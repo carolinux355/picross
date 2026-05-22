@@ -45,3 +45,34 @@ Craftable resources:
     • Cloth
     • Powerups
     • Decorations
+
+Note crafting is the primary time gate for player progression. A skilled or lucky player can get through many levels of content without losing lives, but must invest time to get required resources for upgrading the ship and progressing story.
+
+Other Mechanics:
+
+Ship:
+    • Upgrade for more lives
+    • Unlock new worlds to explore
+    • Upgrade by spending resources (some may need to be crafted)
+    • Decorate with custom sails, paint color, mix and match parts (like phantom hourglass)
+
+Crew:
+    • Can hire new characters to join your crew as you progress the story
+    • Eg: cook, fisherman, first mate, etc, some unlock new mechanics like cooking and fishing, others are just plot
+    • Morale mechanic? Need to flesh out but I like the idea of each crewmate having a meter to maintain/progress on, maybe a friendship mechanic that only goes up vs a morale that can dip if eg ship gets destroyed
+
+Player Level:
+    • More crafting recipes
+    • New features in town
+    • Level up by exploring levels
+
+Quests:
+    • Story
+    • Townsfolk ask for supplies
+    • Once story complete fallback to procedural quests
+
+Town:
+    • Hub for crafting and quests and other features
+
+Island:
+    • Can eventually buy a private island to farm, decorate, etc

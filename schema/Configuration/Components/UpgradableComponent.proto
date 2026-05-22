@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "Configuration/Requirement.proto";
+import "Configuration/Grant.proto";
+
+message UpgradableComponent
+{
+	repeated Requirement cost = 1;
+	string next_id = 2;
+	repeated Grant grants = 3; // on upgrade grant bonus stuff
+}

@@ -43,6 +43,7 @@ flutter:
     - assets/data/configuration/resources/
     - assets/data/configuration/player_level_curves/
     - assets/data/configuration/loot_tables/
+    - assets/data/configuration/ships/
 
   fonts:
     - family: Permanent Marker

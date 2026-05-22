@@ -38,6 +38,7 @@ const GameState$json = {
       '6': '.PlayerLivesState',
       '10': 'playerLives'
     },
+    {'1': 'ships', '3': 6, '4': 3, '5': 11, '6': '.ShipState', '10': 'ships'},
   ],
 };
 
@@ -46,4 +47,5 @@ final $typed_data.Uint8List gameStateDescriptor = $convert.base64Decode(
     'CglHYW1lU3RhdGUSKgoRbnVtX2xldmVsc19wbGF5ZWQYASABKAVSD251bUxldmVsc1BsYXllZB'
     'IOCgJ4cBgCIAEoBVICeHASLQoJaW52ZW50b3J5GAMgASgLMg8uSW52ZW50b3J5U3RhdGVSCWlu'
     'dmVudG9yeRIhCgxwbGF5ZXJfbGV2ZWwYBCABKAVSC3BsYXllckxldmVsEjQKDHBsYXllcl9saX'
-    'ZlcxgFIAEoCzIRLlBsYXllckxpdmVzU3RhdGVSC3BsYXllckxpdmVz');
+    'ZlcxgFIAEoCzIRLlBsYXllckxpdmVzU3RhdGVSC3BsYXllckxpdmVzEiAKBXNoaXBzGAYgAygL'
+    'MgouU2hpcFN0YXRlUgVzaGlwcw==');

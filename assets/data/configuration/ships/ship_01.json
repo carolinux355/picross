@@ -1,0 +1,29 @@
+{
+	"id": "ship_01",
+	"components": {
+		"asset": {
+			"sprite": "assets/images/ship_01.png"
+		},
+		"upgradable": {
+			"cost": [
+				{
+					"type": "RequirementType_Resource",
+					"id": "resource_coin",
+					"amount": 50
+				},
+				{
+					"type": "RequirementType_Resource",
+					"id": "resource_wood",
+					"amount": 1
+				}
+			],
+			"next_id": "ship_02",
+			"grants": [
+				{
+					"type": "GrantType_MaxLivesIncrease",
+					"amount": 1
+				}
+			]
+		}
+	}
+}

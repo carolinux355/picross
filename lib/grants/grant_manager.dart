@@ -42,7 +42,7 @@ class GrantManager extends BaseManager {
 
     switch (grant.type) {
       case GrantType.GrantType_Unset:
-        logger.info('unset grant type!');
+        throw Exception('unset grant type!');
 
       case GrantType.GrantType_Resource:
         if (!dryRun) {
@@ -60,6 +60,7 @@ class GrantManager extends BaseManager {
       case GrantType.GrantType_MaxLivesIncrease:
         if (!dryRun) {
           gameStateManager.gameState.playerLives.maxLives += grant.amount;
+          gameStateManager.gameState.playerLives.numLives = gameStateManager.gameState.playerLives.maxLives;
         }
         results.add(grant);
     

@@ -43,6 +43,7 @@ const TuningComponent$json = {
       '6': '.google.protobuf.Duration',
       '10': 'lifeRefillDuration'
     },
+    {'1': 'initial_ships', '3': 6, '4': 3, '5': 9, '10': 'initialShips'},
   ],
 };
 
@@ -52,4 +53,5 @@ final $typed_data.Uint8List tuningComponentDescriptor = $convert.base64Decode(
     'RvcnlfcmVzb3VyY2VzGAIgAygJUhJpbnZlbnRvcnlSZXNvdXJjZXMSMQoVcGxheWVyX2xldmVs'
     'X2N1cnZlX2lkGAMgASgJUhJwbGF5ZXJMZXZlbEN1cnZlSWQSJAoOeHBfcmVzb3VyY2VfaWQYBC'
     'ABKAlSDHhwUmVzb3VyY2VJZBJLChRsaWZlX3JlZmlsbF9kdXJhdGlvbhgFIAEoCzIZLmdvb2ds'
-    'ZS5wcm90b2J1Zi5EdXJhdGlvblISbGlmZVJlZmlsbER1cmF0aW9u');
+    'ZS5wcm90b2J1Zi5EdXJhdGlvblISbGlmZVJlZmlsbER1cmF0aW9uEiMKDWluaXRpYWxfc2hpcH'
+    'MYBiADKAlSDGluaXRpYWxTaGlwcw==');

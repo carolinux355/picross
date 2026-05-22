@@ -37,6 +37,7 @@ class GameStateManager extends BaseManager {
   }
 
   Future<void> save() async {
+    // TODO: only save once per timestep instead of every time save is called
     logger.info('saving game data to $filePath!');
     final file = File(filePath);
     file.create();

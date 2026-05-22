@@ -50,6 +50,10 @@ class PlayerLevelManager extends BaseManager {
     return gameStateManager.gameState.playerLevel;
   }
 
+  bool isAtMaxLevel() {
+    return getNextLevel() == null;
+  }
+
   bool checkCanLevelUp() {
     int xp = gameStateManager.gameState.xp;
     var nextLevel = getNextLevel();

@@ -8,6 +8,7 @@ import "Configuration/Components/PlayerLevelCurveComponent.proto";
 import "Configuration/Components/FeatureComponent.proto";
 import "Configuration/Components/LootTableComponent.proto";
 import "Configuration/Components/WorldComponent.proto";
+import "Configuration/Components/UpgradableComponent.proto";
 
 message ComponentSet
 {
@@ -19,4 +20,5 @@ message ComponentSet
 	FeatureComponent feature = 6;
 	LootTableComponent loot_table = 7;
 	WorldComponent world = 8;
+	UpgradableComponent upgradable = 9;
 }

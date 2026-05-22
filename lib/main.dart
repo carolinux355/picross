@@ -5,6 +5,7 @@
 import 'dart:developer' as dev;
 
 import 'package:basic/configuration/game_data_manager.dart';
+import 'package:basic/debug/debug_widget.dart';
 import 'package:basic/game_internals/level_generator.dart';
 import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/inventory/inventory_manager.dart';
@@ -14,6 +15,8 @@ import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/player_level/player_level_manager.dart';
 import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:basic/requirements/requirement_manager.dart';
+import 'package:basic/ships/ship_manager.dart';
+import 'package:basic/upgrades/upgrade_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -77,6 +80,8 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider(create: (context) => PlayerLevelManager()),
               ChangeNotifierProvider(create: (context) => PlayerLivesManager()),
               ChangeNotifierProvider(create: (context) => LootTableManager()),
+              ChangeNotifierProvider(create: (context) => UpgradeManager()),
+              ChangeNotifierProvider(create: (context) => ShipManager()),
               Provider(create: (context) => ServiceProvider()),
               ProxyProvider2<AppLifecycleStateNotifier,SettingsController,AudioController>(
                 create: (context) => AudioController(),
@@ -89,36 +94,49 @@ class MyApp extends StatelessWidget {
                 lazy: false,
               ),
             ],
-            child: Builder(
-              builder: (context) {
-                final palette = context.watch<Palette>();
-          
-                return MaterialApp.router(
-                  title: 'My Flutter Game',
-                  theme:
-                      ThemeData.from(
-                        colorScheme: ColorScheme.fromSeed(
-                          seedColor: palette.darkPen,
-                          surface: palette.backgroundMain,
-                        ),
-                        textTheme: TextTheme(
-                          bodyMedium: TextStyle(color: palette.ink),
-                        ),
-                        useMaterial3: true,
-                      ).copyWith(
-                        // Make buttons more fun.
-                        filledButtonTheme: FilledButtonThemeData(
-                          style: FilledButton.styleFrom(
-                            textStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
+            child: KeyboardListener(
+              focusNode: FocusNode()..requestFocus(),
+              onKeyEvent: (event) {
+                if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.keyD) {
+                  showDialog(
+                    context: context, 
+                    builder: (context) => SimpleDialog(
+                      title: Text('Debug')
+                    )
+                  );
+                }
+              },
+              child: Builder(
+                builder: (context) {
+                  final palette = context.watch<Palette>();
+                        
+                  return MaterialApp.router(
+                    title: 'My Flutter Game',
+                    theme:
+                        ThemeData.from(
+                          colorScheme: ColorScheme.fromSeed(
+                            seedColor: palette.darkPen,
+                            surface: palette.backgroundMain,
+                          ),
+                          textTheme: TextTheme(
+                            bodyMedium: TextStyle(color: palette.ink),
+                          ),
+                          useMaterial3: true,
+                        ).copyWith(
+                          // Make buttons more fun.
+                          filledButtonTheme: FilledButtonThemeData(
+                            style: FilledButton.styleFrom(
+                              textStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                  routerConfig: router,
-                );
-              },
+                    routerConfig: router,
+                  );
+                },
+              ),
             ),
           );
         }
@@ -127,6 +145,6 @@ class MyApp extends StatelessWidget {
   }
 
   static void restartApp() {
-    Restart.restartApp();
+    Restart.restartApp(mode: RestartMode.platformDefault);
   }
 }

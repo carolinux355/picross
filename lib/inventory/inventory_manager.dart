@@ -3,6 +3,7 @@ import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/game_internals/base_manager.dart';
 import 'package:basic/generated/persistence/InventoryState.pb.dart';
 import 'package:basic/persistence/game_state_manager.dart';
+import 'package:logging/logging.dart';
 
 enum InventoryType {
   resources,
@@ -11,6 +12,9 @@ enum InventoryType {
 
 class InventoryManager extends BaseManager
 {
+  
+  Logger logger = Logger('Inventory Manager');
+  
   @override List<Type> dependencies = [GameStateManager, GameDataManager];
 
   late GameStateManager gameStateManager;
@@ -38,6 +42,14 @@ class InventoryManager extends BaseManager
 
   void addResource(String resourceId, int amount) {
     gameStateManager.gameState.inventory.resources[resourceId] = getResourceCount(resourceId) + amount;
+    notifyListeners();
+  }
+
+  void removeResource(String resourceId, int amount) {
+    if (!gameStateManager.gameState.inventory.resources.containsKey(resourceId) || gameStateManager.gameState.inventory.resources[resourceId]! < amount) {
+      throw Exception('failed to remove resource $resourceId:$amount, not enough in inventory!');
+    }
+    gameStateManager.gameState.inventory.resources[resourceId] = gameStateManager.gameState.inventory.resources[resourceId]! - amount;
     notifyListeners();
   }
 

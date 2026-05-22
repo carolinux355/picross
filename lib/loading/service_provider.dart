@@ -10,6 +10,8 @@ import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/player_level/player_level_manager.dart';
 import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:basic/requirements/requirement_manager.dart';
+import 'package:basic/ships/ship_manager.dart';
+import 'package:basic/upgrades/upgrade_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +29,8 @@ class ServiceProvider {
   ServiceProvider();
 
   Future initializeProvidersAsync(BuildContext context) async {
-    _registerManager(context.read<GameStateManager>());
+    var gameStateManager = context.read<GameStateManager>();
+    _registerManager(gameStateManager);
     _registerManager(context.read<GameDataManager>());
     _registerManager(context.read<InventoryManager>());
     _registerManager(context.read<GrantManager>());
@@ -35,6 +38,8 @@ class ServiceProvider {
     _registerManager(context.read<PlayerLevelManager>());
     _registerManager(context.read<PlayerLivesManager>());
     _registerManager(context.read<LootTableManager>());
+    _registerManager(context.read<UpgradeManager>());
+    _registerManager(context.read<ShipManager>());
 
     // sort managers to initialize in order of dependencies (need to check for circular dependencies)
     _initializationOrder.clear();
@@ -65,6 +70,48 @@ class ServiceProvider {
       }
     }
 
+    // additional passes to ensure each manager's init order is strictly larger than all its dependencies'
+    bool didUpdateOrder = false;
+    int sanity = 50;
+    int iter = 0;
+    do {      
+      logger.info('service provider resolving iteration $iter');
+      iter++;
+
+      if (sanity <= 0) {
+        throw Exception('Found circular dependencies when initializing managers! Please review all dependencies');
+      }
+      sanity--;
+      didUpdateOrder = false;
+
+      Map<BaseManager, int> newInitOrders = {};
+      for (var kvp in _initializationOrder.entries) {
+        for (var manager in kvp.value) {
+          int maxOrder = -1;
+          for (var dependency in manager.dependencies) {
+            maxOrder = max(maxOrder, _managerInitializationOrder[dependency]!);
+          }
+          if (maxOrder >= kvp.key) {
+            logger.info('${manager.runtimeType} has init order ${kvp.key} but has dependencies with init order $maxOrder, adjusting init order');
+            newInitOrders[manager] = maxOrder + 1;
+            didUpdateOrder = true;
+          }
+        }
+      }
+
+      // do the swap
+      for (var kvp in newInitOrders.entries) {
+        int oldInitOrder = _managerInitializationOrder[kvp.key.runtimeType]!;
+        int newInitOrder = kvp.value;
+        _initializationOrder[oldInitOrder]!.remove(kvp.key);
+        if (!_initializationOrder.containsKey(newInitOrder)) {
+          _initializationOrder[newInitOrder] = [];
+        }
+        _initializationOrder[newInitOrder]!.add(kvp.key);
+        _managerInitializationOrder[kvp.key.runtimeType] = newInitOrder;
+      }
+    } while (didUpdateOrder);
+
     List<Future> futures = [];
     for (var kvp in _initializationOrder.entries) {
       logger.info('${kvp.key}: ${kvp.value}');
@@ -86,7 +133,7 @@ class ServiceProvider {
     await Future.delayed(Duration(seconds: 1));
     isLoading = false;
 
-    context.read<GameStateManager>().save();
+    gameStateManager.save();
   }
 
   void _registerManager(BaseManager manager) {
@@ -98,7 +145,7 @@ class ServiceProvider {
     for (var dependency in manager.dependencies) {
       var d = _registeredManagers.firstWhere((m) => m.runtimeType == dependency);
       if (!d.didInitialize) {
-        logger.info('Manager ${d.runtimeType} is not initialized but ${manager.runtimeType} is dependent on it!');
+        throw Exception('Manager ${d.runtimeType} is not initialized but ${manager.runtimeType} is dependent on it!');
       }
       managers.add(d);
     }

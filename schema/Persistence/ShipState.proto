@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+import "Persistence/UpgradeState.proto";
+
+message ShipState
+{
+	string id = 1;
+	UpgradeState upgrade_state = 2;
+}

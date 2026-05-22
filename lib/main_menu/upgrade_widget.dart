@@ -1,0 +1,94 @@
+import 'package:basic/configuration/game_data_manager.dart';
+import 'package:basic/generated/configuration/Requirement.pb.dart';
+import 'package:basic/generated/persistence/UpgradeState.pb.dart';
+import 'package:basic/inventory/inventory_manager.dart';
+import 'package:basic/requirements/requirement_manager.dart';
+import 'package:basic/upgrades/upgrade_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+class UpgradeWidget extends StatelessWidget {
+  const UpgradeWidget({super.key, required this.upgradableId, required this.upgradeState});
+
+  final String upgradableId;
+  final UpgradeState upgradeState;
+
+  @override
+  Widget build(BuildContext context) {
+    var upgradeManager = context.watch<UpgradeManager>();
+    var upgradeCosts = upgradeManager.getUpgradeCost(upgradableId);
+    
+    return Column(
+      children: [
+        Container(
+          color: Colors.amber,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 10,
+              children: [
+                for (var cost in upgradeCosts)
+                  UpgradeCostWidget(cost: cost)
+              ],
+            ),
+          ),
+        ),
+        if (upgradeManager.canAffordUpgrade(upgradableId))
+          ElevatedButton(
+            onPressed: () => upgradeManager.executeUpgrade(upgradeState), 
+            child: Text('Upgrade')
+            )
+      ],
+    );
+  }
+}
+
+class UpgradeCostWidget extends StatelessWidget {
+  const UpgradeCostWidget({
+    super.key,
+    required this.cost
+  });
+
+  final Requirement cost;
+
+  @override
+  Widget build(BuildContext context) {
+    var gameDataManager = context.read<GameDataManager>();
+    var inventoryManager = context.watch<InventoryManager>();
+    
+    var costData = gameDataManager.getData(cost.id);
+
+    return Container(
+      color: Colors.blueGrey,
+      child: SizedBox(
+        width: 75, 
+        height: 75,
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(costData!.components.asset.sprite),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Container(
+                color: Color(0x80000000),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+                  child: Text(cost.amount.toString(),
+                  style: TextStyle(
+                    fontFamily: 'Permanent Marker', 
+                    color: inventoryManager.getResourceCount(cost.id) >= cost.amount ? Colors.white : Colors.red
+                    ),
+                  ),
+                ),
+              )
+            )
+          ],
+        ),
+      )
+    );
+  }
+}
