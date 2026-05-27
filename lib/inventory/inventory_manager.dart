@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/game_internals/base_manager.dart';
 import 'package:basic/generated/persistence/InventoryState.pb.dart';
@@ -42,6 +44,7 @@ class InventoryManager extends BaseManager
 
   void addResource(String resourceId, int amount) {
     gameStateManager.gameState.inventory.resources[resourceId] = getResourceCount(resourceId) + amount;
+    gameStateManager.save();
     notifyListeners();
   }
 
@@ -49,7 +52,8 @@ class InventoryManager extends BaseManager
     if (!gameStateManager.gameState.inventory.resources.containsKey(resourceId) || gameStateManager.gameState.inventory.resources[resourceId]! < amount) {
       throw Exception('failed to remove resource $resourceId:$amount, not enough in inventory!');
     }
-    gameStateManager.gameState.inventory.resources[resourceId] = gameStateManager.gameState.inventory.resources[resourceId]! - amount;
+    gameStateManager.gameState.inventory.resources[resourceId] = max(0, gameStateManager.gameState.inventory.resources[resourceId]! - amount);
+    gameStateManager.save();
     notifyListeners();
   }
 

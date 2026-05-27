@@ -20,7 +20,7 @@ You can use coins and raw resources to upgrade your ship. Larger ships have more
 
 Progression:
 
-The world map will be split into sub-regions which unlock progressively as the player levels up. Each region has a distinct visual character and unique resources that can only be found there. The picross puzzles increase in difficulty as well the later they unlock. The unique resources gives the player a reason to revisit old locations. Each region also has a progress bar indicating how “mapped out” the region is, ie the more you explore the more progress you make. A fully maxed out region can be explored much more safely (fewer or no bombs) or you can specify which resources you’re looking for and guarantee the puzzle will drop those.
+The world map will be split into sub-regions which unlock progressively as the player upgrades their ship. A world has an HP cost to enter (eg world 1 requires 1 health to play, world 5 requires 6), so later worlds don’t unlock until your max health increases. Each region has a distinct visual character and unique resources that can only be found there. The picross puzzles increase in difficulty as well the later they unlock. The unique resources gives the player a reason to revisit old locations. Each region also has a progress bar indicating how “mapped out” the region is, ie the more you explore the more progress you make. A fully maxed out region can be explored much more safely (fewer or no bombs) or you can specify which resources you’re looking for and guarantee the puzzle will drop those.
 Resources/Crafting:
 
 Raw resources:

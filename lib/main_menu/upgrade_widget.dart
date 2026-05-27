@@ -2,7 +2,6 @@ import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/generated/configuration/Requirement.pb.dart';
 import 'package:basic/generated/persistence/UpgradeState.pb.dart';
 import 'package:basic/inventory/inventory_manager.dart';
-import 'package:basic/requirements/requirement_manager.dart';
 import 'package:basic/upgrades/upgrade_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +15,10 @@ class UpgradeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var upgradeManager = context.watch<UpgradeManager>();
+    var inventoryManager = context.watch<InventoryManager>();
     var upgradeCosts = upgradeManager.getUpgradeCost(upgradableId);
+
+    if (upgradeManager.)
     
     return Column(
       children: [
@@ -34,11 +36,19 @@ class UpgradeWidget extends StatelessWidget {
             ),
           ),
         ),
-        if (upgradeManager.canAffordUpgrade(upgradableId))
-          ElevatedButton(
-            onPressed: () => upgradeManager.executeUpgrade(upgradeState), 
-            child: Text('Upgrade')
-            )
+        ListenableBuilder(
+          listenable: inventoryManager,
+          builder: (context, child) {
+            if (upgradeManager.canAffordUpgrade(upgradableId))
+            {
+              return ElevatedButton(
+                onPressed: () => upgradeManager.executeUpgrade(upgradeState),
+                child: Text('Upgrade')
+              );
+            }
+            return SizedBox.shrink();
+          }
+        )
       ],
     );
   }

@@ -37,11 +37,11 @@ class UpgradeManager extends BaseManager {
   }
 
   bool canAffordUpgrade(String id) {
-    var data = gameDataManager.getData(id)?.components.upgradable;
-    if (data == null) { 
+    var data = gameDataManager.getData(id);
+    if (data == null || !data.components.hasUpgradable()) { 
       return false;
     }
-    return requirementManager.evaluateCosts(data.cost);
+    return requirementManager.evaluateCosts(data.components.upgradable.cost);
   }
 
   bool executeUpgrade(UpgradeState state) {

@@ -94,49 +94,36 @@ class MyApp extends StatelessWidget {
                 lazy: false,
               ),
             ],
-            child: KeyboardListener(
-              focusNode: FocusNode()..requestFocus(),
-              onKeyEvent: (event) {
-                if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.keyD) {
-                  showDialog(
-                    context: context, 
-                    builder: (context) => SimpleDialog(
-                      title: Text('Debug')
-                    )
-                  );
-                }
-              },
-              child: Builder(
-                builder: (context) {
-                  final palette = context.watch<Palette>();
-                        
-                  return MaterialApp.router(
-                    title: 'My Flutter Game',
-                    theme:
-                        ThemeData.from(
-                          colorScheme: ColorScheme.fromSeed(
-                            seedColor: palette.darkPen,
-                            surface: palette.backgroundMain,
-                          ),
-                          textTheme: TextTheme(
-                            bodyMedium: TextStyle(color: palette.ink),
-                          ),
-                          useMaterial3: true,
-                        ).copyWith(
-                          // Make buttons more fun.
-                          filledButtonTheme: FilledButtonThemeData(
-                            style: FilledButton.styleFrom(
-                              textStyle: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
+            child: Builder(
+              builder: (context) {
+                final palette = context.watch<Palette>();
+                      
+                return MaterialApp.router(
+                  title: 'My Flutter Game',
+                  theme:
+                      ThemeData.from(
+                        colorScheme: ColorScheme.fromSeed(
+                          seedColor: palette.darkPen,
+                          surface: palette.backgroundMain,
+                        ),
+                        textTheme: TextTheme(
+                          bodyMedium: TextStyle(color: palette.ink),
+                        ),
+                        useMaterial3: true,
+                      ).copyWith(
+                        // Make buttons more fun.
+                        filledButtonTheme: FilledButtonThemeData(
+                          style: FilledButton.styleFrom(
+                            textStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
                             ),
                           ),
                         ),
-                    routerConfig: router,
-                  );
-                },
-              ),
+                      ),
+                  routerConfig: router,
+                );
+              },
             ),
           );
         }
@@ -146,5 +133,18 @@ class MyApp extends StatelessWidget {
 
   static void restartApp() {
     Restart.restartApp(mode: RestartMode.platformDefault);
+  }
+
+  static bool _isDebugMenuOpen = false;
+  static void openDebugMenu(BuildContext context) async {
+    if (_isDebugMenuOpen) {
+      return;
+    }
+    _isDebugMenuOpen = true;
+    await showDialog(
+      context: context, 
+      builder: (context) => DebugWidget()
+    );
+    _isDebugMenuOpen = false;
   }
 }

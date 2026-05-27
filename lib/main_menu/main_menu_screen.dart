@@ -2,11 +2,13 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:basic/main.dart';
 import 'package:basic/main_menu/main_scene.dart';
 import 'package:basic/shared_widgets/player_lives_widget.dart';
 import 'package:basic/shared_widgets/xp_widget.dart';
 import 'package:basic/style/responsive_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -21,32 +23,40 @@ class MainMenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-            bottom: 0,
-            child: Image.asset('assets/images/background_harbor.png',
-              fit: BoxFit.fill,
+      body: KeyboardListener(
+        focusNode: FocusNode()..requestFocus(),
+        onKeyEvent: (event) {
+          if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.keyD) {
+            MyApp.openDebugMenu(context);
+          }
+        },
+        child: Stack(
+          children: [
+            Positioned(
+              bottom: 0,
+              child: Image.asset('assets/images/background_harbor.png',
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-          ResponsiveScreen(
-            rectangularMenuArea: Container(),
-            squarishMainArea: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children:[ 
-                Expanded(
-                  child: Stack(
-                    children: [
-                      MainMenuScreenCenterContainer(),
-                      MainMenuScreenTopHUD(),
-                    ],
+            ResponsiveScreen(
+              rectangularMenuArea: Container(),
+              squarishMainArea: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:[ 
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        MainMenuScreenCenterContainer(),
+                        MainMenuScreenTopHUD(),
+                      ],
+                    ),
                   ),
-                ),
-                MainMenuScreenBottomHUD(),
-              ]
+                  MainMenuScreenBottomHUD(),
+                ]
+              ),
             ),
-          ),
-        ]
+          ]
+        ),
       ),
     );
   }
