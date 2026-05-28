@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+message LocalizedNameComponent
+{
+	string name = 1;
+	string name_plural = 2;
+}

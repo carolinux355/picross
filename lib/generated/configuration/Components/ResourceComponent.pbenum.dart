@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/Components/ResourceComponent.proto.
+// Generated from configuration/Components/ResourceComponent.proto.
 
 // @dart = 3.3
 

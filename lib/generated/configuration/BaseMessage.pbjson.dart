@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/BaseMessage.proto.
+// Generated from configuration/BaseMessage.proto.
 
 // @dart = 3.3
 

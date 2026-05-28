@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Persistence/GameState.proto.
+// Generated from persistence/GameState.proto.
 
 // @dart = 3.3
 

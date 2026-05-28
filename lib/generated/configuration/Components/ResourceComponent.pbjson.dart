@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/Components/ResourceComponent.proto.
+// Generated from configuration/Components/ResourceComponent.proto.
 
 // @dart = 3.3
 
@@ -18,8 +18,13 @@ import 'dart:typed_data' as $typed_data;
 @$core.Deprecated('Use resourceComponentDescriptor instead')
 const ResourceComponent$json = {
   '1': 'ResourceComponent',
+  '2': [
+    {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'name_plural', '3': 2, '4': 1, '5': 9, '10': 'namePlural'},
+  ],
 };
 
 /// Descriptor for `ResourceComponent`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List resourceComponentDescriptor =
-    $convert.base64Decode('ChFSZXNvdXJjZUNvbXBvbmVudA==');
+final $typed_data.Uint8List resourceComponentDescriptor = $convert.base64Decode(
+    'ChFSZXNvdXJjZUNvbXBvbmVudBISCgRuYW1lGAEgASgJUgRuYW1lEh8KC25hbWVfcGx1cmFsGA'
+    'IgASgJUgpuYW1lUGx1cmFs');

@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:basic/crafting/crafting_screen.dart';
 import 'package:basic/game_internals/level_state.dart';
 import 'package:basic/inventory/inventory_screen.dart';
 import 'package:basic/loading/level_generation_loading_screen.dart';
@@ -115,6 +116,11 @@ final router = GoRouter(
             final worldId = state.extra! as String;
             return LevelGenerationLoadingScreen(key: Key('levelgeneration'), worldId: worldId);
           }
+        ),
+        GoRoute(
+          path: 'crafting',
+          builder: (context, state) =>
+              const CraftingScreen(key: Key('crafting')),
         )
       ],
     ),

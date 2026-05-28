@@ -51,4 +51,8 @@ class GameDataManager extends BaseManager {
   TuningComponent getTuning() {
     return getData(Constants.TUNING_CONFIG_ID)!.components.tuning;
   }
+
+  List<BaseMessage> getAllData() {
+    return _data.values.toList();
+  }
 }

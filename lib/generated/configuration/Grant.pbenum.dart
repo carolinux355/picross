@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/Grant.proto.
+// Generated from configuration/Grant.proto.
 
 // @dart = 3.3
 
@@ -25,6 +25,8 @@ class GrantType extends $pb.ProtobufEnum {
       GrantType._(3, _omitEnumNames ? '' : 'GrantType_MaxLivesIncrease');
   static const GrantType GrantType_LootTable =
       GrantType._(4, _omitEnumNames ? '' : 'GrantType_LootTable');
+  static const GrantType GrantType_MaxCraftingQueueSize =
+      GrantType._(5, _omitEnumNames ? '' : 'GrantType_MaxCraftingQueueSize');
 
   static const $core.List<GrantType> values = <GrantType>[
     GrantType_Unset,
@@ -32,10 +34,11 @@ class GrantType extends $pb.ProtobufEnum {
     GrantType_Xp,
     GrantType_MaxLivesIncrease,
     GrantType_LootTable,
+    GrantType_MaxCraftingQueueSize,
   ];
 
   static final $core.List<GrantType?> _byValue =
-      $pb.ProtobufEnum.$_initByValueList(values, 4);
+      $pb.ProtobufEnum.$_initByValueList(values, 5);
   static GrantType? valueOf($core.int value) =>
       value < 0 || value >= _byValue.length ? null : _byValue[value];
 

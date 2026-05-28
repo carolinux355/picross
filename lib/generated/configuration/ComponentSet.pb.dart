@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/ComponentSet.proto.
+// Generated from configuration/ComponentSet.proto.
 
 // @dart = 3.3
 
@@ -15,10 +15,13 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'Components/AssetComponent.pb.dart' as $3;
+import 'Components/CraftingRecipeComponent.pb.dart' as $9;
 import 'Components/FeatureComponent.pb.dart' as $5;
 import 'Components/LevelDifficultyComponent.pb.dart' as $0;
+import 'Components/LocalizedNameComponent.pb.dart' as $11;
 import 'Components/LootTableComponent.pb.dart' as $6;
 import 'Components/PlayerLevelCurveComponent.pb.dart' as $4;
+import 'Components/PurchasableComponent.pb.dart' as $10;
 import 'Components/ResourceComponent.pb.dart' as $2;
 import 'Components/TuningComponent.pb.dart' as $1;
 import 'Components/UpgradableComponent.pb.dart' as $8;
@@ -37,6 +40,9 @@ class ComponentSet extends $pb.GeneratedMessage {
     $6.LootTableComponent? lootTable,
     $7.WorldComponent? world,
     $8.UpgradableComponent? upgradable,
+    $9.CraftingRecipeComponent? craftingRecipe,
+    $10.PurchasableComponent? purchasable,
+    $11.LocalizedNameComponent? localizedName,
   }) {
     final result = create();
     if (levelDifficulty != null) result.levelDifficulty = levelDifficulty;
@@ -48,6 +54,9 @@ class ComponentSet extends $pb.GeneratedMessage {
     if (lootTable != null) result.lootTable = lootTable;
     if (world != null) result.world = world;
     if (upgradable != null) result.upgradable = upgradable;
+    if (craftingRecipe != null) result.craftingRecipe = craftingRecipe;
+    if (purchasable != null) result.purchasable = purchasable;
+    if (localizedName != null) result.localizedName = localizedName;
     return result;
   }
 
@@ -83,6 +92,14 @@ class ComponentSet extends $pb.GeneratedMessage {
         subBuilder: $7.WorldComponent.create)
     ..aOM<$8.UpgradableComponent>(9, _omitFieldNames ? '' : 'upgradable',
         subBuilder: $8.UpgradableComponent.create)
+    ..aOM<$9.CraftingRecipeComponent>(
+        10, _omitFieldNames ? '' : 'craftingRecipe',
+        subBuilder: $9.CraftingRecipeComponent.create)
+    ..aOM<$10.PurchasableComponent>(11, _omitFieldNames ? '' : 'purchasable',
+        subBuilder: $10.PurchasableComponent.create)
+    ..aOM<$11.LocalizedNameComponent>(
+        12, _omitFieldNames ? '' : 'localizedName',
+        subBuilder: $11.LocalizedNameComponent.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -204,6 +221,39 @@ class ComponentSet extends $pb.GeneratedMessage {
   void clearUpgradable() => $_clearField(9);
   @$pb.TagNumber(9)
   $8.UpgradableComponent ensureUpgradable() => $_ensure(8);
+
+  @$pb.TagNumber(10)
+  $9.CraftingRecipeComponent get craftingRecipe => $_getN(9);
+  @$pb.TagNumber(10)
+  set craftingRecipe($9.CraftingRecipeComponent value) => $_setField(10, value);
+  @$pb.TagNumber(10)
+  $core.bool hasCraftingRecipe() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearCraftingRecipe() => $_clearField(10);
+  @$pb.TagNumber(10)
+  $9.CraftingRecipeComponent ensureCraftingRecipe() => $_ensure(9);
+
+  @$pb.TagNumber(11)
+  $10.PurchasableComponent get purchasable => $_getN(10);
+  @$pb.TagNumber(11)
+  set purchasable($10.PurchasableComponent value) => $_setField(11, value);
+  @$pb.TagNumber(11)
+  $core.bool hasPurchasable() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearPurchasable() => $_clearField(11);
+  @$pb.TagNumber(11)
+  $10.PurchasableComponent ensurePurchasable() => $_ensure(10);
+
+  @$pb.TagNumber(12)
+  $11.LocalizedNameComponent get localizedName => $_getN(11);
+  @$pb.TagNumber(12)
+  set localizedName($11.LocalizedNameComponent value) => $_setField(12, value);
+  @$pb.TagNumber(12)
+  $core.bool hasLocalizedName() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearLocalizedName() => $_clearField(12);
+  @$pb.TagNumber(12)
+  $11.LocalizedNameComponent ensureLocalizedName() => $_ensure(11);
 }
 
 const $core.bool _omitFieldNames =

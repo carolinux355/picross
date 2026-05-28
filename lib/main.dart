@@ -5,6 +5,7 @@
 import 'dart:developer' as dev;
 
 import 'package:basic/configuration/game_data_manager.dart';
+import 'package:basic/crafting/crafting_manager.dart';
 import 'package:basic/debug/debug_widget.dart';
 import 'package:basic/game_internals/level_generator.dart';
 import 'package:basic/grants/grant_manager.dart';
@@ -14,6 +15,7 @@ import 'package:basic/loot_tables/loot_table_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/player_level/player_level_manager.dart';
 import 'package:basic/player_lives/player_lives_manager.dart';
+import 'package:basic/purchasing/purchase_manager.dart';
 import 'package:basic/requirements/requirement_manager.dart';
 import 'package:basic/ships/ship_manager.dart';
 import 'package:basic/upgrades/upgrade_manager.dart';
@@ -82,6 +84,8 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider(create: (context) => LootTableManager()),
               ChangeNotifierProvider(create: (context) => UpgradeManager()),
               ChangeNotifierProvider(create: (context) => ShipManager()),
+              ChangeNotifierProvider(create: (context) => CraftingManager()),
+              ChangeNotifierProvider(create: (context) => PurchaseManager()),
               Provider(create: (context) => ServiceProvider()),
               ProxyProvider2<AppLifecycleStateNotifier,SettingsController,AudioController>(
                 create: (context) => AudioController(),

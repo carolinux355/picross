@@ -4,6 +4,10 @@
 		"asset": {
 			"sprite": "assets/icons/starGold.png"
 		},
-		"resource": {}
+		"resource": {},
+		"localized_name": {
+			"name": "XP",
+			"name_plural": "XP"
+		}
 	}
 }

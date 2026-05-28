@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/Components/LootTableComponent.proto.
+// Generated from configuration/Components/LootTableComponent.proto.
 
 // @dart = 3.3
 

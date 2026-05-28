@@ -4,6 +4,10 @@
 		"asset": {
 			"sprite": "assets/icons/tilePink_10.png"
 		},
-		"resource": {}
+		"resource": {},
+		"localized_name": {
+			"name": "Gem",
+			"name_plural": "Gems"
+		}
 	}
 }

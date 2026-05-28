@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/ComponentSet.proto.
+// Generated from configuration/ComponentSet.proto.
 
 // @dart = 3.3
 
@@ -91,6 +91,30 @@ const ComponentSet$json = {
       '6': '.UpgradableComponent',
       '10': 'upgradable'
     },
+    {
+      '1': 'crafting_recipe',
+      '3': 10,
+      '4': 1,
+      '5': 11,
+      '6': '.CraftingRecipeComponent',
+      '10': 'craftingRecipe'
+    },
+    {
+      '1': 'purchasable',
+      '3': 11,
+      '4': 1,
+      '5': 11,
+      '6': '.PurchasableComponent',
+      '10': 'purchasable'
+    },
+    {
+      '1': 'localized_name',
+      '3': 12,
+      '4': 1,
+      '5': 11,
+      '6': '.LocalizedNameComponent',
+      '10': 'localizedName'
+    },
   ],
 };
 
@@ -104,4 +128,7 @@ final $typed_data.Uint8List componentSetDescriptor = $convert.base64Decode(
     'xldmVsQ3VydmUSKwoHZmVhdHVyZRgGIAEoCzIRLkZlYXR1cmVDb21wb25lbnRSB2ZlYXR1cmUS'
     'MgoKbG9vdF90YWJsZRgHIAEoCzITLkxvb3RUYWJsZUNvbXBvbmVudFIJbG9vdFRhYmxlEiUKBX'
     'dvcmxkGAggASgLMg8uV29ybGRDb21wb25lbnRSBXdvcmxkEjQKCnVwZ3JhZGFibGUYCSABKAsy'
-    'FC5VcGdyYWRhYmxlQ29tcG9uZW50Ugp1cGdyYWRhYmxl');
+    'FC5VcGdyYWRhYmxlQ29tcG9uZW50Ugp1cGdyYWRhYmxlEkEKD2NyYWZ0aW5nX3JlY2lwZRgKIA'
+    'EoCzIYLkNyYWZ0aW5nUmVjaXBlQ29tcG9uZW50Ug5jcmFmdGluZ1JlY2lwZRI3CgtwdXJjaGFz'
+    'YWJsZRgLIAEoCzIVLlB1cmNoYXNhYmxlQ29tcG9uZW50UgtwdXJjaGFzYWJsZRI+Cg5sb2NhbG'
+    'l6ZWRfbmFtZRgMIAEoCzIXLkxvY2FsaXplZE5hbWVDb21wb25lbnRSDWxvY2FsaXplZE5hbWU=');

@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/ComponentSet.proto.
+// Generated from configuration/ComponentSet.proto.
 
 // @dart = 3.3
 

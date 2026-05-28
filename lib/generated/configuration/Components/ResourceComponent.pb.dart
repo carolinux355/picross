@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/Components/ResourceComponent.proto.
+// Generated from configuration/Components/ResourceComponent.proto.
 
 // @dart = 3.3
 
@@ -17,7 +17,15 @@ import 'package:protobuf/protobuf.dart' as $pb;
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 class ResourceComponent extends $pb.GeneratedMessage {
-  factory ResourceComponent() => create();
+  factory ResourceComponent({
+    $core.String? name,
+    $core.String? namePlural,
+  }) {
+    final result = create();
+    if (name != null) result.name = name;
+    if (namePlural != null) result.namePlural = namePlural;
+    return result;
+  }
 
   ResourceComponent._();
 
@@ -31,6 +39,8 @@ class ResourceComponent extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ResourceComponent',
       createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..aOS(2, _omitFieldNames ? '' : 'namePlural')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -51,7 +61,27 @@ class ResourceComponent extends $pb.GeneratedMessage {
   static ResourceComponent getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ResourceComponent>(create);
   static ResourceComponent? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get namePlural => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set namePlural($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasNamePlural() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNamePlural() => $_clearField(2);
 }
 
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-import "Configuration/Requirement.proto";
+import "configuration/Requirement.proto";
 
 message Grant
 {
@@ -17,4 +17,5 @@ enum GrantType
 	GrantType_Xp = 2;
 	GrantType_MaxLivesIncrease = 3;
 	GrantType_LootTable = 4;
+	GrantType_MaxCraftingQueueSize = 5;
 }

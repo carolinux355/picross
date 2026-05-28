@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/Requirement.proto.
+// Generated from configuration/Requirement.proto.
 
 // @dart = 3.3
 

@@ -74,6 +74,12 @@ class GrantManager extends BaseManager {
             results.addAll(tryGrantList(lootTableResults));
           }
         }
+
+      case GrantType.GrantType_MaxCraftingQueueSize:
+        if (!dryRun) {
+          gameStateManager.gameState.crafting.maxQueueSize += grant.amount;
+        }
+        results.add(grant);
     }
 
     return results;

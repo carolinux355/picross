@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-import "Configuration/ComponentSet.proto";
+import "configuration/ComponentSet.proto";
 
 message BaseMessage
 {

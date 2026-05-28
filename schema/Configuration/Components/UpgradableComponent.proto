@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-import "Configuration/Requirement.proto";
-import "Configuration/Grant.proto";
+import "configuration/Requirement.proto";
+import "configuration/Grant.proto";
 
 message UpgradableComponent
 {

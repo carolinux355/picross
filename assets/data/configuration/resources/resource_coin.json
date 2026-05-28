@@ -4,6 +4,10 @@
 		"asset": {
 			"sprite": "assets/icons/coin_01.png"
 		},
-		"resource": {}
+		"resource": {},
+		"localized_name": {
+			"name": "Coin",
+			"name_plural": "Coins"
+		}
 	}
 }

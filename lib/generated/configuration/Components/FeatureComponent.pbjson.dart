@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/Components/FeatureComponent.proto.
+// Generated from configuration/Components/FeatureComponent.proto.
 
 // @dart = 3.3
 

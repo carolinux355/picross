@@ -93,16 +93,16 @@ class MainMenuScreenBottomHUD extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children:[ 
             Spacer(),
-            MainMenuBottomHUDButton(label: 'Quests'),
+            MainMenuBottomHUDButton(label: 'Quests', onPressed: null),
             Spacer(),
-            MainMenuBottomHUDButton(label: 'Upgrades'),
+            MainMenuBottomHUDButton(label: 'Craft', onPressed: () => GoRouter.of(context).push('/crafting')),
             Spacer(),
-            MainMenuBottomHUDButton(label: 'Town'),
+            MainMenuBottomHUDButton(label: 'Town', onPressed: null),
             Spacer(),
             MyButton(
               onPressed: () {
@@ -121,10 +121,12 @@ class MainMenuScreenBottomHUD extends StatelessWidget {
 class MainMenuBottomHUDButton extends StatelessWidget {
   const MainMenuBottomHUDButton({
     super.key,
-    required this.label
+    required this.label,
+    required this.onPressed
   });
 
   final String label;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -134,15 +136,18 @@ class MainMenuBottomHUDButton extends StatelessWidget {
         color: Colors.brown,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(
-            label, 
-            textAlign: TextAlign.center, 
-            style: TextStyle(
-              fontFamily: 'Permanent Marker', 
-              fontSize: 14, 
+          child: TextButton(
+            onPressed: onPressed,
+            child: Text(
+              label,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Permanent Marker',
+                fontSize: 14,
               color: Colors.white
               ),
             ),
+          )
         )
       )
     );

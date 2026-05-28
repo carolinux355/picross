@@ -1,0 +1,27 @@
+{
+	"id": "crafting_recipe_plank",
+	"components": {
+		"crafting_recipe": {
+			"duration": "30s",
+			"cost": [
+				{
+					"type": "RequirementType_Resource",
+					"id": "resource_wood",
+					"amount": 2
+				}
+			],
+			"output": [
+				{
+					"type": "GrantType_Resource",
+					"id": "resource_plank",
+					"amount": 1
+				}
+			]
+		},
+		"resource": {},
+		"localized_name": {
+			"name": "Plank",
+			"name_plural": "Planks"
+		}
+	}
+}

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+import "configuration/Requirement.proto";
+import "configuration/Grant.proto";
+import "google/protobuf/duration.proto";
+
+message CraftingRecipeComponent
+{
+	repeated Requirement cost = 1;
+	repeated Grant output = 2;
+	google.protobuf.Duration duration = 3;
+}

@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/Grant.proto.
+// Generated from configuration/Grant.proto.
 
 // @dart = 3.3
 
@@ -24,6 +24,7 @@ const GrantType$json = {
     {'1': 'GrantType_Xp', '2': 2},
     {'1': 'GrantType_MaxLivesIncrease', '2': 3},
     {'1': 'GrantType_LootTable', '2': 4},
+    {'1': 'GrantType_MaxCraftingQueueSize', '2': 5},
   ],
 };
 
@@ -31,7 +32,8 @@ const GrantType$json = {
 final $typed_data.Uint8List grantTypeDescriptor = $convert.base64Decode(
     'CglHcmFudFR5cGUSEwoPR3JhbnRUeXBlX1Vuc2V0EAASFgoSR3JhbnRUeXBlX1Jlc291cmNlEA'
     'ESEAoMR3JhbnRUeXBlX1hwEAISHgoaR3JhbnRUeXBlX01heExpdmVzSW5jcmVhc2UQAxIXChNH'
-    'cmFudFR5cGVfTG9vdFRhYmxlEAQ=');
+    'cmFudFR5cGVfTG9vdFRhYmxlEAQSIgoeR3JhbnRUeXBlX01heENyYWZ0aW5nUXVldWVTaXplEA'
+    'U=');
 
 @$core.Deprecated('Use grantDescriptor instead')
 const Grant$json = {

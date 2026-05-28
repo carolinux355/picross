@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-import "Configuration/Utils.proto";
+import "configuration/Utils.proto";
 
 message LevelDifficultyComponent
 {

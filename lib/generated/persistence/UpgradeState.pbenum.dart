@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Persistence/UpgradeState.proto.
+// Generated from persistence/UpgradeState.proto.
 
 // @dart = 3.3
 

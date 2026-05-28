@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Persistence/InventoryState.proto.
+// Generated from persistence/InventoryState.proto.
 
 // @dart = 3.3
 

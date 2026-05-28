@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Persistence/GameState.proto.
+// Generated from persistence/GameState.proto.
 
 // @dart = 3.3
 
@@ -14,6 +14,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'CraftingState.pb.dart' as $3;
 import 'InventoryState.pb.dart' as $0;
 import 'PlayerLivesState.pb.dart' as $1;
 import 'ShipState.pb.dart' as $2;
@@ -28,6 +29,7 @@ class GameState extends $pb.GeneratedMessage {
     $core.int? playerLevel,
     $1.PlayerLivesState? playerLives,
     $core.Iterable<$2.ShipState>? ships,
+    $3.CraftingState? crafting,
   }) {
     final result = create();
     if (numLevelsPlayed != null) result.numLevelsPlayed = numLevelsPlayed;
@@ -36,6 +38,7 @@ class GameState extends $pb.GeneratedMessage {
     if (playerLevel != null) result.playerLevel = playerLevel;
     if (playerLives != null) result.playerLives = playerLives;
     if (ships != null) result.ships.addAll(ships);
+    if (crafting != null) result.crafting = crafting;
     return result;
   }
 
@@ -60,6 +63,8 @@ class GameState extends $pb.GeneratedMessage {
         subBuilder: $1.PlayerLivesState.create)
     ..pPM<$2.ShipState>(6, _omitFieldNames ? '' : 'ships',
         subBuilder: $2.ShipState.create)
+    ..aOM<$3.CraftingState>(7, _omitFieldNames ? '' : 'crafting',
+        subBuilder: $3.CraftingState.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -131,6 +136,17 @@ class GameState extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(6)
   $pb.PbList<$2.ShipState> get ships => $_getList(5);
+
+  @$pb.TagNumber(7)
+  $3.CraftingState get crafting => $_getN(6);
+  @$pb.TagNumber(7)
+  set crafting($3.CraftingState value) => $_setField(7, value);
+  @$pb.TagNumber(7)
+  $core.bool hasCrafting() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearCrafting() => $_clearField(7);
+  @$pb.TagNumber(7)
+  $3.CraftingState ensureCrafting() => $_ensure(6);
 }
 
 const $core.bool _omitFieldNames =

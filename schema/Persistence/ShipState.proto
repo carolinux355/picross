@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-import "Persistence/UpgradeState.proto";
+import "persistence/UpgradeState.proto";
 
 message ShipState
 {

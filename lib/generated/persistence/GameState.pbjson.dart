@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Persistence/GameState.proto.
+// Generated from persistence/GameState.proto.
 
 // @dart = 3.3
 
@@ -39,6 +39,14 @@ const GameState$json = {
       '10': 'playerLives'
     },
     {'1': 'ships', '3': 6, '4': 3, '5': 11, '6': '.ShipState', '10': 'ships'},
+    {
+      '1': 'crafting',
+      '3': 7,
+      '4': 1,
+      '5': 11,
+      '6': '.CraftingState',
+      '10': 'crafting'
+    },
   ],
 };
 
@@ -48,4 +56,5 @@ final $typed_data.Uint8List gameStateDescriptor = $convert.base64Decode(
     'IOCgJ4cBgCIAEoBVICeHASLQoJaW52ZW50b3J5GAMgASgLMg8uSW52ZW50b3J5U3RhdGVSCWlu'
     'dmVudG9yeRIhCgxwbGF5ZXJfbGV2ZWwYBCABKAVSC3BsYXllckxldmVsEjQKDHBsYXllcl9saX'
     'ZlcxgFIAEoCzIRLlBsYXllckxpdmVzU3RhdGVSC3BsYXllckxpdmVzEiAKBXNoaXBzGAYgAygL'
-    'MgouU2hpcFN0YXRlUgVzaGlwcw==');
+    'MgouU2hpcFN0YXRlUgVzaGlwcxIqCghjcmFmdGluZxgHIAEoCzIOLkNyYWZ0aW5nU3RhdGVSCG'
+    'NyYWZ0aW5n');

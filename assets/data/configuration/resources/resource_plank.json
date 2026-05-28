@@ -1,0 +1,13 @@
+{
+	"id": "resource_plank",
+	"components": {
+		"asset": {
+			"sprite": "assets/icons/coin_03.png"
+		},
+		"resource": {},
+		"localized_name": {
+			"name": "Plank",
+			"name_plural": "Planks"
+		}
+	}
+}

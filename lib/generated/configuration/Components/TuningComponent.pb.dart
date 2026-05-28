@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/Components/TuningComponent.proto.
+// Generated from configuration/Components/TuningComponent.proto.
 
 // @dart = 3.3
 

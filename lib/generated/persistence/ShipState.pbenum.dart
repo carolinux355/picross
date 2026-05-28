@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Persistence/ShipState.proto.
+// Generated from persistence/ShipState.proto.
 
 // @dart = 3.3
 

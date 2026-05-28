@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "configuration/Requirement.proto";
+import "configuration/Grant.proto";
+
+message PurchasableComponent
+{
+	repeated Requirement unlock = 1;
+	repeated Requirement cost = 2;
+	repeated Grant grants = 3;
+}

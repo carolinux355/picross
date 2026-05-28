@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-//import "Configuration/Utils.proto";
-import "Configuration/Grant.proto";
+//import "configuration/Utils.proto";
+import "configuration/Grant.proto";
 
 message PlayerLevelCurveComponent
 {

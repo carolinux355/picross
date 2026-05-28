@@ -1,8 +1,9 @@
 syntax = "proto3";
 
-import "Persistence/InventoryState.proto";
-import "Persistence/PlayerLivesState.proto";
-import "Persistence/ShipState.proto";
+import "persistence/InventoryState.proto";
+import "persistence/PlayerLivesState.proto";
+import "persistence/ShipState.proto";
+import "persistence/CraftingState.proto";
 
 message GameState
 {
@@ -12,4 +13,5 @@ message GameState
 	int32 player_level = 4;
 	PlayerLivesState player_lives = 5;
 	repeated ShipState ships = 6;
+	CraftingState crafting = 7;
 }

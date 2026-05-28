@@ -22,6 +22,10 @@
 							"type": "GrantType_Resource",
 							"id": "resource_coin",
 							"amount": 15
+						},
+						{
+							"type": "GrantType_MaxCraftingQueueSize",
+							"amount": 1
 						}
 					]
 				},
@@ -33,6 +37,10 @@
 							"type": "GrantType_Resource",
 							"id": "resource_coin",
 							"amount": 15
+						},
+						{
+							"type": "GrantType_MaxCraftingQueueSize",
+							"amount": 1
 						}
 					]
 				}

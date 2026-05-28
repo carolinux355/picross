@@ -44,6 +44,7 @@ flutter:
     - assets/data/configuration/player_level_curves/
     - assets/data/configuration/loot_tables/
     - assets/data/configuration/ships/
+    - assets/data/configuration/crafting_recipes/
 
   fonts:
     - family: Permanent Marker

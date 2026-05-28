@@ -75,6 +75,7 @@ class InventoryItemView extends StatelessWidget {
     var inventoryManager = context.watch<InventoryManager>();
     var gameDataManager = context.watch<GameDataManager>();
     var data = gameDataManager.getData(resourceId);
+    final resourceName = data!.components.localizedName.namePlural;
     
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -83,12 +84,12 @@ class InventoryItemView extends StatelessWidget {
         child: Center(
           child: Stack(
             children: [
-              Image.asset(data!.components.asset.sprite),
+              Image.asset(data.components.asset.sprite),
               Positioned(
                 bottom: 0,
                 right: 0,
                 child: Text(
-                  '$resourceId: ${inventoryManager.getResourceCount(resourceId)}', 
+                  '$resourceName: ${inventoryManager.getResourceCount(resourceId)}', 
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Permanent Marker',

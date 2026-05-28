@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from Configuration/Components/LevelDifficultyComponent.proto.
+// Generated from configuration/Components/LevelDifficultyComponent.proto.
 
 // @dart = 3.3
 

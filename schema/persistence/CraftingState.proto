@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+import "configuration/Grant.proto";
+import "google/protobuf/timestamp.proto";
+
+message CraftingState
+{
+	repeated CraftingInstance craft_queue = 1;
+	int32 max_queue_size = 2;
+}
+
+message CraftingInstance
+{
+	string crafting_recipe_id = 1;
+	repeated Grant grants = 2;
+	google.protobuf.Timestamp start_time = 3;
+}

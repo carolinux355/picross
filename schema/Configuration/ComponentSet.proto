@@ -1,14 +1,17 @@
 syntax = "proto3";
 
-import "Configuration/Components/LevelDifficultyComponent.proto";
-import "Configuration/Components/TuningComponent.proto";
-import "Configuration/Components/ResourceComponent.proto";
-import "Configuration/Components/AssetComponent.proto";
-import "Configuration/Components/PlayerLevelCurveComponent.proto";
-import "Configuration/Components/FeatureComponent.proto";
-import "Configuration/Components/LootTableComponent.proto";
-import "Configuration/Components/WorldComponent.proto";
-import "Configuration/Components/UpgradableComponent.proto";
+import "configuration/Components/LevelDifficultyComponent.proto";
+import "configuration/Components/TuningComponent.proto";
+import "configuration/Components/ResourceComponent.proto";
+import "configuration/Components/AssetComponent.proto";
+import "configuration/Components/PlayerLevelCurveComponent.proto";
+import "configuration/Components/FeatureComponent.proto";
+import "configuration/Components/LootTableComponent.proto";
+import "configuration/Components/WorldComponent.proto";
+import "configuration/Components/UpgradableComponent.proto";
+import "configuration/Components/CraftingRecipeComponent.proto";
+import "configuration/Components/PurchasableComponent.proto";
+import "configuration/Components/LocalizedNameComponent.proto";
 
 message ComponentSet
 {
@@ -21,4 +24,7 @@ message ComponentSet
 	LootTableComponent loot_table = 7;
 	WorldComponent world = 8;
 	UpgradableComponent upgradable = 9;
+	CraftingRecipeComponent crafting_recipe = 10;
+	PurchasableComponent purchasable = 11;
+	LocalizedNameComponent localized_name = 12;
 }

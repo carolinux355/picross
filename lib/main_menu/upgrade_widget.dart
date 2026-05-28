@@ -17,8 +17,6 @@ class UpgradeWidget extends StatelessWidget {
     var upgradeManager = context.watch<UpgradeManager>();
     var inventoryManager = context.watch<InventoryManager>();
     var upgradeCosts = upgradeManager.getUpgradeCost(upgradableId);
-
-    if (upgradeManager.)
     
     return Column(
       children: [

@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:basic/configuration/game_data_manager.dart';
+import 'package:basic/crafting/crafting_manager.dart';
 import 'package:basic/game_internals/base_manager.dart';
 import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/inventory/inventory_manager.dart';
@@ -9,6 +10,7 @@ import 'package:basic/loot_tables/loot_table_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/player_level/player_level_manager.dart';
 import 'package:basic/player_lives/player_lives_manager.dart';
+import 'package:basic/purchasing/purchase_manager.dart';
 import 'package:basic/requirements/requirement_manager.dart';
 import 'package:basic/ships/ship_manager.dart';
 import 'package:basic/upgrades/upgrade_manager.dart';
@@ -40,6 +42,8 @@ class ServiceProvider {
     _registerManager(context.read<LootTableManager>());
     _registerManager(context.read<UpgradeManager>());
     _registerManager(context.read<ShipManager>());
+    _registerManager(context.read<CraftingManager>());
+    _registerManager(context.read<PurchaseManager>());
 
     // sort managers to initialize in order of dependencies (need to check for circular dependencies)
     _initializationOrder.clear();
