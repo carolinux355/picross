@@ -1,0 +1,13 @@
+{
+	"id": "resource_iron_ore",
+	"components": {
+		"asset": {
+			"sprite": "assets/icons/iron_ore.png"
+		},
+		"resource": {},
+		"localized_name": {
+			"name": "Iron Ore",
+			"name_plural": "Iron Ore"
+		}
+	}
+}

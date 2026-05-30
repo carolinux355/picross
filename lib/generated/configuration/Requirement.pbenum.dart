@@ -21,15 +21,18 @@ class RequirementType extends $pb.ProtobufEnum {
       RequirementType._(1, _omitEnumNames ? '' : 'RequirementType_PlayerLevel');
   static const RequirementType RequirementType_Resource =
       RequirementType._(2, _omitEnumNames ? '' : 'RequirementType_Resource');
+  static const RequirementType RequirementType_PlayerLives =
+      RequirementType._(3, _omitEnumNames ? '' : 'RequirementType_PlayerLives');
 
   static const $core.List<RequirementType> values = <RequirementType>[
     RequirementType_Unset,
     RequirementType_PlayerLevel,
     RequirementType_Resource,
+    RequirementType_PlayerLives,
   ];
 
   static final $core.List<RequirementType?> _byValue =
-      $pb.ProtobufEnum.$_initByValueList(values, 2);
+      $pb.ProtobufEnum.$_initByValueList(values, 3);
   static RequirementType? valueOf($core.int value) =>
       value < 0 || value >= _byValue.length ? null : _byValue[value];
 

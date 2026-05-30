@@ -22,13 +22,15 @@ const RequirementType$json = {
     {'1': 'RequirementType_Unset', '2': 0},
     {'1': 'RequirementType_PlayerLevel', '2': 1},
     {'1': 'RequirementType_Resource', '2': 2},
+    {'1': 'RequirementType_PlayerLives', '2': 3},
   ],
 };
 
 /// Descriptor for `RequirementType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List requirementTypeDescriptor = $convert.base64Decode(
     'Cg9SZXF1aXJlbWVudFR5cGUSGQoVUmVxdWlyZW1lbnRUeXBlX1Vuc2V0EAASHwobUmVxdWlyZW'
-    '1lbnRUeXBlX1BsYXllckxldmVsEAESHAoYUmVxdWlyZW1lbnRUeXBlX1Jlc291cmNlEAI=');
+    '1lbnRUeXBlX1BsYXllckxldmVsEAESHAoYUmVxdWlyZW1lbnRUeXBlX1Jlc291cmNlEAISHwob'
+    'UmVxdWlyZW1lbnRUeXBlX1BsYXllckxpdmVzEAM=');
 
 @$core.Deprecated('Use comparisonTypeDescriptor instead')
 const ComparisonType$json = {

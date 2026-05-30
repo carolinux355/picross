@@ -4,6 +4,7 @@ import "persistence/InventoryState.proto";
 import "persistence/PlayerLivesState.proto";
 import "persistence/ShipState.proto";
 import "persistence/CraftingState.proto";
+import "persistence/PersistedLevelState.proto";
 
 message GameState
 {
@@ -14,4 +15,5 @@ message GameState
 	PlayerLivesState player_lives = 5;
 	repeated ShipState ships = 6;
 	CraftingState crafting = 7;
+	PersistedLevelState persisted_level_state = 8;
 }

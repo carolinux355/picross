@@ -1,0 +1,59 @@
+{
+	"id": "loot_table_world_05",
+	"components": {
+		"loot_table": {
+			"rolls": 
+			[
+				{
+					"type": "LootTableType_WeightedRoll",
+					"outcomes": [
+						{
+							"weight": 20
+						},
+						{
+							"weight": 20,
+							"grants": [
+								{
+									"type": "GrantType_Resource",
+									"id": "resource_coin",
+									"amount": 10
+								}
+							]
+						},
+						{
+							"weight": 15,
+							"grants": [
+								{
+									"type": "GrantType_Resource",
+									"id": "resource_stone",
+									"amount": 4
+								}
+							]
+						},
+						{
+							"weight": 15,
+							"grants": [
+								{
+									"type": "GrantType_Resource",
+									"id": "resource_wood",
+									"amount": 4
+								}
+							]
+						},
+						{
+							"weight": 3,
+							"grants": [
+								{
+									"type": "GrantType_Resource",
+									"id": "resource_gem_01",
+									"amount": 1
+								}
+							]
+						}
+						
+					]
+				}
+			]
+		}
+	}
+}

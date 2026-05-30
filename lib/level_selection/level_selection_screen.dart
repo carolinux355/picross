@@ -78,13 +78,13 @@ class LevelSelectionWorldWidget extends StatelessWidget {
     var playerLivesManager = context.watch<PlayerLivesManager>();
     var worldConfig = gameDataManager.getData(worldId);
     bool isUnlocked = requirementManager.evaluateList(worldConfig!.components.feature.unlock);
-    bool hasLives = playerLivesManager.getLives() > 0;
+    bool hasEnoughLives = playerLivesManager.getLives() >= worldConfig.components.world.requiredLives;
 
     return ListTile(
       enabled:
           true,
       onTap: () {
-        if (isUnlocked && hasLives) {
+        if (isUnlocked && hasEnoughLives) {
           final audioController = context.read<AudioController>();
           audioController.playSfx(SfxType.buttonTap);
       

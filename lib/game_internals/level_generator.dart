@@ -1,10 +1,9 @@
 import 'dart:math';
 
 import 'package:basic/configuration/game_data_manager.dart';
-import 'package:basic/generated/configuration/Grant.pb.dart';
-import 'package:basic/level_selection/levels.dart';
+import 'package:basic/generated/configuration/Utils.pb.dart';
+import 'package:basic/generated/persistence/PersistedLevelState.pb.dart';
 import 'package:basic/loot_tables/loot_table_manager.dart';
-import 'package:basic/math/constant_vector.dart';
 import 'package:logging/logging.dart';
 
 /// Randomly generate a level from given parameters.
@@ -12,7 +11,7 @@ class LevelGenerator {
 
   LevelGenerator();
 
-  Future<GameLevel> generateLevel({required GameDataManager gameDataManager, required LootTableManager lootTableManager, required String worldId}) async {
+  Future<PersistedLevelState> generateLevel({required GameDataManager gameDataManager, required LootTableManager lootTableManager, required String worldId}) async {
     
     final log = Logger('LevelGenerator');
     final random = Random();
@@ -34,10 +33,10 @@ class LevelGenerator {
 
     int totalTiles = width * height;
     List<int> tiles = List.filled(totalTiles, 0);
-    List<int> bombs = [];
     List<int> remainingIndexes = List.generate(totalTiles, (index) => index);
     List<int> filledTiles = [];
-    Map<int, List<Grant>> rewards = {};
+    Map<int, PersistedLevelTileContents> tileContents = {};
+
     remainingIndexes.shuffle();
     int numTiles = max(((100-difficulty)/100) * totalTiles, 3).toInt();
     int numBombs = max((difficulty / 150) * totalTiles, 1).toInt();
@@ -51,33 +50,23 @@ class LevelGenerator {
 
     for(int i = 0; i < numBombs; i++) {
       int index = remainingIndexes.removeLast();
-      bombs.add(index);
+      tileContents[index] ??= PersistedLevelTileContents();
+      tileContents[index]!.isBomb = true;
     }
 
     var lootTable = gameDataManager.getData(worldData.components.world.lootTableId)!.components.lootTable;
     for(int index in filledTiles) {
-      rewards[index] ??= [];
-      rewards[index]!.addAll(lootTableManager.execute(lootTable));
+      tileContents[index] ??= PersistedLevelTileContents();
+      tileContents[index]!.grants.addAll(lootTableManager.execute(lootTable));
     }
 
-    var level = GameLevel(
-      size: ConstantVector2(width, height),
+    var level = PersistedLevelState(
+      size: ProtoVector2(x: width, y: height),
       tiles: tiles,
-      bombs: bombs,
-      rewards: rewards,
-      worldId: worldId
+      tileContents: tileContents.entries,
+      worldId: worldId,
+      isComplete: false
     );
-
-    // debug log level
-    for(int i = 0; i < height; i++){
-      String row = "";
-      for(int j = 0; j < width; j++) {
-        row += "${tiles[i*width + j]}, ";
-      }
-      log.info(row);
-    }
-
-    log.info("Bombs: ${level.bombs}");    
 
     return level;
   }

@@ -2,7 +2,7 @@
 	"id": "resource_plank",
 	"components": {
 		"asset": {
-			"sprite": "assets/icons/coin_03.png"
+			"sprite": "assets/icons/plank.png"
 		},
 		"resource": {},
 		"localized_name": {

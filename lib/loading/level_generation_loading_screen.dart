@@ -2,6 +2,7 @@
 import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/game_internals/level_generator.dart';
 import 'package:basic/loot_tables/loot_table_manager.dart';
+import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/style/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -28,6 +29,7 @@ class _LevelGenerationLoadingScreen extends State<LevelGenerationLoadingScreen> 
   Widget build(BuildContext context) {
     var palette = context.watch<Palette>();
     var gameData = context.watch<GameDataManager>();
+    var gameStateManager = context.watch<GameStateManager>();
     var lootTableManager = context.watch<LootTableManager>();
     var levelGenerator = context.watch<LevelGenerator>();
     
@@ -35,7 +37,9 @@ class _LevelGenerationLoadingScreen extends State<LevelGenerationLoadingScreen> 
 
     var goRouter = GoRouter.of(context);
     generatedLevel.then((result) {
-      goRouter.go('/play/session/generated', extra: result);
+      gameStateManager.gameState.persistedLevelState = result;
+      gameStateManager.save();
+      goRouter.go('/play/session/generated');
     });
 
     return Scaffold(

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import "configuration/Utils.proto";
+import "configuration/Grant.proto";
+import "google/protobuf/duration.proto";
+
+message PersistedLevelState
+{
+	repeated int32 tiles = 1; // list of 0 or 1 tilemap
+	ProtoVector2 size = 2;
+	google.protobuf.Duration play_time = 3;
+	repeated int32 marked_tiles = 4;
+	repeated int32 revealed_tiles = 5;
+	map<int32, PersistedLevelTileContents> tile_contents = 6;
+	string world_id = 7; // config that was used to generate this level
+	bool is_complete = 8;
+}
+
+message PersistedLevelTileContents
+{
+	repeated Grant grants = 1;
+	bool is_bomb = 2;
+}

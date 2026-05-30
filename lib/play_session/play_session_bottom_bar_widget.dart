@@ -3,7 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 //import 'package:basic/style/my_button.dart';
-import 'package:basic/game_internals/level_state.dart';
+import 'package:basic/game_internals/level_state_controller.dart';
 import 'package:basic/play_session/play_session_screen.dart';
 import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class PlaySessionBottomBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final levelState = context.watch<LevelState>();
+    final levelState = context.watch<LevelStateController>();
 
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -54,7 +54,7 @@ class PlayerLivesCounterWidget extends StatelessWidget {
     required this.levelState
   });
 
-  final LevelState levelState;
+  final LevelStateController levelState;
 
   @override
   Widget build(BuildContext context) {

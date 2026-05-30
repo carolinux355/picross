@@ -18,8 +18,7 @@ import 'package:provider/provider.dart';
 
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
-import '../game_internals/level_state.dart';
-import '../level_selection/levels.dart';
+import '../game_internals/level_state_controller.dart';
 import '../style/confetti.dart';
 import '../style/palette.dart';
 import 'game_widget.dart';
@@ -30,9 +29,8 @@ import 'game_widget.dart';
 /// It is a stateful widget because it manages some state of its own,
 /// such as whether the game is in a "celebration" state.
 class PlaySessionScreen extends StatefulWidget {
-  final GameLevel level;
 
-  const PlaySessionScreen(this.level, {super.key});
+  const PlaySessionScreen({super.key});
 
   @override
   State<PlaySessionScreen> createState() => PlaySessionScreenState();
@@ -67,15 +65,15 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
     final gameDataManager = context.watch<GameDataManager>();
     final playerLivesManager = context.watch<PlayerLivesManager>();
 
+    final levelState = gameStateManager.gameState.persistedLevelState;
+
     return MultiProvider(
       providers: [
-        Provider.value(value: widget.level),
         // Create and provide the [LevelState] object that will be used
         // by widgets below this one in the widget tree.
         ChangeNotifierProvider(
           create: (context) =>
-              LevelState(
-                level: widget.level, 
+              LevelStateController(
                 onWin: _playerWon, 
                 onLose: _playerLost, 
                 playerLivesManager: playerLivesManager, 
@@ -105,7 +103,7 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
                   children: [
                     PlaySessionTopBarWidget(),
                     //const Spacer(),
-                    Expanded(child: GameWidget(playerSessionState: this,)),
+                    Expanded(child: GameWidget(playerSessionState: this, levelState: levelState,)),
                     //const Spacer(),
                     PlaySessionBottomBarWidget(playerSessionState: this,),
                   ],

@@ -6,6 +6,8 @@ import 'dart:math';
 
 import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/generated/configuration/Grant.pb.dart';
+import 'package:basic/generated/persistence/PersistedLevelState.pb.dart';
+import 'package:basic/math/constant_vector.dart';
 import 'package:basic/play_session/game_gesture_manager.dart';
 import 'package:basic/play_session/play_session_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,33 +16,35 @@ import 'package:provider/provider.dart';
 
 //import '../audio/audio_controller.dart';
 //import '../audio/sounds.dart';
-import '../game_internals/level_state.dart';
-import '../level_selection/levels.dart';
+import '../game_internals/level_state_controller.dart';
+import '../level_selection/clue_provider.dart';
 
 /// This widget defines the game UI itself, without things like the settings
 /// button or the back button.
 class GameWidget extends StatelessWidget {
-  const GameWidget({super.key, required this.playerSessionState});
+  const GameWidget({super.key, required this.playerSessionState, required this.levelState});
 
   final PlaySessionScreenState playerSessionState;
+  final PersistedLevelState levelState;
 
   @override
   Widget build(BuildContext context) {
-    final level = context.watch<GameLevel>();
-    final levelState = context.watch<LevelState>();
-    double cellSize = _calculateCellSize(context, level);
+    final clueProvider = ClueProvider(levelState: levelState);
+    final levelStateController = context.watch<LevelStateController>();
+
+    double cellSize = _calculateCellSize(context, clueProvider);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Spacer(),
-        PicrossGrid(level: level, levelState: levelState, playerSessionState: playerSessionState, cellSize: cellSize,),
+        PicrossGrid(clueProvider: clueProvider, levelState: levelState, levelStateController: levelStateController, playerSessionState: playerSessionState, cellSize: cellSize,),
         Spacer()
       ],
     );
   }
 
-  double _calculateCellSize(BuildContext context, GameLevel level)
+  double _calculateCellSize(BuildContext context, ClueProvider clueProvider)
   {
     const double minSize = 30;
     // get screen size and calculate cell size based on that and the level size, with some padding
@@ -51,15 +55,15 @@ class GameWidget extends StatelessWidget {
     height = height - 300;
     int horizontalClueMaxCount = 0;
     int verticalClueMaxCount = 0;
-    for(int i = 0; i < level.size.y; i++) {
-      var clue = level.getClueForRow(i);
+    for(int i = 0; i < levelState.size.y; i++) {
+      var clue = clueProvider.getClueForRow(i);
       if (clue.tileClues.length > horizontalClueMaxCount) {
         horizontalClueMaxCount = clue.tileClues.length;
       }
     }
 
-    for(int i = 0; i < level.size.x; i++) {
-      var clue = level.getClueForColumn(i);
+    for(int i = 0; i < levelState.size.x; i++) {
+      var clue = clueProvider.getClueForColumn(i);
       if (clue.tileClues.length > verticalClueMaxCount) {
         verticalClueMaxCount = clue.tileClues.length;
       }
@@ -72,8 +76,8 @@ class GameWidget extends StatelessWidget {
     width = width - horizontalClueOffset;
     height = height - verticalClueOffset;
 
-    var cellWidth = width / level.size.x;
-    var cellHeight = height / level.size.y;
+    var cellWidth = width / levelState.size.x;
+    var cellHeight = height / levelState.size.y;
     return max(min(cellHeight, cellWidth), minSize);
   }
 }
@@ -82,14 +86,16 @@ class GameWidget extends StatelessWidget {
 class PicrossGrid extends StatelessWidget {
   const PicrossGrid({
     super.key,
-    required this.level,
+    required this.clueProvider,
     required this.levelState,
+    required this.levelStateController,
     required this.playerSessionState,
     required this.cellSize,
   });
 
-  final GameLevel level;
-  final LevelState levelState;
+  final ClueProvider clueProvider;
+  final PersistedLevelState levelState;
+  final LevelStateController levelStateController;
   final PlaySessionScreenState playerSessionState;
   final double cellSize;
 
@@ -108,8 +114,8 @@ class PicrossGrid extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               spacing: 2,
               children: [
-                for (int i = 0; i < level.size.x; i++)
-                  VerticalClueWidget(clueData: level.getClueForColumn(i), cellSize: cellSize),
+                for (int i = 0; i < levelState.size.x; i++)
+                  VerticalClueWidget(clueData: clueProvider.getClueForColumn(i), cellSize: cellSize),
               ],
             ),
           ),
@@ -120,12 +126,12 @@ class PicrossGrid extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 spacing: 2,
                 children: [
-                  for (int i = 0; i < level.size.y; i++)
-                    HorizontalClueWidget(clueData: level.getClueForRow(i), cellSize: cellSize,),
+                  for (int i = 0; i < levelState.size.y; i++)
+                    HorizontalClueWidget(clueData: clueProvider.getClueForRow(i), cellSize: cellSize,),
                 ],
               ),
               GameGestureManager(
-                gridSize: level.size,
+                gridSize: ConstantVector2.fromProto(levelState.size),
                 cellSize: cellSize + 2,
                 onTapReceived: _onTap,
                 onDragReceived: _onDragReceived,
@@ -133,8 +139,8 @@ class PicrossGrid extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    for (int i = 0; i < level.size.y; i++)
-                      PicrossRow(level: level, levelState: levelState, row: i, playerSessionState: playerSessionState, cellSize: cellSize),
+                    for (int i = 0; i < levelState.size.y; i++)
+                      PicrossRow(clueProvider: clueProvider, levelStateController: levelStateController, row: i, playerSessionState: playerSessionState, cellSize: cellSize),
                   ]
                 ),
               ),
@@ -151,17 +157,17 @@ class PicrossGrid extends StatelessWidget {
       switch(playerSessionState.getInputMode()) 
       {
         case PlayerSessionInputMode.reveal:
-          levelState.revealTile(index);
+          levelStateController.revealTile(index);
 
         case PlayerSessionInputMode.mark:
-          levelState.toggleMarking(index);
+          levelStateController.toggleMarking(index);
       }
     }
   }
 
   void _onDragReceived(int index) {
     // ignore if marked and in mark mode (only in drag mode)
-    if (levelState.isTileMarked(index) && playerSessionState.getInputMode() == PlayerSessionInputMode.mark) {
+    if (levelStateController.isTileMarked(index) && playerSessionState.getInputMode() == PlayerSessionInputMode.mark) {
       return;
     }
     _onTap(index);
@@ -171,15 +177,15 @@ class PicrossGrid extends StatelessWidget {
 class PicrossRow extends StatelessWidget {
   const PicrossRow({
     super.key,
-    required this.level,
-    required this.levelState,
+    required this.clueProvider,
+    required this.levelStateController,
     required this.row,
     required this.playerSessionState,
     required this.cellSize,
   });
 
-  final GameLevel level;
-  final LevelState levelState;
+  final ClueProvider clueProvider;
+  final LevelStateController levelStateController;
   final int row;
   final PlaySessionScreenState playerSessionState;
   final double cellSize;
@@ -192,8 +198,8 @@ class PicrossRow extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            for (int j = 0; j < level.size.x; j++)
-              PicrossCell(level: level, levelState: levelState, row: row, column: j, playerSessionState: playerSessionState, cellSize: cellSize),
+            for (int j = 0; j < levelStateController.size().x; j++)
+              PicrossCell(clueProvider: clueProvider, levelStateController: levelStateController, row: row, column: j, playerSessionState: playerSessionState, cellSize: cellSize),
             //HorizontalBombCountClueEntry(clueData: clueData, cellSize: cellSize)
           ],
         ),
@@ -267,51 +273,6 @@ class HorizontalClueEntry extends StatelessWidget {
   }
 }
 
-class HorizontalBombCountClueEntry extends StatelessWidget {
-  const HorizontalBombCountClueEntry({
-    super.key,
-    required this.clueData,
-    required this.cellSize,
-  });
-
-  final ClueData clueData;
-  final double cellSize;
-
-  @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    var warningTextTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary, fontSize: 12);
-
-    return Container(
-      color: theme.colorScheme.tertiary,
-      child: SizedBox(
-        height: cellSize,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 0.0, right: 2.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                spacing: 1,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.warning, color: Colors.red, size: warningTextTheme?.fontSize ?? 12),
-                      Text(clueData.bombCount.toString(), style: warningTextTheme,)
-                    ],
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class VerticalClueWidget extends StatelessWidget {
   const VerticalClueWidget({
     super.key,
@@ -356,16 +317,16 @@ class VerticalClueWidget extends StatelessWidget {
 class PicrossCell extends StatefulWidget {
   const PicrossCell({
     super.key,
-    required this.level,
-    required this.levelState,
+    required this.clueProvider,
+    required this.levelStateController,
     required this.row,
     required this.column,
     required this.playerSessionState,
     required this.cellSize, 
   });
 
-  final GameLevel level;
-  final LevelState levelState;
+  final ClueProvider clueProvider;
+  final LevelStateController levelStateController;
   final int row;
   final int column;
   final PlaySessionScreenState playerSessionState;
@@ -400,8 +361,8 @@ class _PicrossCellState extends State<PicrossCell> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    int index = widget.row * widget.level.size.x + widget.column;
-    if (!_didReveal && widget.levelState.revealedTiles.contains(index)) {
+    int index = widget.row * widget.levelStateController.size().x + widget.column;
+    if (!_didReveal && widget.levelStateController.state.revealedTiles.contains(index)) {
       _didReveal = true;
       _animationController.forward();
     }
@@ -419,8 +380,8 @@ class _PicrossCellState extends State<PicrossCell> with SingleTickerProviderStat
               return Transform(
                 transform: Matrix4.rotationY(_animation.value * pi),
                 alignment: Alignment.center,
-                child: _animation.value < 0.5 ? _drawHiddenState(context, widget.level, widget.levelState, widget.cellSize) :
-                  _drawRevealedState(context, widget.level, widget.levelState, widget.cellSize)
+                child: _animation.value < 0.5 ? _drawHiddenState(context, widget.levelStateController, widget.cellSize) :
+                  _drawRevealedState(context, widget.clueProvider, widget.levelStateController, widget.cellSize)
               );
             }
           ),
@@ -428,9 +389,9 @@ class _PicrossCellState extends State<PicrossCell> with SingleTickerProviderStat
     );
   }
 
-  Widget _drawHiddenState(BuildContext context, GameLevel level, LevelState levelState, double cellSize) {
+  Widget _drawHiddenState(BuildContext context, LevelStateController levelState, double cellSize) {
     var theme = Theme.of(context);
-    int index = widget.row * level.size.x + widget.column;
+    int index = widget.row * levelState.size().x + widget.column;
 
     // draw disabled tiles
     if (levelState.disabledTiles.contains(index)) {
@@ -460,13 +421,13 @@ class _PicrossCellState extends State<PicrossCell> with SingleTickerProviderStat
       child: Icon(Icons.help),);
   }
 
-  Widget _drawRevealedState(BuildContext context, GameLevel level, LevelState levelState, double cellSize) {
-    int index = widget.row * level.size.x + widget.column;
+  Widget _drawRevealedState(BuildContext context, ClueProvider clueProvider, LevelStateController levelState, double cellSize) {
+    int index = widget.row * levelState.size().x + widget.column;
 
     // draw bombs
-    if (levelState.revealedTiles.contains(index)) {
+    if (levelState.state.revealedTiles.contains(index)) {
       // draw bomb state
-      if (level.bombs.contains(index)) {
+      if (levelState.bombs.contains(index)) {
         return Container(
           width: cellSize,
           height: cellSize,
@@ -488,17 +449,17 @@ class _PicrossCellState extends State<PicrossCell> with SingleTickerProviderStat
 
     var grant = levelState.getRewardPreviewAtIndex(index);
     // draw revealed tile
-    if (levelState.revealedTiles.contains(index)) {
+    if (levelState.state.revealedTiles.contains(index)) {
       // draw revealed tile
       return Container(
         width: cellSize,
         height: cellSize,
-        color: level.tiles[index] > 0 ? const Color.fromARGB(255, 0, 21, 137) : Colors.white,
+        color: levelState.state.tiles[index] > 0 ? const Color.fromARGB(255, 0, 21, 137) : Colors.white,
         child: grant != null ? PicrossCellRewardPreview(grant: grant, cellSize: cellSize,) : null
       );
     }
 
-    return _drawHiddenState(context, level, levelState, cellSize);
+    return _drawHiddenState(context, levelState, cellSize);
   }
 }
 

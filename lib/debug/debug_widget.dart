@@ -1,6 +1,6 @@
 import 'package:basic/generated/configuration/Grant.pb.dart';
-import 'package:basic/generated/configuration/Grant.pbenum.dart';
 import 'package:basic/grants/grant_manager.dart';
+import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +10,7 @@ class DebugWidget extends SimpleDialog {
   @override
   Widget build(BuildContext context) {
     var grantManager = context.read<GrantManager>();
+    var playerLivesManager = context.read<PlayerLivesManager>();
     
     return SizedBox(
       width: 300,
@@ -44,6 +45,10 @@ class DebugWidget extends SimpleDialog {
                 ElevatedButton(
                   onPressed: () => grantManager.tryGrant(Grant(type: GrantType.GrantType_Resource, id: 'resource_stone', amount: 10)),
                   child: Text('Grant 10 stone')
+                ),
+                ElevatedButton(
+                  onPressed: () => playerLivesManager.addLives(1, false),
+                  child: Text('Restore Lives (1)')
                 ),
               ],
             )

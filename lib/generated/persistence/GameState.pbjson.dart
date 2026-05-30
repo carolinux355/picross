@@ -47,6 +47,14 @@ const GameState$json = {
       '6': '.CraftingState',
       '10': 'crafting'
     },
+    {
+      '1': 'persisted_level_state',
+      '3': 8,
+      '4': 1,
+      '5': 11,
+      '6': '.PersistedLevelState',
+      '10': 'persistedLevelState'
+    },
   ],
 };
 
@@ -57,4 +65,5 @@ final $typed_data.Uint8List gameStateDescriptor = $convert.base64Decode(
     'dmVudG9yeRIhCgxwbGF5ZXJfbGV2ZWwYBCABKAVSC3BsYXllckxldmVsEjQKDHBsYXllcl9saX'
     'ZlcxgFIAEoCzIRLlBsYXllckxpdmVzU3RhdGVSC3BsYXllckxpdmVzEiAKBXNoaXBzGAYgAygL'
     'MgouU2hpcFN0YXRlUgVzaGlwcxIqCghjcmFmdGluZxgHIAEoCzIOLkNyYWZ0aW5nU3RhdGVSCG'
-    'NyYWZ0aW5n');
+    'NyYWZ0aW5nEkgKFXBlcnNpc3RlZF9sZXZlbF9zdGF0ZRgIIAEoCzIULlBlcnNpc3RlZExldmVs'
+    'U3RhdGVSE3BlcnNpc3RlZExldmVsU3RhdGU=');

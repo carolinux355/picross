@@ -2,12 +2,12 @@
 	"id": "resource_stone",
 	"components": {
 		"asset": {
-			"sprite": "assets/icons/coin_03.png"
+			"sprite": "assets/icons/stone.png"
 		},
 		"resource": {},
 		"localized_name": {
 			"name": "Stone",
-			"name_plural": "Stone"
+			"name_plural": "Stones"
 		}
 	}
 }

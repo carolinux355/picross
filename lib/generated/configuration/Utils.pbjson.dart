@@ -27,3 +27,31 @@ const IntegerRange$json = {
 /// Descriptor for `IntegerRange`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List integerRangeDescriptor = $convert.base64Decode(
     'CgxJbnRlZ2VyUmFuZ2USEAoDbWluGAEgASgFUgNtaW4SEAoDbWF4GAIgASgFUgNtYXg=');
+
+@$core.Deprecated('Use protoVector2Descriptor instead')
+const ProtoVector2$json = {
+  '1': 'ProtoVector2',
+  '2': [
+    {'1': 'x', '3': 1, '4': 1, '5': 5, '10': 'x'},
+    {'1': 'y', '3': 2, '4': 1, '5': 5, '10': 'y'},
+  ],
+};
+
+/// Descriptor for `ProtoVector2`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List protoVector2Descriptor = $convert
+    .base64Decode('CgxQcm90b1ZlY3RvcjISDAoBeBgBIAEoBVIBeBIMCgF5GAIgASgFUgF5');
+
+@$core.Deprecated('Use protoVector3Descriptor instead')
+const ProtoVector3$json = {
+  '1': 'ProtoVector3',
+  '2': [
+    {'1': 'x', '3': 1, '4': 1, '5': 5, '10': 'x'},
+    {'1': 'y', '3': 2, '4': 1, '5': 5, '10': 'y'},
+    {'1': 'z', '3': 3, '4': 1, '5': 5, '10': 'z'},
+  ],
+};
+
+/// Descriptor for `ProtoVector3`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List protoVector3Descriptor = $convert.base64Decode(
+    'CgxQcm90b1ZlY3RvcjMSDAoBeBgBIAEoBVIBeBIMCgF5GAIgASgFUgF5EgwKAXoYAyABKAVSAX'
+    'o=');

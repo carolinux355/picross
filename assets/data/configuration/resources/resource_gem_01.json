@@ -2,7 +2,7 @@
 	"id": "resource_gem_01",
 	"components": {
 		"asset": {
-			"sprite": "assets/icons/tilePink_10.png"
+			"sprite": "assets/icons/gem.png"
 		},
 		"resource": {},
 		"localized_name": {

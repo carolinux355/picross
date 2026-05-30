@@ -2,7 +2,9 @@
 	"id": "world_05",
 	"components": {
 		"world": {
-			"loot_table_id": "loot_table_world_01"
+			"loot_table_id": "loot_table_world_05",
+			"required_lives": 5,
+			"base_xp": 25
 		},
 		"feature": {
 			"unlock": [

@@ -16,6 +16,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'CraftingState.pb.dart' as $3;
 import 'InventoryState.pb.dart' as $0;
+import 'PersistedLevelState.pb.dart' as $4;
 import 'PlayerLivesState.pb.dart' as $1;
 import 'ShipState.pb.dart' as $2;
 
@@ -30,6 +31,7 @@ class GameState extends $pb.GeneratedMessage {
     $1.PlayerLivesState? playerLives,
     $core.Iterable<$2.ShipState>? ships,
     $3.CraftingState? crafting,
+    $4.PersistedLevelState? persistedLevelState,
   }) {
     final result = create();
     if (numLevelsPlayed != null) result.numLevelsPlayed = numLevelsPlayed;
@@ -39,6 +41,8 @@ class GameState extends $pb.GeneratedMessage {
     if (playerLives != null) result.playerLives = playerLives;
     if (ships != null) result.ships.addAll(ships);
     if (crafting != null) result.crafting = crafting;
+    if (persistedLevelState != null)
+      result.persistedLevelState = persistedLevelState;
     return result;
   }
 
@@ -65,6 +69,9 @@ class GameState extends $pb.GeneratedMessage {
         subBuilder: $2.ShipState.create)
     ..aOM<$3.CraftingState>(7, _omitFieldNames ? '' : 'crafting',
         subBuilder: $3.CraftingState.create)
+    ..aOM<$4.PersistedLevelState>(
+        8, _omitFieldNames ? '' : 'persistedLevelState',
+        subBuilder: $4.PersistedLevelState.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -147,6 +154,17 @@ class GameState extends $pb.GeneratedMessage {
   void clearCrafting() => $_clearField(7);
   @$pb.TagNumber(7)
   $3.CraftingState ensureCrafting() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  $4.PersistedLevelState get persistedLevelState => $_getN(7);
+  @$pb.TagNumber(8)
+  set persistedLevelState($4.PersistedLevelState value) => $_setField(8, value);
+  @$pb.TagNumber(8)
+  $core.bool hasPersistedLevelState() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearPersistedLevelState() => $_clearField(8);
+  @$pb.TagNumber(8)
+  $4.PersistedLevelState ensurePersistedLevelState() => $_ensure(7);
 }
 
 const $core.bool _omitFieldNames =

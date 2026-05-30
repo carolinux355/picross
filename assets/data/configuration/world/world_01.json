@@ -2,7 +2,9 @@
 	"id": "world_01",
 	"components": {
 		"world": {
-			"loot_table_id": "loot_table_world_01"
+			"loot_table_id": "loot_table_world_01",
+			"required_lives": 1,
+			"base_xp": 5
 		},
 		"level_difficulty": {
 			"size_range": {

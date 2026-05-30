@@ -19,9 +19,13 @@ export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 class WorldComponent extends $pb.GeneratedMessage {
   factory WorldComponent({
     $core.String? lootTableId,
+    $core.int? requiredLives,
+    $core.int? baseXp,
   }) {
     final result = create();
     if (lootTableId != null) result.lootTableId = lootTableId;
+    if (requiredLives != null) result.requiredLives = requiredLives;
+    if (baseXp != null) result.baseXp = baseXp;
     return result;
   }
 
@@ -38,6 +42,8 @@ class WorldComponent extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'WorldComponent',
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'lootTableId')
+    ..aI(2, _omitFieldNames ? '' : 'requiredLives')
+    ..aI(3, _omitFieldNames ? '' : 'baseXp')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -67,6 +73,24 @@ class WorldComponent extends $pb.GeneratedMessage {
   $core.bool hasLootTableId() => $_has(0);
   @$pb.TagNumber(1)
   void clearLootTableId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get requiredLives => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set requiredLives($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasRequiredLives() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRequiredLives() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get baseXp => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set baseXp($core.int value) => $_setSignedInt32(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasBaseXp() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBaseXp() => $_clearField(3);
 }
 
 const $core.bool _omitFieldNames =

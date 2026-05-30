@@ -29,6 +29,7 @@ Raw resources:
     • Stone
     • Vines
     • Twigs
+    • Iron ore
     • Small fish/worms: sell for low price or use as bait in fishing loop
     • Fruits/Veggies naturally occurring
 
@@ -44,11 +45,13 @@ Craftable resources:
     • Sails
     • Paint
     • Cloth
+    • Barrels
     • Powerups
     • Decorations
 
 Note crafting is the primary time gate for player progression. A skilled or lucky player can get through many levels of content without losing lives, but must invest time to get required resources for upgrading the ship and progressing story.
 Crafting recipes can be gifted or purchased, unlocked at various player levels. Crafting costs input resources + time. Crafting gives a fixed output of resource.
+The craft queue can process one item at a time. The max queue size increases with player level.
 
 Other Mechanics:
 
@@ -75,6 +78,17 @@ Quests:
 
 Town:
     • Hub for crafting and quests and other features
+    • Shop that sells powerups, ship decorations, loot chests, daily deals, etc
 
 Island:
     • Can eventually buy a private island to farm, decorate, etc
+
+Power Ups:
+    • Can be crafted/purchased
+    • Reveal row/column/square
+    • Disable bombs in region
+    • Double down (roll for treasure)
+
+Combos:
+    • Revealing tiles in rapid succession triggers a combo. Get 5 in a row and earn a bonus resource (eg chest, token towards something, soft premium?)
+        ◦ Soft premium could be resource that is used to by decorations, totally optional but gives player sense of mastery

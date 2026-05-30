@@ -1,0 +1,13 @@
+{
+	"id": "resource_string",
+	"components": {
+		"asset": {
+			"sprite": "assets/icons/string.png"
+		},
+		"resource": {},
+		"localized_name": {
+			"name": "String",
+			"name_plural": "Strings"
+		}
+	}
+}

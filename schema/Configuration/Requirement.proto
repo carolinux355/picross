@@ -13,6 +13,7 @@ enum RequirementType
 	RequirementType_Unset = 0;
 	RequirementType_PlayerLevel = 1;
 	RequirementType_Resource = 2;
+	RequirementType_PlayerLives = 3;
 }
 
 enum ComparisonType

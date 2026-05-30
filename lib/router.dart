@@ -3,17 +3,17 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:basic/crafting/crafting_screen.dart';
-import 'package:basic/game_internals/level_state.dart';
+import 'package:basic/game_internals/level_state_controller.dart';
 import 'package:basic/inventory/inventory_screen.dart';
 import 'package:basic/loading/level_generation_loading_screen.dart';
 import 'package:basic/loading/loading_screen.dart';
+import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/win_game/lost_game_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'level_selection/level_selection_screen.dart';
-import 'level_selection/levels.dart';
 import 'main_menu/main_menu_screen.dart';
 import 'play_session/play_session_screen.dart';
 import 'settings/settings_screen.dart';
@@ -36,24 +36,31 @@ final router = GoRouter(
       routes: [
         GoRoute(
           path: 'play',
-          pageBuilder: (context, state) => buildMyTransition<void>(
-            key: const ValueKey('play'),
-            color: context.watch<Palette>().backgroundLevelSelection,
-            child: const LevelSelectionScreen(key: Key('level selection')),
-          ),
+          pageBuilder: (context, state) { 
+            var gameStateManager = context.read<GameStateManager>();
+            if (gameStateManager.gameState.hasPersistedLevelState() && !gameStateManager.gameState.persistedLevelState.isComplete) {
+              // go directly to the persisted level
+              return buildMyTransition<void>(
+                key: const ValueKey('persisted_level'),
+                color: context.watch<Palette>().backgroundPlaySession,
+                child: const PlaySessionScreen(),
+              );
+            }
+            // else go to level select
+            return buildMyTransition<void>(
+              key: const ValueKey('play'),
+              color: context.watch<Palette>().backgroundLevelSelection,
+              child: const LevelSelectionScreen(key: Key('level selection')),
+            );
+          },
           routes: [
             GoRoute(
               path: 'session/:level',
-              pageBuilder: (context, state) {
-                GameLevel level = state.extra! as GameLevel;
-                
+              pageBuilder: (context, state) {                
                 return buildMyTransition<void>(
                   key: const ValueKey('level'),
                   color: context.watch<Palette>().backgroundPlaySession,
-                  child: PlaySessionScreen(
-                    level,
-                    key: const Key('play session'),
-                  ),
+                  child: PlaySessionScreen(),
                 );
               },
             ),

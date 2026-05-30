@@ -54,6 +54,9 @@ class RequirementManager extends BaseManager {
 
       case RequirementType.RequirementType_Resource:
         return inventoryManager.getResourceCount(requirement.id);
+
+      case RequirementType.RequirementType_PlayerLives:
+        return gameStateManager.gameState.playerLives.numLives;
     }
 
     return 0;
