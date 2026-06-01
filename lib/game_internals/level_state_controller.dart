@@ -1,5 +1,4 @@
 import 'package:basic/configuration/game_data_manager.dart';
-import 'package:basic/game_internals/score.dart';
 import 'package:basic/generated/configuration/Grant.pb.dart';
 import 'package:basic/generated/configuration/Utils.pb.dart';
 import 'package:basic/generated/persistence/PersistedLevelState.pb.dart';
@@ -44,7 +43,6 @@ class LevelStateController extends ChangeNotifier {
   Map<int, List<Grant>> rewards = {};
   List<int> bombs = [];
 
-  late DateTime _startOfPlay;
   final List<int> disabledTiles = [];
 
   void _initialize() {
@@ -59,7 +57,6 @@ class LevelStateController extends ChangeNotifier {
       }
     }
 
-    _startOfPlay = DateTime.now();
     _checkAutoFill();
     notifyListeners();
   }
@@ -132,24 +129,26 @@ class LevelStateController extends ChangeNotifier {
 
     var world = gameDataManager.getData(state.worldId);
 
-    // process win
-    final score = Score(
-      DateTime.now().difference(_startOfPlay),
-    );
-
     // consolidate all rewards earned
     List<Grant> pendingRewards = [];
     for(var kvp in state.tileContents.entries) {
       pendingRewards.addAll(kvp.value.grants);
     }    
     pendingRewards = grantManager.consolidateGrants(pendingRewards);
+
+    bool perfectScore = true;
+    if (state.revealedTiles.toSet().intersection(bombs.toSet()).isNotEmpty) {
+      perfectScore = false;
+    }
+    int xp = world!.components.world.baseXp * state.difficulty + (perfectScore ? world.components.world.baseXp * gameDataManager.getTuning().perfectScoreXpBonus : 0);
+
     pendingRewards.add(Grant(
       type: GrantType.GrantType_Xp,
       id: gameDataManager.getTuning().xpResourceId,
-      amount: world!.components.world.baseXp,
+      amount: xp,
     ));
 
-    LevelCompleteState levelCompleteState = LevelCompleteState(rewards: List.from(pendingRewards), score: score, worldId: state.worldId);
+    LevelCompleteState levelCompleteState = LevelCompleteState(rewards: List.from(pendingRewards), worldId: state.worldId);
 
     var gameState = gameStateManager.gameState;
     gameState.numLevelsPlayed++;
@@ -239,7 +238,6 @@ class LevelStateController extends ChangeNotifier {
 class LevelCompleteState
 {
   final List<Grant> rewards;
-  final Score score;
   final String worldId;
-  LevelCompleteState({required this.rewards, required this.score, required this.worldId});
+  LevelCompleteState({required this.rewards, required this.worldId});
 }

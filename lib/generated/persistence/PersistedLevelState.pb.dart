@@ -13,10 +13,8 @@
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
-import 'package:protobuf/well_known_types/google/protobuf/duration.pb.dart'
-    as $1;
 
-import '../configuration/Grant.pb.dart' as $2;
+import '../configuration/Grant.pb.dart' as $1;
 import '../configuration/Utils.pb.dart' as $0;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
@@ -25,7 +23,7 @@ class PersistedLevelState extends $pb.GeneratedMessage {
   factory PersistedLevelState({
     $core.Iterable<$core.int>? tiles,
     $0.ProtoVector2? size,
-    $1.Duration? playTime,
+    $core.int? difficulty,
     $core.Iterable<$core.int>? markedTiles,
     $core.Iterable<$core.int>? revealedTiles,
     $core.Iterable<$core.MapEntry<$core.int, PersistedLevelTileContents>>?
@@ -36,7 +34,7 @@ class PersistedLevelState extends $pb.GeneratedMessage {
     final result = create();
     if (tiles != null) result.tiles.addAll(tiles);
     if (size != null) result.size = size;
-    if (playTime != null) result.playTime = playTime;
+    if (difficulty != null) result.difficulty = difficulty;
     if (markedTiles != null) result.markedTiles.addAll(markedTiles);
     if (revealedTiles != null) result.revealedTiles.addAll(revealedTiles);
     if (tileContents != null) result.tileContents.addEntries(tileContents);
@@ -60,8 +58,7 @@ class PersistedLevelState extends $pb.GeneratedMessage {
     ..p<$core.int>(1, _omitFieldNames ? '' : 'tiles', $pb.PbFieldType.K3)
     ..aOM<$0.ProtoVector2>(2, _omitFieldNames ? '' : 'size',
         subBuilder: $0.ProtoVector2.create)
-    ..aOM<$1.Duration>(3, _omitFieldNames ? '' : 'playTime',
-        subBuilder: $1.Duration.create)
+    ..aI(3, _omitFieldNames ? '' : 'difficulty')
     ..p<$core.int>(4, _omitFieldNames ? '' : 'markedTiles', $pb.PbFieldType.K3)
     ..p<$core.int>(
         5, _omitFieldNames ? '' : 'revealedTiles', $pb.PbFieldType.K3)
@@ -110,15 +107,13 @@ class PersistedLevelState extends $pb.GeneratedMessage {
   $0.ProtoVector2 ensureSize() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  $1.Duration get playTime => $_getN(2);
+  $core.int get difficulty => $_getIZ(2);
   @$pb.TagNumber(3)
-  set playTime($1.Duration value) => $_setField(3, value);
+  set difficulty($core.int value) => $_setSignedInt32(2, value);
   @$pb.TagNumber(3)
-  $core.bool hasPlayTime() => $_has(2);
+  $core.bool hasDifficulty() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPlayTime() => $_clearField(3);
-  @$pb.TagNumber(3)
-  $1.Duration ensurePlayTime() => $_ensure(2);
+  void clearDifficulty() => $_clearField(3);
 
   @$pb.TagNumber(4)
   $pb.PbList<$core.int> get markedTiles => $_getList(3);
@@ -151,7 +146,7 @@ class PersistedLevelState extends $pb.GeneratedMessage {
 
 class PersistedLevelTileContents extends $pb.GeneratedMessage {
   factory PersistedLevelTileContents({
-    $core.Iterable<$2.Grant>? grants,
+    $core.Iterable<$1.Grant>? grants,
     $core.bool? isBomb,
   }) {
     final result = create();
@@ -172,8 +167,8 @@ class PersistedLevelTileContents extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'PersistedLevelTileContents',
       createEmptyInstance: create)
-    ..pPM<$2.Grant>(1, _omitFieldNames ? '' : 'grants',
-        subBuilder: $2.Grant.create)
+    ..pPM<$1.Grant>(1, _omitFieldNames ? '' : 'grants',
+        subBuilder: $1.Grant.create)
     ..aOB(2, _omitFieldNames ? '' : 'isBomb')
     ..hasRequiredFields = false;
 
@@ -199,7 +194,7 @@ class PersistedLevelTileContents extends $pb.GeneratedMessage {
   static PersistedLevelTileContents? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $pb.PbList<$2.Grant> get grants => $_getList(0);
+  $pb.PbList<$1.Grant> get grants => $_getList(0);
 
   @$pb.TagNumber(2)
   $core.bool get isBomb => $_getBF(1);

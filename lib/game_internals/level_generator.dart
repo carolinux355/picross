@@ -62,6 +62,7 @@ class LevelGenerator {
 
     var level = PersistedLevelState(
       size: ProtoVector2(x: width, y: height),
+      difficulty: difficulty,
       tiles: tiles,
       tileContents: tileContents.entries,
       worldId: worldId,

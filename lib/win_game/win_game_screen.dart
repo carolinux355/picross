@@ -47,14 +47,6 @@ class WinGameScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'Score: ${levelCompleteState.score.score}\n'
-                    'Time: ${levelCompleteState.score.formattedTime}',
-                    style: const TextStyle(
-                      fontFamily: 'Permanent Marker',
-                      fontSize: 20,
-                    ),
-                  ),
-                  Text(
                     'Rewards:',
                     style: const TextStyle(
                       fontFamily: 'Permanent Marker',

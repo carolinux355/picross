@@ -13,13 +13,13 @@
 				},
 				{
 					"type": "RequirementType_Resource",
-					"id": "resource_wood",
-					"amount": 25
+					"id": "resource_plank",
+					"amount": 20
 				},
 				{
 					"type": "RequirementType_Resource",
-					"id": "resource_stone",
-					"amount": 25
+					"id": "resource_iron_ore",
+					"amount": 10
 				}
 			],
 			"next_id": "ship_04",

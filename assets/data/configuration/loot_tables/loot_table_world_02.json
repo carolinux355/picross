@@ -21,7 +21,7 @@
 							]
 						},
 						{
-							"weight": 2,
+							"weight": 5,
 							"grants": [
 								{
 									"type": "GrantType_Resource",
@@ -31,11 +31,21 @@
 							]
 						},
 						{
-							"weight": 2,
+							"weight": 5,
 							"grants": [
 								{
 									"type": "GrantType_Resource",
 									"id": "resource_wood",
+									"amount": 1
+								}
+							]
+						},
+						{
+							"weight": 5,
+							"grants": [
+								{
+									"type": "GrantType_Resource",
+									"id": "resource_iron_ore",
 									"amount": 1
 								}
 							]

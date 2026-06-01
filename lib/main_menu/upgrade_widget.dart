@@ -16,7 +16,6 @@ class UpgradeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var upgradeManager = context.watch<UpgradeManager>();
     var inventoryManager = context.watch<InventoryManager>();
-    var upgradeCosts = upgradeManager.getUpgradeCost(upgradableId);
     
     return Column(
       children: [
@@ -28,7 +27,7 @@ class UpgradeWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               spacing: 10,
               children: [
-                for (var cost in upgradeCosts)
+                for (var cost in upgradeManager.getUpgradeCost(upgradableId))
                   UpgradeCostWidget(cost: cost)
               ],
             ),
@@ -66,6 +65,7 @@ class UpgradeCostWidget extends StatelessWidget {
     var inventoryManager = context.watch<InventoryManager>();
     
     var costData = gameDataManager.getData(cost.id);
+    var ownedAmount = inventoryManager.getResourceCount(cost.id);
 
     return Container(
       color: Colors.blueGrey,
@@ -85,7 +85,7 @@ class UpgradeCostWidget extends StatelessWidget {
                 color: Color(0x80000000),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-                  child: Text(cost.amount.toString(),
+                  child: Text('${ownedAmount.toString()}/${cost.amount.toString()}',
                   style: TextStyle(
                     fontFamily: 'Permanent Marker', 
                     color: inventoryManager.getResourceCount(cost.id) >= cost.amount ? Colors.white : Colors.red

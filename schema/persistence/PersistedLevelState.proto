@@ -2,13 +2,12 @@ syntax = "proto3";
 
 import "configuration/Utils.proto";
 import "configuration/Grant.proto";
-import "google/protobuf/duration.proto";
 
 message PersistedLevelState
 {
 	repeated int32 tiles = 1; // list of 0 or 1 tilemap
 	ProtoVector2 size = 2;
-	google.protobuf.Duration play_time = 3;
+	int32 difficulty = 3;
 	repeated int32 marked_tiles = 4;
 	repeated int32 revealed_tiles = 5;
 	map<int32, PersistedLevelTileContents> tile_contents = 6;

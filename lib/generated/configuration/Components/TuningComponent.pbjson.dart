@@ -44,6 +44,13 @@ const TuningComponent$json = {
       '10': 'lifeRefillDuration'
     },
     {'1': 'initial_ships', '3': 6, '4': 3, '5': 9, '10': 'initialShips'},
+    {
+      '1': 'perfect_score_xp_bonus',
+      '3': 7,
+      '4': 1,
+      '5': 5,
+      '10': 'perfectScoreXpBonus'
+    },
   ],
 };
 
@@ -54,4 +61,5 @@ final $typed_data.Uint8List tuningComponentDescriptor = $convert.base64Decode(
     'X2N1cnZlX2lkGAMgASgJUhJwbGF5ZXJMZXZlbEN1cnZlSWQSJAoOeHBfcmVzb3VyY2VfaWQYBC'
     'ABKAlSDHhwUmVzb3VyY2VJZBJLChRsaWZlX3JlZmlsbF9kdXJhdGlvbhgFIAEoCzIZLmdvb2ds'
     'ZS5wcm90b2J1Zi5EdXJhdGlvblISbGlmZVJlZmlsbER1cmF0aW9uEiMKDWluaXRpYWxfc2hpcH'
-    'MYBiADKAlSDGluaXRpYWxTaGlwcw==');
+    'MYBiADKAlSDGluaXRpYWxTaGlwcxIzChZwZXJmZWN0X3Njb3JlX3hwX2JvbnVzGAcgASgFUhNw'
+    'ZXJmZWN0U2NvcmVYcEJvbnVz');

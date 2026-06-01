@@ -26,6 +26,7 @@ class TuningComponent extends $pb.GeneratedMessage {
     $core.String? xpResourceId,
     $0.Duration? lifeRefillDuration,
     $core.Iterable<$core.String>? initialShips,
+    $core.int? perfectScoreXpBonus,
   }) {
     final result = create();
     if (worldIds != null) result.worldIds.addAll(worldIds);
@@ -37,6 +38,8 @@ class TuningComponent extends $pb.GeneratedMessage {
     if (lifeRefillDuration != null)
       result.lifeRefillDuration = lifeRefillDuration;
     if (initialShips != null) result.initialShips.addAll(initialShips);
+    if (perfectScoreXpBonus != null)
+      result.perfectScoreXpBonus = perfectScoreXpBonus;
     return result;
   }
 
@@ -59,6 +62,7 @@ class TuningComponent extends $pb.GeneratedMessage {
     ..aOM<$0.Duration>(5, _omitFieldNames ? '' : 'lifeRefillDuration',
         subBuilder: $0.Duration.create)
     ..pPS(6, _omitFieldNames ? '' : 'initialShips')
+    ..aI(7, _omitFieldNames ? '' : 'perfectScoreXpBonus')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -117,6 +121,15 @@ class TuningComponent extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(6)
   $pb.PbList<$core.String> get initialShips => $_getList(5);
+
+  @$pb.TagNumber(7)
+  $core.int get perfectScoreXpBonus => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set perfectScoreXpBonus($core.int value) => $_setSignedInt32(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasPerfectScoreXpBonus() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearPerfectScoreXpBonus() => $_clearField(7);
 }
 
 const $core.bool _omitFieldNames =

@@ -41,6 +41,26 @@
 							]
 						},
 						{
+							"weight": 5,
+							"grants": [
+								{
+									"type": "GrantType_Resource",
+									"id": "resource_iron_ore",
+									"amount": 2
+								}
+							]
+						},
+						{
+							"weight": 2,
+							"grants": [
+								{
+									"type": "GrantType_Resource",
+									"id": "resource_plank",
+									"amount": 1
+								}
+							]
+						},
+						{
 							"weight": 1,
 							"grants": [
 								{

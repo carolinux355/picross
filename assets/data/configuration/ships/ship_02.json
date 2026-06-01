@@ -13,8 +13,8 @@
 				},
 				{
 					"type": "RequirementType_Resource",
-					"id": "resource_wood",
-					"amount": 20
+					"id": "resource_plank",
+					"amount": 5
 				},
 				{
 					"type": "RequirementType_Resource",

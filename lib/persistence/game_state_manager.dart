@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:basic/constants.dart';
 import 'package:basic/game_internals/base_manager.dart';
+import 'package:basic/utils/time_utils.dart';
 import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:basic/generated/persistence/GameState.pb.dart';
@@ -11,6 +12,10 @@ class GameStateManager extends BaseManager {
   late String filePath;
   late GameState gameState;
   final Logger logger = Logger('GameStateManager');
+
+  static const int kSaveTimeStepMs = 5000; // save at most once every 0.5s
+  DateTime? lastSaveTime;
+  Future? scheduledSave;
 
   GameStateManager();
 
@@ -37,11 +42,26 @@ class GameStateManager extends BaseManager {
   }
 
   Future<void> save() async {
-    // TODO: only save once per timestep instead of every time save is called
-    logger.info('saving game data to $filePath!');
+    if (scheduledSave != null) {
+      //logger.info('save already scheduled, skipping save call');
+      return;
+    }
+    if (scheduledSave == null && lastSaveTime != null && TimeUtils.timeSince(TimeUtils.now(), lastSaveTime!).inMilliseconds < kSaveTimeStepMs) {
+      // schedule a save in the future
+      scheduledSave = Future.delayed(Duration(milliseconds: kSaveTimeStepMs), () 
+        { 
+          scheduledSave = null;
+          save();
+        }
+      );
+      return;
+    }
+
+    logger.info('SAVING game data to $filePath!');
     final file = File(filePath);
     file.create();
     file.writeAsBytes(gameState.writeToBuffer());
+    lastSaveTime = TimeUtils.now();
   }
 
   Future<void> clearAllData() async {

@@ -11,4 +11,5 @@ message TuningComponent
 	string xp_resource_id = 4;
 	google.protobuf.Duration life_refill_duration = 5;
 	repeated string initial_ships = 6;
+	int32 perfect_score_xp_bonus = 7;
 }

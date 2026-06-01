@@ -71,7 +71,6 @@ class CraftingQueueWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final craftingManager = context.watch<CraftingManager>();
     final gameStateManager = context.watch<GameStateManager>();
 
     return Column(

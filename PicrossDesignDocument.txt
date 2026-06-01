@@ -75,6 +75,7 @@ Quests:
     • Story
     • Townsfolk ask for supplies
     • Once story complete fallback to procedural quests
+    • Quests gate access to upgrades, need a crew to man a bigger ship, need good reputation to hire crew
 
 Town:
     • Hub for crafting and quests and other features

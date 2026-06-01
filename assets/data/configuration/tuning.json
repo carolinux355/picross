@@ -7,7 +7,8 @@
 			"player_level_curve_id": "player_level_curve",
 			"xp_resource_id": "resource_xp",
 			"life_refill_duration": "1800s",
-			"initial_ships": ["ship_01"]
+			"initial_ships": ["ship_01"],
+			"perfect_score_xp_bonus": 10
 		}
 	}
 }

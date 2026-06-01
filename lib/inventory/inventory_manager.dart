@@ -37,8 +37,6 @@ class InventoryManager extends BaseManager
       return gameStateManager.gameState.inventory.resources[resourceId]!;
     }
 
-    var resourcesMap = gameStateManager.gameState.inventory.resources;
-    resourcesMap['resource_coin'] = 0;
     return 0;
   }
 

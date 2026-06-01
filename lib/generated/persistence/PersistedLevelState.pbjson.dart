@@ -21,14 +21,7 @@ const PersistedLevelState$json = {
   '2': [
     {'1': 'tiles', '3': 1, '4': 3, '5': 5, '10': 'tiles'},
     {'1': 'size', '3': 2, '4': 1, '5': 11, '6': '.ProtoVector2', '10': 'size'},
-    {
-      '1': 'play_time',
-      '3': 3,
-      '4': 1,
-      '5': 11,
-      '6': '.google.protobuf.Duration',
-      '10': 'playTime'
-    },
+    {'1': 'difficulty', '3': 3, '4': 1, '5': 5, '10': 'difficulty'},
     {'1': 'marked_tiles', '3': 4, '4': 3, '5': 5, '10': 'markedTiles'},
     {'1': 'revealed_tiles', '3': 5, '4': 3, '5': 5, '10': 'revealedTiles'},
     {
@@ -65,13 +58,13 @@ const PersistedLevelState_TileContentsEntry$json = {
 /// Descriptor for `PersistedLevelState`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List persistedLevelStateDescriptor = $convert.base64Decode(
     'ChNQZXJzaXN0ZWRMZXZlbFN0YXRlEhQKBXRpbGVzGAEgAygFUgV0aWxlcxIhCgRzaXplGAIgAS'
-    'gLMg0uUHJvdG9WZWN0b3IyUgRzaXplEjYKCXBsYXlfdGltZRgDIAEoCzIZLmdvb2dsZS5wcm90'
-    'b2J1Zi5EdXJhdGlvblIIcGxheVRpbWUSIQoMbWFya2VkX3RpbGVzGAQgAygFUgttYXJrZWRUaW'
-    'xlcxIlCg5yZXZlYWxlZF90aWxlcxgFIAMoBVINcmV2ZWFsZWRUaWxlcxJLCg10aWxlX2NvbnRl'
-    'bnRzGAYgAygLMiYuUGVyc2lzdGVkTGV2ZWxTdGF0ZS5UaWxlQ29udGVudHNFbnRyeVIMdGlsZU'
-    'NvbnRlbnRzEhkKCHdvcmxkX2lkGAcgASgJUgd3b3JsZElkEh8KC2lzX2NvbXBsZXRlGAggASgI'
-    'Ugppc0NvbXBsZXRlGlwKEVRpbGVDb250ZW50c0VudHJ5EhAKA2tleRgBIAEoBVIDa2V5EjEKBX'
-    'ZhbHVlGAIgASgLMhsuUGVyc2lzdGVkTGV2ZWxUaWxlQ29udGVudHNSBXZhbHVlOgI4AQ==');
+    'gLMg0uUHJvdG9WZWN0b3IyUgRzaXplEh4KCmRpZmZpY3VsdHkYAyABKAVSCmRpZmZpY3VsdHkS'
+    'IQoMbWFya2VkX3RpbGVzGAQgAygFUgttYXJrZWRUaWxlcxIlCg5yZXZlYWxlZF90aWxlcxgFIA'
+    'MoBVINcmV2ZWFsZWRUaWxlcxJLCg10aWxlX2NvbnRlbnRzGAYgAygLMiYuUGVyc2lzdGVkTGV2'
+    'ZWxTdGF0ZS5UaWxlQ29udGVudHNFbnRyeVIMdGlsZUNvbnRlbnRzEhkKCHdvcmxkX2lkGAcgAS'
+    'gJUgd3b3JsZElkEh8KC2lzX2NvbXBsZXRlGAggASgIUgppc0NvbXBsZXRlGlwKEVRpbGVDb250'
+    'ZW50c0VudHJ5EhAKA2tleRgBIAEoBVIDa2V5EjEKBXZhbHVlGAIgASgLMhsuUGVyc2lzdGVkTG'
+    'V2ZWxUaWxlQ29udGVudHNSBXZhbHVlOgI4AQ==');
 
 @$core.Deprecated('Use persistedLevelTileContentsDescriptor instead')
 const PersistedLevelTileContents$json = {
