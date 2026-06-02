@@ -1,10 +1,18 @@
 {
 	"id": "world_01",
 	"components": {
+		"asset": {
+			"sprite": "assets/images/island.png"
+		},
+		"localized_name": {
+			"name": "Beginner's Bay",
+			"description": "Safe waters close to harbor with lots of natural resources to collect"
+		},
 		"world": {
 			"loot_table_id": "loot_table_world_01",
 			"required_lives": 1,
-			"base_xp": 5
+			"base_xp": 5,
+			"possible_resources": ["resource_wood"]
 		},
 		"level_difficulty": {
 			"size_range": {

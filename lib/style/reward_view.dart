@@ -26,7 +26,7 @@ class RewardView extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset(data!.components.asset.sprite),
+                child: Center(child: Image.asset(data!.components.asset.sprite)),
               ),
               Positioned(
                 bottom: 0,

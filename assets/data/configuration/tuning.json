@@ -3,7 +3,7 @@
 	"components": {
 		"tuning": {
 			"world_ids": ["world_01","world_02","world_03","world_04","world_05","world_06"],
-			"inventory_resources": ["resource_coin","resource_wood","resource_stone","resource_gem_01","resource_plank"],
+			"inventory_resources": ["resource_wood","resource_stone","resource_plank"],
 			"player_level_curve_id": "player_level_curve",
 			"xp_resource_id": "resource_xp",
 			"life_refill_duration": "1800s",

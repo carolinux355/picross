@@ -2,7 +2,7 @@
 	"id": "resource_wood",
 	"components": {
 		"asset": {
-			"sprite": "assets/icons/wood.png"
+			"sprite": "assets/icons/resources/wood.png"
 		},
 		"resource": {},
 		"localized_name": {

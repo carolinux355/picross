@@ -1,10 +1,18 @@
 {
 	"id": "world_04",
 	"components": {
+		"asset": {
+			"sprite": "assets/images/island.png"
+		},
+		"localized_name": {
+			"name": "Frosty Mountains",
+			"description": "A chilly and brutal world for only the bravest sailors to voyage towards"
+		},
 		"world": {
 			"loot_table_id": "loot_table_world_04",
 			"required_lives": 4,
-			"base_xp": 20
+			"base_xp": 20,
+			"possible_resources": ["resource_wood", "resource_stone"]
 		},
 		"feature": {
 			"unlock": [

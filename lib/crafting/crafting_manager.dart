@@ -79,6 +79,11 @@ class CraftingManager extends BaseManager {
     gameStateManager.gameState.crafting.craftQueue.add(craftingInstance);
     gameStateManager.save();
     notifyListeners();
+
+    // schedule notification for craft completion
+    Future.delayed(Duration(seconds: recipe.duration.toDart().inSeconds), () {
+      notifyListeners();
+    });
   }
 
   bool canCollect(CraftingInstance instance) {

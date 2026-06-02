@@ -3,14 +3,12 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:basic/configuration/game_data_manager.dart';
+import 'package:basic/level_selection/world_info_dialog.dart';
 import 'package:basic/player_lives/player_lives_manager.dart';
-import 'package:basic/requirements/requirement_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../audio/audio_controller.dart';
-import '../audio/sounds.dart';
 import '../style/my_button.dart';
 import '../style/palette.dart';
 import '../style/responsive_screen.dart';
@@ -41,12 +39,11 @@ class LevelSelectionScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 50),
             Expanded(
               child: ListView(
                 children: [
-                  for (final worldId in tuningData.worldIds)
-                    LevelSelectionWorldWidget(worldId: worldId),
+                  for (int i = 0; i < tuningData.worldIds.length; i++)
+                     LevelSelectionWorldWidget(worldId: tuningData.worldIds[i], isEven: i % 2 == 0),
                 ],
               ),
             ),
@@ -67,20 +64,28 @@ class LevelSelectionWorldWidget extends StatelessWidget {
   const LevelSelectionWorldWidget({
     super.key,
     required this.worldId,
+    required this.isEven
   });
 
   final String worldId;
+  final bool isEven;
 
   @override
   Widget build(BuildContext context) {
-    var gameDataManager = context.watch<GameDataManager>();
-    var requirementManager = context.watch<RequirementManager>();
-    var playerLivesManager = context.watch<PlayerLivesManager>();
-    var worldConfig = gameDataManager.getData(worldId);
-    bool isUnlocked = requirementManager.evaluateList(worldConfig!.components.feature.unlock);
-    bool hasEnoughLives = playerLivesManager.getLives() >= worldConfig.components.world.requiredLives;
 
-    return ListTile(
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+      child: Row(
+        children: [
+          if (!isEven)
+            Spacer(),
+          LevelSelectWorldView(worldId: worldId),
+          if (isEven)
+            Spacer(),
+        ]
+      ),
+    );
+    /*return ListTile(
       enabled:
           true,
       onTap: () {
@@ -95,6 +100,47 @@ class LevelSelectionWorldWidget extends StatelessWidget {
       },
       leading: isUnlocked ? Text('World') : Text('Locked'),
       title: Text(worldId),
+    );*/
+  }
+}
+
+class LevelSelectWorldView extends StatelessWidget {
+  const LevelSelectWorldView({
+    super.key,
+    required this.worldId,
+  });
+
+  final String worldId;
+
+  @override
+  Widget build(BuildContext context) {
+    final gameDataManager = context.watch<GameDataManager>();
+    var playerLivesManager = context.watch<PlayerLivesManager>();
+    var worldConfig = gameDataManager.getData(worldId);
+    final image = Image.asset(worldConfig!.components.asset.sprite);
+
+    bool hasEnoughLives = playerLivesManager.getLives() >= worldConfig.components.world.requiredLives;
+    
+    return GestureDetector(
+      onTap: () => _onTap(context),
+      child: Opacity(
+        opacity: hasEnoughLives ? 1.0 : 0.5,
+        child: Column(
+          children: [
+            image,
+            Text(worldConfig.components.localizedName.name)
+          ]
+        )
+      ),
+    );
+  }
+
+  void _onTap(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => WorldInfoDialog(
+        worldId: worldId,
+      )
     );
   }
 }

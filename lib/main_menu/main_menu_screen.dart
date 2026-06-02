@@ -4,8 +4,7 @@
 
 import 'package:basic/main.dart';
 import 'package:basic/main_menu/main_scene.dart';
-import 'package:basic/shared_widgets/player_lives_widget.dart';
-import 'package:basic/shared_widgets/xp_widget.dart';
+import 'package:basic/shared_widgets/wallet_widget.dart';
 import 'package:basic/style/responsive_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,7 +25,7 @@ class MainMenuScreen extends StatelessWidget {
       body: KeyboardListener(
         focusNode: FocusNode()..requestFocus(),
         onKeyEvent: (event) {
-          if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.keyD) {
+          if (event is KeyDownEvent && (event.logicalKey == LogicalKeyboardKey.keyD || event.logicalKey == LogicalKeyboardKey.f12)) {
             MyApp.openDebugMenu(context);
           }
         },
@@ -43,11 +42,11 @@ class MainMenuScreen extends StatelessWidget {
               squarishMainArea: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:[ 
+                  MainMenuScreenTopHUD(),
                   Expanded(
                     child: Stack(
                       children: [
                         MainMenuScreenCenterContainer(),
-                        MainMenuScreenTopHUD(),
                       ],
                     ),
                   ),
@@ -67,11 +66,9 @@ class MainMenuScreenTopHUD extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return Row(
+    return Column(
       children:[
-        XPWidget(),
-        PlayerLivesWidget()
+        WalletWidget(),
       ]
     );
   }
@@ -83,7 +80,7 @@ class MainMenuScreenBottomHUD extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final audioController = context.watch<AudioController>();
-    final backgroundImage = Image.asset('assets/icons/buttonLong_beige_pressed.png');
+    final backgroundImage = Image.asset('assets/icons/ui/buttonLong_beige_pressed.png');
 
     return Container(
       decoration: BoxDecoration(
@@ -183,14 +180,20 @@ class MainMenuScreenRightHUD extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children:[ 
-        MyButton(
+        ElevatedButton(
           onPressed: () => GoRouter.of(context).push('/inventory'),
-          child: const Text('Inventory'),
+          child: SizedBox(
+            width: 50,
+            height: 50,
+            child: Image.asset('assets/icons/ui/inventory.png')),
         ),
         _gap,
-        MyButton(
+        ElevatedButton(
           onPressed: () => GoRouter.of(context).push('/settings'),
-          child: const Text('Settings'),
+          child: SizedBox(
+            width: 50,
+            height: 50,
+            child: Image.asset('assets/icons/ui/settings.png')),
         ),
       ]
     );

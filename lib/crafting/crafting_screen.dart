@@ -94,20 +94,30 @@ class CraftingQueueElementWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var craftingManager = context.watch<CraftingManager>();
+    final gameDataManager = context.read<GameDataManager>();
+    var data = gameDataManager.getData(craftingInstance.craftingRecipeId);
+
     return Row(
       children: [
-        Text(craftingInstance.craftingRecipeId),
+        Text(data!.components.localizedName.name),
         TimerDisplayWidget(getTimeLeft: () => _getTimeLeft(context)),
         Spacer(),
-        if (craftingManager.canCollect(craftingInstance))
-          MyButton(
-            onPressed: () {
-              craftingManager.collectCraft(craftingInstance);
-            },
-            child: Text('Collect')
-          )
-        else
-          SizedBox.shrink()
+        ListenableBuilder(
+          listenable: craftingManager,
+          builder: (context, child) {
+            if (craftingManager.canCollect(craftingInstance)) {
+              return MyButton(
+                onPressed: () {
+                  craftingManager.collectCraft(craftingInstance);
+                },
+                child: Text('Collect')
+              );
+            }
+
+            return SizedBox.shrink();
+          },
+        ),
+        
       ]
     );
   }

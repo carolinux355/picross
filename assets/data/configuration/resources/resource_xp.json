@@ -2,7 +2,7 @@
 	"id": "resource_xp",
 	"components": {
 		"asset": {
-			"sprite": "assets/icons/starGold.png"
+			"sprite": "assets/icons/resources/xp.png"
 		},
 		"resource": {},
 		"localized_name": {

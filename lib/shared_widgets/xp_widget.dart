@@ -11,17 +11,17 @@ class XPWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final gameStateManager = context.watch<GameStateManager>();
     final playerLevelManager = context.watch<PlayerLevelManager>();
-    final image = Image.asset('assets/icons/cloud3.png');
+    final image = Image.asset('assets/icons/ui/iconCircle_grey.png');
 
     return ListenableBuilder(
       listenable: playerLevelManager,
       builder: (context, child) { 
         return SizedBox(
-          height: 100,
-          width: 100,
+          height: 75,
+          width: 75,
           child: Container(
             decoration: BoxDecoration(
-              image: DecorationImage(image: image.image)
+              image: DecorationImage(image: image.image, fit: BoxFit.fill)
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

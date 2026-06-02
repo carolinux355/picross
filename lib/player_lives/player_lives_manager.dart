@@ -74,6 +74,13 @@ class PlayerLivesManager extends BaseManager {
     notifyListeners();
   }
 
+  void addMaxLives(int numLives) {
+    gameStateManager.gameState.playerLives.maxLives += numLives;
+    gameStateManager.gameState.playerLives.numLives += numLives;
+    gameStateManager.save();
+    notifyListeners();
+  }
+
   int getLives() {
     return gameStateManager.gameState.playerLives.numLives;
   }

@@ -16,22 +16,12 @@
 								{
 									"type": "GrantType_Resource",
 									"id": "resource_coin",
-									"amount": 1
+									"amount": 5
 								}
 							]
 						},
 						{
-							"weight": 1,
-							"grants": [
-								{
-									"type": "GrantType_Resource",
-									"id": "resource_stone",
-									"amount": 1
-								}
-							]
-						},
-						{
-							"weight": 1,
+							"weight": 5,
 							"grants": [
 								{
 									"type": "GrantType_Resource",

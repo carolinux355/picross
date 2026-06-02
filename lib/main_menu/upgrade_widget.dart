@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UpgradeWidget extends StatelessWidget {
-  const UpgradeWidget({super.key, required this.upgradableId, required this.upgradeState});
+  const UpgradeWidget({super.key, required this.upgradeState});
 
-  final String upgradableId;
   final UpgradeState upgradeState;
 
   @override
@@ -17,36 +16,41 @@ class UpgradeWidget extends StatelessWidget {
     var upgradeManager = context.watch<UpgradeManager>();
     var inventoryManager = context.watch<InventoryManager>();
     
-    return Column(
-      children: [
-        Container(
-          color: Colors.amber,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              spacing: 10,
-              children: [
-                for (var cost in upgradeManager.getUpgradeCost(upgradableId))
-                  UpgradeCostWidget(cost: cost)
-              ],
+    return ListenableBuilder(
+      listenable: Listenable.merge([upgradeManager, inventoryManager]),
+      builder: (context, child) {
+        return Column(
+          children: [
+            Container(
+              color: Colors.amber,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 10,
+                  children: [
+                    for (var cost in upgradeManager.getUpgradeCost(upgradeState.currentId))
+                      UpgradeCostWidget(cost: cost)
+                  ]
+                )
+              ),
             ),
-          ),
-        ),
-        ListenableBuilder(
-          listenable: inventoryManager,
-          builder: (context, child) {
-            if (upgradeManager.canAffordUpgrade(upgradableId))
-            {
-              return ElevatedButton(
-                onPressed: () => upgradeManager.executeUpgrade(upgradeState),
-                child: Text('Upgrade')
-              );
-            }
-            return SizedBox.shrink();
-          }
-        )
-      ],
+            ListenableBuilder(
+              listenable: inventoryManager,
+              builder: (context, child) {
+                if (upgradeManager.canAffordUpgrade(upgradeState.currentId))
+                {
+                  return ElevatedButton(
+                    onPressed: () => upgradeManager.executeUpgrade(upgradeState),
+                    child: Text('Upgrade')
+                  );
+                }
+                return SizedBox.shrink();
+              }
+            )
+          ],
+        );
+      }
     );
   }
 }

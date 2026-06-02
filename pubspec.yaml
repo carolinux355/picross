@@ -38,6 +38,8 @@ flutter:
     - assets/music/
     - assets/sfx/
     - assets/icons/
+    - assets/icons/resources/
+    - assets/icons/ui/
     - assets/data/configuration/
     - assets/data/configuration/world/
     - assets/data/configuration/resources/

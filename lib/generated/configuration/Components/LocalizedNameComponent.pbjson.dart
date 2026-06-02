@@ -21,11 +21,11 @@ const LocalizedNameComponent$json = {
   '2': [
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     {'1': 'name_plural', '3': 2, '4': 1, '5': 9, '10': 'namePlural'},
+    {'1': 'description', '3': 3, '4': 1, '5': 9, '10': 'description'},
   ],
 };
 
 /// Descriptor for `LocalizedNameComponent`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List localizedNameComponentDescriptor =
-    $convert.base64Decode(
-        'ChZMb2NhbGl6ZWROYW1lQ29tcG9uZW50EhIKBG5hbWUYASABKAlSBG5hbWUSHwoLbmFtZV9wbH'
-        'VyYWwYAiABKAlSCm5hbWVQbHVyYWw=');
+final $typed_data.Uint8List localizedNameComponentDescriptor = $convert.base64Decode(
+    'ChZMb2NhbGl6ZWROYW1lQ29tcG9uZW50EhIKBG5hbWUYASABKAlSBG5hbWUSHwoLbmFtZV9wbH'
+    'VyYWwYAiABKAlSCm5hbWVQbHVyYWwSIAoLZGVzY3JpcHRpb24YAyABKAlSC2Rlc2NyaXB0aW9u');

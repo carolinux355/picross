@@ -1,10 +1,18 @@
 {
 	"id": "world_03",
 	"components": {
+		"asset": {
+			"sprite": "assets/images/island.png"
+		},
+		"localized_name": {
+			"name": "Jazzy Jungle",
+			"description": "Tall trees cover a dense world of resources to plunder."
+		},
 		"world": {
 			"loot_table_id": "loot_table_world_03",
 			"required_lives": 3,
-			"base_xp": 15
+			"base_xp": 15,
+			"possible_resources": ["resource_wood", "resource_string"]
 		},
 		"feature": {
 			"unlock": [

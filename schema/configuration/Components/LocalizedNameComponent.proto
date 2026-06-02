@@ -4,4 +4,5 @@ message LocalizedNameComponent
 {
 	string name = 1;
 	string name_plural = 2;
+	string description = 3;
 }

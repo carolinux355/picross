@@ -1,10 +1,18 @@
 {
 	"id": "world_02",
 	"components": {
+		"asset": {
+			"sprite": "assets/images/island.png"
+		},
+		"localized_name": {
+			"name": "Quizzling Quarry",
+			"description": "Rocky shores spell danger for brave sailors, but stone and iron abound here!"
+		},
 		"world": {
 			"loot_table_id": "loot_table_world_02",
 			"required_lives": 2,
-			"base_xp": 10
+			"base_xp": 10,
+			"possible_resources": ["resource_stone", "resource_iron_ore"]
 		},
 		"feature": {
 			"unlock": [

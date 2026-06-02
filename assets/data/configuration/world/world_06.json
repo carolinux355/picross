@@ -1,10 +1,18 @@
 {
 	"id": "world_06",
 	"components": {
+		"asset": {
+			"sprite": "assets/images/island.png"
+		},
+		"localized_name": {
+			"name": "World 6",
+			"description": "World 6 Description"
+		},
 		"world": {
 			"loot_table_id": "loot_table_world_06",
 			"required_lives": 6,
-			"base_xp": 30
+			"base_xp": 30,
+			"possible_resources": ["resource_wood", "resource_stone"]
 		},
 		"feature": {
 			"unlock": [

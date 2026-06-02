@@ -3,16 +3,13 @@
 // BSD-style license that can be found in the LICENSE file.
 
 //import 'package:basic/style/my_button.dart';
-import 'package:basic/game_internals/level_state_controller.dart';
+import 'package:basic/play_session/play_session_powerups_widget.dart';
 import 'package:basic/play_session/play_session_screen.dart';
-import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 //import 'package:go_router/go_router.dart';
 //import 'package:provider/provider.dart';
 
-/// This widget defines the game UI itself, without things like the settings
-/// button or the back button.
+/// This widget defines the bottom HUD during a picross game
 class PlaySessionBottomBarWidget extends StatelessWidget {
   const PlaySessionBottomBarWidget({super.key, required this.playerSessionState});
 
@@ -21,7 +18,6 @@ class PlaySessionBottomBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final levelState = context.watch<LevelStateController>();
 
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -35,7 +31,7 @@ class PlaySessionBottomBarWidget extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: Row(
                 children: [
-                  PlayerLivesCounterWidget(levelState: levelState,),
+                  PlaySessionPowerupsWidget(),
                   Spacer(),
                   PlaySessionBottomBarInputWidget(playerSessionState: playerSessionState),
                 ],
@@ -44,29 +40,6 @@ class PlaySessionBottomBarWidget extends StatelessWidget {
           ),
         )
       ]
-    );
-  }
-}
-
-class PlayerLivesCounterWidget extends StatelessWidget {
-  const PlayerLivesCounterWidget({
-    super.key,
-    required this.levelState
-  });
-
-  final LevelStateController levelState;
-
-  @override
-  Widget build(BuildContext context) {
-    PlayerLivesManager playerLivesManager = context.watch<PlayerLivesManager>();
-    return Row(
-      spacing: 10,
-      children: [
-        for(int i = 0; i < playerLivesManager.getMaxLives(); i++)
-          Icon(
-            Icons.circle, 
-            color: levelState.getLivesRemaining() > i ? Colors.blue : Colors.red,)
-      ],
     );
   }
 }

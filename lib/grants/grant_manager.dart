@@ -6,6 +6,7 @@ import 'package:basic/inventory/inventory_manager.dart';
 import 'package:basic/loot_tables/loot_table_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/player_level/player_level_manager.dart';
+import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:basic/requirements/requirement_manager.dart';
 import 'package:logging/logging.dart';
 
@@ -14,7 +15,7 @@ class GrantManager extends BaseManager {
   final Logger logger = Logger('Grant Manager');
   
   @override
-  List<Type> dependencies = [GameStateManager, GameDataManager, RequirementManager, InventoryManager, PlayerLevelManager, LootTableManager];
+  List<Type> dependencies = [GameStateManager, GameDataManager, RequirementManager, InventoryManager, PlayerLevelManager, LootTableManager, PlayerLivesManager];
 
   late GameStateManager gameStateManager;
   late GameDataManager gameDataManager;
@@ -22,6 +23,7 @@ class GrantManager extends BaseManager {
   late InventoryManager inventoryManager;
   late PlayerLevelManager playerLevelManager;
   late LootTableManager lootTableManager;
+  late PlayerLivesManager playerLivesManager;
   
   @override
   Future initialize(List<BaseManager> managers) async {
@@ -31,6 +33,7 @@ class GrantManager extends BaseManager {
     inventoryManager = managers.firstWhere((m) => m.runtimeType == InventoryManager) as InventoryManager;
     playerLevelManager = managers.firstWhere((m) => m.runtimeType == PlayerLevelManager) as PlayerLevelManager;
     lootTableManager = managers.firstWhere((m) => m.runtimeType == LootTableManager) as LootTableManager;
+    playerLivesManager = managers.firstWhere((m) => m.runtimeType == PlayerLivesManager) as PlayerLivesManager;
   }
 
   List<Grant> tryGrant(Grant grant, {bool dryRun = false}) {
@@ -59,8 +62,7 @@ class GrantManager extends BaseManager {
 
       case GrantType.GrantType_MaxLivesIncrease:
         if (!dryRun) {
-          gameStateManager.gameState.playerLives.maxLives += grant.amount;
-          gameStateManager.gameState.playerLives.numLives = gameStateManager.gameState.playerLives.maxLives;
+          playerLivesManager.addMaxLives(grant.amount);
         }
         results.add(grant);
     

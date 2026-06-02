@@ -22,6 +22,13 @@ const WorldComponent$json = {
     {'1': 'loot_table_id', '3': 1, '4': 1, '5': 9, '10': 'lootTableId'},
     {'1': 'required_lives', '3': 2, '4': 1, '5': 5, '10': 'requiredLives'},
     {'1': 'base_xp', '3': 3, '4': 1, '5': 5, '10': 'baseXp'},
+    {
+      '1': 'possible_resources',
+      '3': 4,
+      '4': 3,
+      '5': 9,
+      '10': 'possibleResources'
+    },
   ],
 };
 
@@ -29,4 +36,4 @@ const WorldComponent$json = {
 final $typed_data.Uint8List worldComponentDescriptor = $convert.base64Decode(
     'Cg5Xb3JsZENvbXBvbmVudBIiCg1sb290X3RhYmxlX2lkGAEgASgJUgtsb290VGFibGVJZBIlCg'
     '5yZXF1aXJlZF9saXZlcxgCIAEoBVINcmVxdWlyZWRMaXZlcxIXCgdiYXNlX3hwGAMgASgFUgZi'
-    'YXNlWHA=');
+    'YXNlWHASLQoScG9zc2libGVfcmVzb3VyY2VzGAQgAygJUhFwb3NzaWJsZVJlc291cmNlcw==');

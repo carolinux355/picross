@@ -45,7 +45,7 @@
 							"grants": [
 								{
 									"type": "GrantType_Resource",
-									"id": "resource_gem_01",
+									"id": "resource_premium",
 									"amount": 1
 								}
 							]

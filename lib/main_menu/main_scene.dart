@@ -17,7 +17,7 @@ class MainSceneWidget extends StatelessWidget {
     return Column(
       children: [
         Spacer(),
-        UpgradeWidget(upgradableId: shipState.upgradeState.currentId, upgradeState: shipState.upgradeState,),
+        UpgradeWidget(upgradeState: shipState.upgradeState,),
         Center(
           child: ShipView()
         )

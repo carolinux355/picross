@@ -35,16 +35,6 @@
 							"grants": [
 								{
 									"type": "GrantType_Resource",
-									"id": "resource_wood",
-									"amount": 1
-								}
-							]
-						},
-						{
-							"weight": 5,
-							"grants": [
-								{
-									"type": "GrantType_Resource",
 									"id": "resource_iron_ore",
 									"amount": 1
 								}
@@ -55,7 +45,7 @@
 							"grants": [
 								{
 									"type": "GrantType_Resource",
-									"id": "resource_gem_01",
+									"id": "resource_premium",
 									"amount": 1
 								}
 							]

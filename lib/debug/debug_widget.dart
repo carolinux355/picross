@@ -22,6 +22,7 @@ class DebugWidget extends SimpleDialog {
             Row(
               children: [
                 Text('Debug Menu'),
+                Spacer(),
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(), 
                   child: Text('X')

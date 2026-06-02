@@ -5,4 +5,5 @@ message WorldComponent
 	string loot_table_id = 1;
 	int32 required_lives = 2;
 	int32 base_xp = 3;
+	repeated string possible_resources = 4;
 }

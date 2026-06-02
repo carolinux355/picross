@@ -22,27 +22,21 @@ class WinGameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
 
-    const gap = SizedBox(height: 10);
-
     return Scaffold(
       backgroundColor: palette.backgroundPlaySession,
       body: ResponsiveScreen(
         squarishMainArea: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Positioned(
-              top: 0,
-              left: 0,
-              child: XPWidget()
-            ),
-            gap,
             const Center(
               child: Text(
-                'You won!',
-                style: TextStyle(fontFamily: 'Permanent Marker', fontSize: 50),
+                'Voyage Complete!',
+                style: TextStyle(fontFamily: 'Permanent Marker', fontSize: 42),
               ),
             ),
-            gap,
+            SizedBox(height: 50),
+            XPWidget(),
+            SizedBox(height: 50),
             Center(
               child: Column(
                 children: [
@@ -54,9 +48,10 @@ class WinGameScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 100,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
+                    height: 300,
+                    child: GridView(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+                      scrollDirection: Axis.vertical,
                       children: [
                         for (var reward in levelCompleteState.rewards)
                           RewardView(reward: reward)
@@ -76,13 +71,19 @@ class WinGameScreen extends StatelessWidget {
               onPressed: () {
                 GoRouter.of(context).go('/');
               },
-              child: const Text('Back to Town'),
+              child: const Text('Town'),
+            ),
+            MyButton(
+              onPressed: () {
+                GoRouter.of(context).go('/play');
+              },
+              child: const Text('World Select'),
             ),
             MyButton(
               onPressed: () {
                 GoRouter.of(context).go('/levelgeneration', extra: levelCompleteState.worldId);
               },
-              child: const Text('Continue'),
+              child: const Text('Next'),
             ),
           ],
         ),

@@ -20,10 +20,12 @@ class LocalizedNameComponent extends $pb.GeneratedMessage {
   factory LocalizedNameComponent({
     $core.String? name,
     $core.String? namePlural,
+    $core.String? description,
   }) {
     final result = create();
     if (name != null) result.name = name;
     if (namePlural != null) result.namePlural = namePlural;
+    if (description != null) result.description = description;
     return result;
   }
 
@@ -41,6 +43,7 @@ class LocalizedNameComponent extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOS(2, _omitFieldNames ? '' : 'namePlural')
+    ..aOS(3, _omitFieldNames ? '' : 'description')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -80,6 +83,15 @@ class LocalizedNameComponent extends $pb.GeneratedMessage {
   $core.bool hasNamePlural() => $_has(1);
   @$pb.TagNumber(2)
   void clearNamePlural() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get description => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set description($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasDescription() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDescription() => $_clearField(3);
 }
 
 const $core.bool _omitFieldNames =

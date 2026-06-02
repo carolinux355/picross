@@ -2,7 +2,7 @@
 	"id": "resource_coin",
 	"components": {
 		"asset": {
-			"sprite": "assets/icons/coin_01.png"
+			"sprite": "assets/icons/resources/coin_01.png"
 		},
 		"resource": {},
 		"localized_name": {

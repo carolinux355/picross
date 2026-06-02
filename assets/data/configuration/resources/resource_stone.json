@@ -2,7 +2,7 @@
 	"id": "resource_stone",
 	"components": {
 		"asset": {
-			"sprite": "assets/icons/stone.png"
+			"sprite": "assets/icons/resources/stone.png"
 		},
 		"resource": {},
 		"localized_name": {

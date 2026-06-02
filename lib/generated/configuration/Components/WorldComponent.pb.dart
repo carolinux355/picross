@@ -21,11 +21,14 @@ class WorldComponent extends $pb.GeneratedMessage {
     $core.String? lootTableId,
     $core.int? requiredLives,
     $core.int? baseXp,
+    $core.Iterable<$core.String>? possibleResources,
   }) {
     final result = create();
     if (lootTableId != null) result.lootTableId = lootTableId;
     if (requiredLives != null) result.requiredLives = requiredLives;
     if (baseXp != null) result.baseXp = baseXp;
+    if (possibleResources != null)
+      result.possibleResources.addAll(possibleResources);
     return result;
   }
 
@@ -44,6 +47,7 @@ class WorldComponent extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'lootTableId')
     ..aI(2, _omitFieldNames ? '' : 'requiredLives')
     ..aI(3, _omitFieldNames ? '' : 'baseXp')
+    ..pPS(4, _omitFieldNames ? '' : 'possibleResources')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -91,6 +95,9 @@ class WorldComponent extends $pb.GeneratedMessage {
   $core.bool hasBaseXp() => $_has(2);
   @$pb.TagNumber(3)
   void clearBaseXp() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $pb.PbList<$core.String> get possibleResources => $_getList(3);
 }
 
 const $core.bool _omitFieldNames =

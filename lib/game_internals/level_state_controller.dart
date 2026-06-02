@@ -140,15 +140,16 @@ class LevelStateController extends ChangeNotifier {
     if (state.revealedTiles.toSet().intersection(bombs.toSet()).isNotEmpty) {
       perfectScore = false;
     }
+
     int xp = world!.components.world.baseXp * state.difficulty + (perfectScore ? world.components.world.baseXp * gameDataManager.getTuning().perfectScoreXpBonus : 0);
+
+    LevelCompleteState levelCompleteState = LevelCompleteState(rewards: List.from(pendingRewards), xpEarned: xp, worldId: state.worldId);
 
     pendingRewards.add(Grant(
       type: GrantType.GrantType_Xp,
       id: gameDataManager.getTuning().xpResourceId,
       amount: xp,
     ));
-
-    LevelCompleteState levelCompleteState = LevelCompleteState(rewards: List.from(pendingRewards), worldId: state.worldId);
 
     var gameState = gameStateManager.gameState;
     gameState.numLevelsPlayed++;
@@ -238,6 +239,7 @@ class LevelStateController extends ChangeNotifier {
 class LevelCompleteState
 {
   final List<Grant> rewards;
+  final int xpEarned;
   final String worldId;
-  LevelCompleteState({required this.rewards, required this.worldId});
+  LevelCompleteState({required this.rewards, required this.xpEarned, required this.worldId});
 }

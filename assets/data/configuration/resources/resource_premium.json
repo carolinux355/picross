@@ -1,0 +1,13 @@
+{
+	"id": "resource_premium",
+	"components": {
+		"asset": {
+			"sprite": "assets/icons/resources/gem.png"
+		},
+		"resource": {},
+		"localized_name": {
+			"name": "Gem",
+			"name_plural": "Gems"
+		}
+	}
+}
