@@ -46,13 +46,13 @@ class GameWidget extends StatelessWidget {
 
   double _calculateCellSize(BuildContext context, ClueProvider clueProvider)
   {
-    const double minSize = 30;
+    const double minSize = 1;
     // get screen size and calculate cell size based on that and the level size, with some padding
     var screenSize = MediaQuery.sizeOf(context);
     var safeAreaPadding = MediaQuery.of(context).viewPadding;
     var width = screenSize.width - safeAreaPadding.left - safeAreaPadding.right;
     var height = screenSize.height - safeAreaPadding.top - safeAreaPadding.bottom;
-    height = height - 300;
+    height = height - 400; // account for top and bottom bars, this is a magic number that looks good on my screen but should be made more robust in the future
     int horizontalClueMaxCount = 0;
     int verticalClueMaxCount = 0;
     for(int i = 0; i < levelState.size.y; i++) {
@@ -70,8 +70,8 @@ class GameWidget extends StatelessWidget {
     }
 
     // todo: magic number feeling but looks good
-    double horizontalClueOffset = horizontalClueMaxCount * 30 + 13;
-    double verticalClueOffset = verticalClueMaxCount * 30 + 13;
+    double horizontalClueOffset = horizontalClueMaxCount * 34;
+    double verticalClueOffset = verticalClueMaxCount * 34;
 
     width = width - horizontalClueOffset;
     height = height - verticalClueOffset;
@@ -101,52 +101,64 @@ class PicrossGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(0.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 1.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              spacing: 2,
-              children: [
-                for (int i = 0; i < levelState.size.x; i++)
-                  VerticalClueWidget(clueData: clueProvider.getClueForColumn(i), cellSize: cellSize),
-              ],
-            ),
-          ),
-          Row(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+    var mapBackgroundImage = Image.asset('assets/icons/ui/panelInset_beige.png');
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: mapBackgroundImage.image, 
+          centerSlice: Rect.fromLTWH(5,5,83,83),
+          fit: BoxFit.fill
+        )
+      ),
+      child: Padding(
+        //padding: const EdgeInsets.all(0.0),
+        padding: const EdgeInsets.only(right: 16.0, bottom: 16.0, top: 8.0, left: 1.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 1.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.end,
-                spacing: 2,
+                spacing: 4,
                 children: [
-                  for (int i = 0; i < levelState.size.y; i++)
-                    HorizontalClueWidget(clueData: clueProvider.getClueForRow(i), cellSize: cellSize,),
+                  for (int i = 0; i < levelState.size.x; i++)
+                    VerticalClueWidget(clueData: clueProvider.getClueForColumn(i), cellSize: cellSize),
                 ],
               ),
-              GameGestureManager(
-                gridSize: ConstantVector2.fromProto(levelState.size),
-                cellSize: cellSize + 2,
-                onTapReceived: _onTap,
-                onDragReceived: _onDragReceived,
-                child: Column(
+            ),
+            Row(
+              children: [
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
+                  spacing: 4,
                   children: [
                     for (int i = 0; i < levelState.size.y; i++)
-                      PicrossRow(clueProvider: clueProvider, levelStateController: levelStateController, row: i, playerSessionState: playerSessionState, cellSize: cellSize),
-                  ]
+                      HorizontalClueWidget(clueData: clueProvider.getClueForRow(i), cellSize: cellSize,),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        ],
+                GameGestureManager(
+                  gridSize: ConstantVector2.fromProto(levelState.size),
+                  cellSize: cellSize + 4,
+                  onTapReceived: _onTap,
+                  onDragReceived: _onDragReceived,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      for (int i = 0; i < levelState.size.y; i++)
+                        PicrossRow(clueProvider: clueProvider, levelStateController: levelStateController, row: i, playerSessionState: playerSessionState, cellSize: cellSize),
+                    ]
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -200,7 +212,6 @@ class PicrossRow extends StatelessWidget {
           children: [
             for (int j = 0; j < levelStateController.size().x; j++)
               PicrossCell(clueProvider: clueProvider, levelStateController: levelStateController, row: row, column: j, playerSessionState: playerSessionState, cellSize: cellSize),
-            //HorizontalBombCountClueEntry(clueData: clueData, cellSize: cellSize)
           ],
         ),
       ],
@@ -221,28 +232,25 @@ class HorizontalClueWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var textTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary, fontSize: 18);
+    var textTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.tertiary, fontSize: 18, fontFamily: 'Permanent Marker');
 
-    return Container(
-      color: theme.colorScheme.tertiary,
-      child: SizedBox(
-        height: cellSize,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10.0, right: 3.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                spacing: 1,
-                children: [
-                  for (int i = 0; i < clueData.tileClues.length; i++)
-                    HorizontalClueEntry(clue: clueData.tileClues[i], textTheme: textTheme, isLastClue: i == clueData.tileClues.length - 1),
-                ],
-              ),
-            ],
-          ),
+    return SizedBox(
+      height: cellSize,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10.0, right: 3.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              spacing: 1,
+              children: [
+                for (int i = 0; i < clueData.tileClues.length; i++)
+                  HorizontalClueEntry(clue: clueData.tileClues[i], textTheme: textTheme, isLastClue: i == clueData.tileClues.length - 1),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -286,10 +294,9 @@ class VerticalClueWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var textTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onTertiary, fontSize: 18);
+    var textTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.tertiary, fontSize: 18, fontFamily: 'Permanent Marker');
 
     return Container(
-      color: theme.colorScheme.tertiary,
       child: SizedBox(
         width: cellSize,
         child: Padding(
@@ -368,7 +375,9 @@ class _PicrossCellState extends State<PicrossCell> with SingleTickerProviderStat
     }
 
     return Container(
-      color: Colors.grey,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.blueGrey, width: 1)
+      ),
       child: 
         Container(
           width: widget.cellSize,
@@ -414,10 +423,9 @@ class _PicrossCellState extends State<PicrossCell> with SingleTickerProviderStat
     }
       
     // draw hidden state
-    return Container(
+    return SizedBox(
       width: cellSize,
       height: cellSize,
-      color: theme.colorScheme.inversePrimary,
       child: Icon(Icons.help),);
   }
 

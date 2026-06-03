@@ -1,10 +1,8 @@
-// Copyright 2022, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
 
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/shared_widgets/player_lives_widget.dart';
 import 'package:basic/shared_widgets/wallet_widget.dart';
+import 'package:basic/style/background_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -16,35 +14,37 @@ class PlaySessionTopBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
 
-    return Container(
-      color: theme.colorScheme.primary,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              WalletWidget(showPlayerLives: false),
-            ],
-          ),
-          Row(
-            children: [
-              InkResponse(
-                onTap: () => GoRouter.of(context).push('/settings'),
-                child: Image.asset(
-                  'assets/icons/ui/settings.png',
-                  semanticLabel: 'Settings',
+    return BackgroundFrame(
+      color: BackgroundFrameColor.brown,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                WalletWidget(showPlayerLives: false),
+              ],
+            ),
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () => GoRouter.of(context).push('/settings'),
+                  icon: Image.asset(
+                    'assets/icons/ui/settings.png',
+                    semanticLabel: 'Settings',
+                  ),
                 ),
-              ),
-              PlaySessionBackButtonWidget(),
-              Spacer(),
-              PlayerLivesWidget(),
-              Spacer(),
-            ],
-          )
-        ],
+                PlaySessionBackButtonWidget(),
+                Spacer(),
+                PlayerLivesWidget(),
+                Spacer(),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

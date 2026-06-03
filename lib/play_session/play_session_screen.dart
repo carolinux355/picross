@@ -20,7 +20,6 @@ import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
 import '../game_internals/level_state_controller.dart';
 import '../style/confetti.dart';
-import '../style/palette.dart';
 import 'game_widget.dart';
 
 /// This widget defines the entirety of the screen that the player sees when
@@ -58,7 +57,6 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final palette = context.watch<Palette>();
     final settingsController = context.watch<SettingsController>();
     final grantManager = context.watch<GrantManager>();
     final gameStateManager = context.watch<GameStateManager>();
@@ -87,48 +85,50 @@ class PlaySessionScreenState extends State<PlaySessionScreen> {
       child: IgnorePointer(
         // Ignore all input during the celebration animation.
         ignoring: _playerSessionState != PlayerSessionState.playing,
-        child: SafeArea(
-          child: Scaffold(
-            backgroundColor: palette.backgroundPlaySession,
-            // The stack is how you layer widgets on top of each other.
-            // Here, it is used to overlay the winning confetti animation on top
-            // of the game.
-            body: Stack(
-              children: [
-                // This is the main layout of the play session screen,
-                // with a settings button on top, the actual play area
-                // in the middle, and a back button at the bottom.
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    PlaySessionTopBarWidget(),
-                    //const Spacer(),
-                    Expanded(child: GameWidget(playerSessionState: this, levelState: levelState,)),
-                    //const Spacer(),
-                    PlaySessionBottomBarWidget(playerSessionState: this,),
-                  ],
-                ),
-                // This is the confetti animation that is overlaid on top of the
-                // game when the player wins.
-                SizedBox.expand(
-                  child: Visibility(
-                    visible: _playerSessionState == PlayerSessionState.celebrating,
-                    child: IgnorePointer(
-                      child: Confetti(isStopped: _playerSessionState != PlayerSessionState.celebrating),
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/water_background.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: SafeArea(
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      PlaySessionTopBarWidget(),
+                      //const Spacer(),
+                      Expanded(child: GameWidget(playerSessionState: this, levelState: levelState,)),
+                      //const Spacer(),
+                      PlaySessionBottomBarWidget(playerSessionState: this,),
+                    ],
+                  ),
+                  // This is the confetti animation that is overlaid on top of the
+                  // game when the player wins.
+                  SizedBox.expand(
+                    child: Visibility(
+                      visible: _playerSessionState == PlayerSessionState.celebrating,
+                      child: IgnorePointer(
+                        child: Confetti(isStopped: _playerSessionState != PlayerSessionState.celebrating),
+                      ),
                     ),
                   ),
-                ),
-                // This is the dark scrim overlay animation that is overlaid on top of the
-                // game when the player loses.
-                SizedBox.expand(
-                  child: Visibility(
-                    visible: _playerSessionState == PlayerSessionState.lostState,
-                    child: IgnorePointer(
-                      child: Container(color: Colors.black.withAlpha(128)),
+                  // This is the dark scrim overlay animation that is overlaid on top of the
+                  // game when the player loses.
+                  SizedBox.expand(
+                    child: Visibility(
+                      visible: _playerSessionState == PlayerSessionState.lostState,
+                      child: IgnorePointer(
+                        child: Container(color: Colors.black.withAlpha(128)),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

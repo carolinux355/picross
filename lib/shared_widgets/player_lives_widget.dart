@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:basic/player_lives/player_lives_manager.dart';
+import 'package:basic/style/background_frame.dart';
 import 'package:basic/utils/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,30 +13,30 @@ class PlayerLivesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playerLivesManager = context.watch<PlayerLivesManager>();
-    final image = Image.asset('assets/icons/ui/square_orange.png');
 
     return ListenableBuilder(
       listenable: playerLivesManager,
       builder: (context, child) { 
         return SizedBox(
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(image: image.image, fit: BoxFit.fill)
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  spacing: 2,
-                  children: [
-                    for(int i = 0; i < playerLivesManager.getMaxLives(); i++)
-                      Icon(
-                        Icons.circle, 
-                        color: playerLivesManager.getLives() > i ? Colors.blue : Colors.red,)
-                  ],
-                ),
-                TimerDisplayWidget(getTimeLeft: () => playerLivesManager.getTimeUntilNextRefill()),
-              ],
+          child: BackgroundFrame(
+            color: BackgroundFrameColor.beige,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    spacing: 2,
+                    children: [
+                      for(int i = 0; i < playerLivesManager.getMaxLives(); i++)
+                        Icon(
+                          Icons.favorite, 
+                          color: playerLivesManager.getLives() > i ? Colors.red : Colors.blueGrey,)
+                    ],
+                  ),
+                  TimerDisplayWidget(getTimeLeft: () => playerLivesManager.getTimeUntilNextRefill()),
+                ],
+              ),
             ),
           ),
         );

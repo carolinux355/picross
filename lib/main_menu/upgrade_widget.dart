@@ -2,6 +2,7 @@ import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/generated/configuration/Requirement.pb.dart';
 import 'package:basic/generated/persistence/UpgradeState.pb.dart';
 import 'package:basic/inventory/inventory_manager.dart';
+import 'package:basic/style/background_frame.dart';
 import 'package:basic/upgrades/upgrade_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,14 +16,16 @@ class UpgradeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var upgradeManager = context.watch<UpgradeManager>();
     var inventoryManager = context.watch<InventoryManager>();
+
+    final backgroundImage = AssetImage('assets/icons/ui/buttonLong_blue_pressed.png');
     
     return ListenableBuilder(
       listenable: Listenable.merge([upgradeManager, inventoryManager]),
       builder: (context, child) {
         return Column(
           children: [
-            Container(
-              color: Colors.amber,
+            BackgroundFrame(
+              color: BackgroundFrameColor.blue,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(

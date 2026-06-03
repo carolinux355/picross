@@ -1,13 +1,8 @@
-// Copyright 2022, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
 
-//import 'package:basic/style/my_button.dart';
 import 'package:basic/play_session/play_session_powerups_widget.dart';
 import 'package:basic/play_session/play_session_screen.dart';
+import 'package:basic/style/background_frame.dart';
 import 'package:flutter/material.dart';
-//import 'package:go_router/go_router.dart';
-//import 'package:provider/provider.dart';
 
 /// This widget defines the bottom HUD during a picross game
 class PlaySessionBottomBarWidget extends StatelessWidget {
@@ -17,24 +12,25 @@ class PlaySessionBottomBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
 
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          child: Container(
-            height: 100,
-            color: theme.colorScheme.surfaceContainer,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                children: [
-                  PlaySessionPowerupsWidget(),
-                  Spacer(),
-                  PlaySessionBottomBarInputWidget(playerSessionState: playerSessionState),
-                ],
+          child: SizedBox(
+            height: 120,
+            child: BackgroundFrame(
+              color: BackgroundFrameColor.grey,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  children: [
+                    PlaySessionPowerupsWidget(),
+                    Spacer(),
+                    PlaySessionBottomBarInputWidget(playerSessionState: playerSessionState),
+                  ],
+                ),
               ),
             ),
           ),
@@ -51,15 +47,9 @@ class PlaySessionBottomBarInputWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final selectedStyle = ElevatedButton.styleFrom(
-      backgroundColor: theme.colorScheme.primary,
-      padding: EdgeInsets.all(20),
-    );
-    final unselectedStyle = ElevatedButton.styleFrom(
-      backgroundColor: Colors.grey,
-      padding: EdgeInsets.all(20),
-    );
+
+    final selectedBackground = AssetImage('assets/icons/ui/buttonSquare_brown_pressed.png');
+    final unselectedBackground = AssetImage('assets/icons/ui/buttonSquare_beige.png');
 
     final inputMode = playerSessionState.getInputMode();
 
@@ -69,36 +59,38 @@ class PlaySessionBottomBarInputWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
-          spacing: 5,
+          spacing: 0,
           children: [
             SizedBox(
               width: 50,
               height: 40,
-              child: ElevatedButton(
-                style: inputMode == PlayerSessionInputMode.reveal ? selectedStyle : unselectedStyle,
-                onPressed: () {
-                  playerSessionState.setInputMode(PlayerSessionInputMode.reveal);
-                },
-                child: Icon(
-                  Icons.square, 
-                  color: inputMode == PlayerSessionInputMode.reveal ? theme.colorScheme.onPrimary : theme.colorScheme.primary,
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: inputMode == PlayerSessionInputMode.reveal ? selectedBackground : unselectedBackground)
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    playerSessionState.setInputMode(PlayerSessionInputMode.reveal);
+                  }, 
+                  icon: Icon(Icons.edit, color: inputMode == PlayerSessionInputMode.reveal ? Colors.white : Colors.black)
                 )
               )
             ),
             SizedBox(
               width: 50,
-              height: 40, 
-              child: ElevatedButton(
-                style: inputMode == PlayerSessionInputMode.mark ? selectedStyle : unselectedStyle,
-                onPressed: () {
-                  playerSessionState.setInputMode(PlayerSessionInputMode.mark);
-                },
-                child: Icon(
-                  Icons.flag,
-                  color: inputMode == PlayerSessionInputMode.mark ? theme.colorScheme.onPrimary : theme.colorScheme.primary,
+              height: 40,
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: inputMode == PlayerSessionInputMode.mark ? selectedBackground : unselectedBackground)
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    playerSessionState.setInputMode(PlayerSessionInputMode.mark);
+                  }, 
+                  icon: Icon(Icons.flag, color: inputMode == PlayerSessionInputMode.mark ? Colors.white : Colors.black)
                 )
               )
-            )
+            ),
           ],
         ),
       ]

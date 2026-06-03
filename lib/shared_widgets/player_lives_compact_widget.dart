@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:basic/player_lives/player_lives_manager.dart';
+import 'package:basic/style/background_frame.dart';
 import 'package:basic/utils/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,16 +13,13 @@ class PlayerLivesCompactWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playerLivesManager = context.watch<PlayerLivesManager>();
-    final image = Image.asset('assets/icons/ui/square_orange.png');
 
     return ListenableBuilder(
       listenable: playerLivesManager,
       builder: (context, child) { 
         return SizedBox(
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(image: image.image, fit: BoxFit.fill)
-            ),
+          child: BackgroundFrame(
+            color: BackgroundFrameColor.beige,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -30,7 +28,7 @@ class PlayerLivesCompactWidget extends StatelessWidget {
                   child: Row(
                     spacing: 2,
                     children: [
-                      Icon(Icons.circle, color: Colors.blue),
+                      Icon(Icons.favorite, color: Colors.red),
                       Text('x ${playerLivesManager.getLives()}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Permanent Marker'),)
                     ],
                   ),

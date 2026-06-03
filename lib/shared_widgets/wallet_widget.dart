@@ -2,6 +2,7 @@ import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/inventory/inventory_manager.dart';
 import 'package:basic/shared_widgets/player_lives_compact_widget.dart';
 import 'package:basic/shared_widgets/xp_widget.dart';
+import 'package:basic/style/background_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +42,6 @@ class WalletResourceWidget extends StatelessWidget {
     var data = gameDataManager.getData(resourceId);
     var icon = Image.asset(data!.components.asset.sprite);
     var iconBackground = Image.asset('assets/icons/ui/buttonRound_beige.png');
-    var textBackground = Image.asset('assets/icons/ui/buttonSquare_beige_pressed.png');
     
     return Row(
       children: [
@@ -49,25 +49,29 @@ class WalletResourceWidget extends StatelessWidget {
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-            image: DecorationImage(image: iconBackground.image, fit: BoxFit.fill)
+            image: DecorationImage(
+              image: iconBackground.image, 
+              fit: BoxFit.fill,
+            )
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image(image: icon.image, width: 20, height: 20,),
           )
         ),
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(image: textBackground.image, fit: BoxFit.contain)
-          ),
+        BackgroundFrame(
+          color: BackgroundFrameColor.beige,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: Text('${inventoryManager.getResourceCount(resourceId)}', 
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Permanent Marker',
-                  fontSize: 24
+            child: SizedBox(
+              height: 25,
+              child: Center(
+                child: Text('${inventoryManager.getResourceCount(resourceId)}', 
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black
+                  ),
                 ),
               ),
             ),

@@ -5,6 +5,7 @@
 import 'package:basic/main.dart';
 import 'package:basic/main_menu/main_scene.dart';
 import 'package:basic/shared_widgets/wallet_widget.dart';
+import 'package:basic/style/background_frame.dart';
 import 'package:basic/style/responsive_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -80,15 +81,9 @@ class MainMenuScreenBottomHUD extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final audioController = context.watch<AudioController>();
-    final backgroundImage = Image.asset('assets/icons/ui/buttonLong_beige_pressed.png');
 
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: backgroundImage.image,
-          fit: BoxFit.fill
-        ),
-      ),
+    return BackgroundFrame(
+      color: BackgroundFrameColor.beige,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
