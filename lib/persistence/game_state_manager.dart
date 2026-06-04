@@ -27,7 +27,7 @@ class GameStateManager extends BaseManager {
 
   Future<String> _getPersistentDataPath() async {
     final directory = await getApplicationDocumentsDirectory();
-    return directory.path + Constants.PERSISTENT_FILE_NAME;
+    return directory.path + Constants.kPersistentFileName;
   }
 
   Future<GameState?> _readGameState() async {

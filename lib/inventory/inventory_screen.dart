@@ -16,7 +16,7 @@ class InventoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
     final gameDataManager = context.watch<GameDataManager>();
-    final tuning = gameDataManager.getData(Constants.TUNING_CONFIG_ID)!.components.tuning;
+    final tuning = gameDataManager.getData(Constants.kTuningConfigId)!.components.tuning;
 
     return Scaffold(
       backgroundColor: palette.backgroundLevelSelection,

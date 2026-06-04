@@ -22,7 +22,10 @@ import '../level_selection/clue_provider.dart';
 /// This widget defines the game UI itself, without things like the settings
 /// button or the back button.
 class GameWidget extends StatelessWidget {
-  const GameWidget({super.key, required this.playerSessionState, required this.levelState});
+  
+  GameWidget({super.key, required this.playerSessionState, required this.levelState});
+  
+  final Logger logger = Logger('GameWidget');
 
   final PlaySessionScreenState playerSessionState;
   final PersistedLevelState levelState;
@@ -46,13 +49,18 @@ class GameWidget extends StatelessWidget {
 
   double _calculateCellSize(BuildContext context, ClueProvider clueProvider)
   {
+    logger.info('Calculating cell size for ${levelState.size.x}x${levelState.size.y}');
+
     const double minSize = 1;
     // get screen size and calculate cell size based on that and the level size, with some padding
     var screenSize = MediaQuery.sizeOf(context);
+    logger.info('screen size: ${screenSize.width}x${screenSize.height}');
     var safeAreaPadding = MediaQuery.of(context).viewPadding;
     var width = screenSize.width - safeAreaPadding.left - safeAreaPadding.right;
     var height = screenSize.height - safeAreaPadding.top - safeAreaPadding.bottom;
+    logger.info('screen size after safe area: ${width}x$height');
     height = height - 400; // account for top and bottom bars, this is a magic number that looks good on my screen but should be made more robust in the future
+    logger.info('new height: $height');
     int horizontalClueMaxCount = 0;
     int verticalClueMaxCount = 0;
     for(int i = 0; i < levelState.size.y; i++) {
@@ -70,15 +78,20 @@ class GameWidget extends StatelessWidget {
     }
 
     // todo: magic number feeling but looks good
-    double horizontalClueOffset = horizontalClueMaxCount * 34;
-    double verticalClueOffset = verticalClueMaxCount * 34;
+    double horizontalClueOffset = horizontalClueMaxCount * 34 + 32;
+    double verticalClueOffset = verticalClueMaxCount * 34 + 32;
 
     width = width - horizontalClueOffset;
     height = height - verticalClueOffset;
 
+    logger.info('grid size after clue offsets: ${width}x$height');
+
     var cellWidth = width / levelState.size.x;
     var cellHeight = height / levelState.size.y;
-    return max(min(cellHeight, cellWidth), minSize);
+    logger.info('cellSize: $cellWidth x $cellHeight');
+    double cellSize = max(min(cellHeight, cellWidth), minSize);
+    logger.info('cellSize: $cellSize');
+    return cellSize;
   }
 }
 
@@ -296,27 +309,25 @@ class VerticalClueWidget extends StatelessWidget {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.tertiary, fontSize: 18, fontFamily: 'Permanent Marker');
 
-    return Container(
-      child: SizedBox(
-        width: cellSize,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            //spacing: 3,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  for (var clue in clueData.tileClues)
-                    Text(clue.toString(), textAlign: TextAlign.center, style: textTheme),
-                ],
-              ),
-            ],
-          ),
+    return SizedBox(
+      width: cellSize,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          //spacing: 3,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                for (var clue in clueData.tileClues)
+                  Text(clue.toString(), textAlign: TextAlign.center, style: textTheme),
+              ],
+            ),
+          ],
         ),
-      )
+      ),
     );
   }
 }

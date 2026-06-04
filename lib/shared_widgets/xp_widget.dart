@@ -35,7 +35,7 @@ class XPWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(playerLevelManager.isAtMaxLevel() ? '${gameStateManager.gameState.xp}' : '${gameStateManager.gameState.xp} / ${playerLevelManager.getNextLevel()?.minXp}', 
+                Text(playerLevelManager.isAtMaxLevel() ? '${gameStateManager.gameState.xp.xp}' : '${gameStateManager.gameState.xp.xp} / ${playerLevelManager.getNextLevel()?.minXp}', 
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Permanent Marker',

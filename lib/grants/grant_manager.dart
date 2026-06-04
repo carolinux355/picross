@@ -34,9 +34,12 @@ class GrantManager extends BaseManager {
     playerLevelManager = managers.firstWhere((m) => m.runtimeType == PlayerLevelManager) as PlayerLevelManager;
     lootTableManager = managers.firstWhere((m) => m.runtimeType == LootTableManager) as LootTableManager;
     playerLivesManager = managers.firstWhere((m) => m.runtimeType == PlayerLivesManager) as PlayerLivesManager;
+
+    // if any pending grants are detected on startup, flush them now for safety
+    flushPendingGrants();
   }
 
-  List<Grant> tryGrant(Grant grant, {bool dryRun = false}) {
+  List<Grant> tryGrant(Grant grant, {bool dryRun = false, InventoryType inventoryType = InventoryType.resources}) {
     List<Grant> results = [];
     // check requirements valid
     if (!requirementManager.evaluateList(grant.requirements)) {
@@ -49,13 +52,21 @@ class GrantManager extends BaseManager {
 
       case GrantType.GrantType_Resource:
         if (!dryRun) {
-          inventoryManager.addResource(grant.id, grant.amount);
+          if (inventoryType == InventoryType.resources) {
+            inventoryManager.addResource(grant.id, grant.amount);
+          } else if (inventoryType == InventoryType.pending) {
+            inventoryManager.addPending(grant.id, grant.amount);
+          }
         }
         results.add(grant);
 
       case GrantType.GrantType_Xp:
         if (!dryRun) {
-          gameStateManager.gameState.xp += grant.amount;
+          if (inventoryType == InventoryType.pending) {
+            gameStateManager.gameState.xp.pendingXp += grant.amount;
+          } else {
+            gameStateManager.gameState.xp.xp += grant.amount;
+          }
           playerLevelManager.onXpGranted();
         }
         results.add(grant);
@@ -87,10 +98,10 @@ class GrantManager extends BaseManager {
     return results;
   }
 
-  List<Grant> tryGrantList(List<Grant> grants, {bool dryRun = false}) {
+  List<Grant> tryGrantList(List<Grant> grants, {bool dryRun = false, InventoryType inventoryType = InventoryType.resources}) {
     List<Grant> results = [];
     for (Grant grant in grants) {
-      results.addAll(tryGrant(grant, dryRun: dryRun));
+      results.addAll(tryGrant(grant, dryRun: dryRun, inventoryType: inventoryType));
     }
     return results;
   }
@@ -111,5 +122,10 @@ class GrantManager extends BaseManager {
       consolidatedGrants.add(Grant(type: GrantType.GrantType_Resource, id: kvp.key, amount: kvp.value));
     }
     return consolidatedGrants;
+  }
+
+  void flushPendingGrants() {
+    inventoryManager.flushPending();
+    playerLevelManager.flushPending();
   }
 }

@@ -2,6 +2,7 @@
 import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/game_internals/base_manager.dart';
 import 'package:basic/generated/configuration/Components/PlayerLevelCurveComponent.pb.dart';
+import 'package:basic/generated/persistence/XpState.pb.dart';
 import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:logging/logging.dart';
@@ -25,6 +26,9 @@ class PlayerLevelManager extends BaseManager {
     gameDataManager = managers.firstWhere((m) => m.runtimeType == GameDataManager) as GameDataManager;
     gameStateManager = managers.firstWhere((m) => m.runtimeType == GameStateManager) as GameStateManager;
 
+    if (!gameStateManager.gameState.hasXp()) {
+      gameStateManager.gameState.xp = XpState();
+    }
     _playerLevelCurveComponent = gameDataManager.getData(gameDataManager.getTuning().playerLevelCurveId)!.components.playerLevelCurve;
 
     // initialize player level for new users
@@ -55,7 +59,7 @@ class PlayerLevelManager extends BaseManager {
   }
 
   bool checkCanLevelUp() {
-    int xp = gameStateManager.gameState.xp;
+    int xp = gameStateManager.gameState.xp.xp;
     var nextLevel = getNextLevel();
     if (nextLevel == null) {
       return false;
@@ -86,5 +90,15 @@ class PlayerLevelManager extends BaseManager {
     gameStateManager.save();
 
     return true;
+  }
+
+  void flushPending() {
+    if (gameStateManager.gameState.xp.pendingXp > 0) {
+      gameStateManager.gameState.xp.xp += gameStateManager.gameState.xp.pendingXp;
+      gameStateManager.gameState.xp.pendingXp = 0;
+      gameStateManager.save();
+
+      onXpGranted();
+    }
   }
 }

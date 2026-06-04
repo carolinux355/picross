@@ -5,11 +5,12 @@ import "persistence/PlayerLivesState.proto";
 import "persistence/ShipState.proto";
 import "persistence/CraftingState.proto";
 import "persistence/PersistedLevelState.proto";
+import "persistence/XpState.proto";
 
 message GameState
 {
 	int32 num_levels_played = 1;
-	int32 xp = 2;
+	XpState xp = 2;
 	InventoryState inventory = 3;
 	int32 player_level = 4;
 	PlayerLivesState player_lives = 5;

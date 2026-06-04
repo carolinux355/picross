@@ -10,8 +10,7 @@ class WorldInfoDialog extends SimpleDialog {
 
   final String worldId;
 
-
-  WorldInfoDialog({super.key, required this.worldId}) : super();
+  const WorldInfoDialog({super.key, required this.worldId}) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +23,12 @@ class WorldInfoDialog extends SimpleDialog {
 
   Widget _buildDialog(BuildContext context) {
     final gameDataManager = context.watch<GameDataManager>();
-    var playerLivesManager = context.watch<PlayerLivesManager>();
-    var worldConfig = gameDataManager.getData(worldId);
+    final playerLivesManager = context.watch<PlayerLivesManager>();
+    final requirementManager = context.watch<RequirementManager>();
+    final worldConfig = gameDataManager.getData(worldId);
+
     bool hasEnoughLives = playerLivesManager.getLives() >= worldConfig!.components.world.requiredLives;
+    bool isUnlocked = requirementManager.evaluateList(worldConfig.components.feature.unlock);
 
     return Stack(
       children: [
@@ -50,12 +52,15 @@ class WorldInfoDialog extends SimpleDialog {
                 spacing: 10,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  MyButton(
-                    onPressed: () {
-                      _startLevel(context);
-                    },
-                    child: hasEnoughLives? Text('Start level') : Text('Need ${worldConfig.components.world.requiredLives} lives'),
-                  ),
+                  if (isUnlocked)
+                    MyButton(
+                      onPressed: () {
+                        _startLevel(context);
+                      },
+                      child: hasEnoughLives? Text('Start level') : Text('Need ${worldConfig.components.world.requiredLives} lives'),
+                    )
+                  else
+                    Text('Locked')
                 ],
               )
             ]

@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:basic/game_internals/level_state_controller.dart';
+import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/shared_widgets/xp_widget.dart';
 import 'package:basic/style/reward_view.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class WinGameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
+    final grantManager = context.watch<GrantManager>();
 
     return Scaffold(
       backgroundColor: palette.backgroundPlaySession,
@@ -69,18 +71,21 @@ class WinGameScreen extends StatelessWidget {
           children: [
             MyButton(
               onPressed: () {
+                grantManager.flushPendingGrants();
                 GoRouter.of(context).go('/');
               },
               child: const Text('Town'),
             ),
             MyButton(
               onPressed: () {
+                grantManager.flushPendingGrants();
                 GoRouter.of(context).go('/play');
               },
               child: const Text('World Select'),
             ),
             MyButton(
               onPressed: () {
+                grantManager.flushPendingGrants();
                 GoRouter.of(context).go('/levelgeneration', extra: levelCompleteState.worldId);
               },
               child: const Text('Next'),

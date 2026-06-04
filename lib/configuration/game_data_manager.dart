@@ -18,7 +18,7 @@ class GameDataManager extends BaseManager {
 
   @override
   Future initialize(List<BaseManager> managers) async {
-    filePath = Constants.CONFIGURATION_PATH;
+    filePath = Constants.kConfigurationPath;
     await _readGameData();
   }
 
@@ -49,7 +49,7 @@ class GameDataManager extends BaseManager {
   }
 
   TuningComponent getTuning() {
-    return getData(Constants.TUNING_CONFIG_ID)!.components.tuning;
+    return getData(Constants.kTuningConfigId)!.components.tuning;
   }
 
   List<BaseMessage> getAllData() {

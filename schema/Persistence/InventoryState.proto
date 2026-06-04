@@ -3,4 +3,5 @@ syntax = "proto3";
 message InventoryState
 {
 	map<string, int32> resources = 1;
+	map<string, int32> pending_resources = 2; // flush on app start
 }

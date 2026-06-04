@@ -3,6 +3,7 @@ import 'package:basic/generated/configuration/Grant.pb.dart';
 import 'package:basic/generated/configuration/Utils.pb.dart';
 import 'package:basic/generated/persistence/PersistedLevelState.pb.dart';
 import 'package:basic/grants/grant_manager.dart';
+import 'package:basic/inventory/inventory_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:basic/settings/settings.dart';
@@ -142,21 +143,21 @@ class LevelStateController extends ChangeNotifier {
     }
 
     int xp = world!.components.world.baseXp * state.difficulty + (perfectScore ? world.components.world.baseXp * gameDataManager.getTuning().perfectScoreXpBonus : 0);
-
-    LevelCompleteState levelCompleteState = LevelCompleteState(rewards: List.from(pendingRewards), xpEarned: xp, worldId: state.worldId);
-
-    pendingRewards.add(Grant(
+    Grant xpGrant = Grant(
       type: GrantType.GrantType_Xp,
-      id: gameDataManager.getTuning().xpResourceId,
-      amount: xp,
-    ));
+      amount: xp
+    );
 
+    LevelCompleteState levelCompleteState = LevelCompleteState(rewards: List.from(pendingRewards), xpGrant: xpGrant, worldId: state.worldId);
+
+    pendingRewards.add(xpGrant);
+    
     var gameState = gameStateManager.gameState;
     gameState.numLevelsPlayed++;
 
-    grantManager.tryGrantList(pendingRewards);
+    grantManager.tryGrantList(pendingRewards, inventoryType: InventoryType.pending);
     // mark level complete so we generate a new one
-    gameStateManager.gameState.persistedLevelState.isComplete = true;
+    gameState.persistedLevelState.isComplete = true;
     gameStateManager.save();
 
     // callback to view
@@ -239,7 +240,7 @@ class LevelStateController extends ChangeNotifier {
 class LevelCompleteState
 {
   final List<Grant> rewards;
-  final int xpEarned;
+  final Grant xpGrant;
   final String worldId;
-  LevelCompleteState({required this.rewards, required this.xpEarned, required this.worldId});
+  LevelCompleteState({required this.rewards, required this.xpGrant, required this.worldId});
 }

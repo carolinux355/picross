@@ -3,8 +3,10 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:basic/configuration/game_data_manager.dart';
+import 'package:basic/generated/configuration/Requirement.pb.dart';
 import 'package:basic/level_selection/world_info_dialog.dart';
 import 'package:basic/player_lives/player_lives_manager.dart';
+import 'package:basic/requirements/requirement_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +30,7 @@ class LevelSelectionScreen extends StatelessWidget {
         squarishMainArea: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.0),
               child: Center(
                 child: Text(
                   'Select level',
@@ -115,10 +117,12 @@ class LevelSelectWorldView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gameDataManager = context.watch<GameDataManager>();
-    var playerLivesManager = context.watch<PlayerLivesManager>();
-    var worldConfig = gameDataManager.getData(worldId);
-    final image = Image.asset(worldConfig!.components.asset.sprite);
+    final playerLivesManager = context.watch<PlayerLivesManager>();
+    final requirementManager = context.watch<RequirementManager>();
+    final worldConfig = gameDataManager.getData(worldId);
+    final image = AssetImage(worldConfig!.components.asset.sprite);
 
+    bool isUnlocked = requirementManager.evaluateList(worldConfig.components.feature.unlock);
     bool hasEnoughLives = playerLivesManager.getLives() >= worldConfig.components.world.requiredLives;
     
     return GestureDetector(
@@ -127,7 +131,7 @@ class LevelSelectWorldView extends StatelessWidget {
         opacity: hasEnoughLives ? 1.0 : 0.5,
         child: Column(
           children: [
-            image,
+            Image(image: image, color: isUnlocked ? Colors.white : Colors.grey, colorBlendMode: BlendMode.modulate,),
             Text(worldConfig.components.localizedName.name)
           ]
         )

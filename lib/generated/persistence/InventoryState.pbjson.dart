@@ -27,8 +27,19 @@ const InventoryState$json = {
       '6': '.InventoryState.ResourcesEntry',
       '10': 'resources'
     },
+    {
+      '1': 'pending_resources',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.InventoryState.PendingResourcesEntry',
+      '10': 'pendingResources'
+    },
   ],
-  '3': [InventoryState_ResourcesEntry$json],
+  '3': [
+    InventoryState_ResourcesEntry$json,
+    InventoryState_PendingResourcesEntry$json
+  ],
 };
 
 @$core.Deprecated('Use inventoryStateDescriptor instead')
@@ -41,8 +52,21 @@ const InventoryState_ResourcesEntry$json = {
   '7': {'7': true},
 };
 
+@$core.Deprecated('Use inventoryStateDescriptor instead')
+const InventoryState_PendingResourcesEntry$json = {
+  '1': 'PendingResourcesEntry',
+  '2': [
+    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {'1': 'value', '3': 2, '4': 1, '5': 5, '10': 'value'},
+  ],
+  '7': {'7': true},
+};
+
 /// Descriptor for `InventoryState`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List inventoryStateDescriptor = $convert.base64Decode(
     'Cg5JbnZlbnRvcnlTdGF0ZRI8CglyZXNvdXJjZXMYASADKAsyHi5JbnZlbnRvcnlTdGF0ZS5SZX'
-    'NvdXJjZXNFbnRyeVIJcmVzb3VyY2VzGjwKDlJlc291cmNlc0VudHJ5EhAKA2tleRgBIAEoCVID'
-    'a2V5EhQKBXZhbHVlGAIgASgFUgV2YWx1ZToCOAE=');
+    'NvdXJjZXNFbnRyeVIJcmVzb3VyY2VzElIKEXBlbmRpbmdfcmVzb3VyY2VzGAIgAygLMiUuSW52'
+    'ZW50b3J5U3RhdGUuUGVuZGluZ1Jlc291cmNlc0VudHJ5UhBwZW5kaW5nUmVzb3VyY2VzGjwKDl'
+    'Jlc291cmNlc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgFUgV2YWx1ZToC'
+    'OAEaQwoVUGVuZGluZ1Jlc291cmNlc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGA'
+    'IgASgFUgV2YWx1ZToCOAE=');

@@ -19,9 +19,12 @@ export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 class InventoryState extends $pb.GeneratedMessage {
   factory InventoryState({
     $core.Iterable<$core.MapEntry<$core.String, $core.int>>? resources,
+    $core.Iterable<$core.MapEntry<$core.String, $core.int>>? pendingResources,
   }) {
     final result = create();
     if (resources != null) result.resources.addEntries(resources);
+    if (pendingResources != null)
+      result.pendingResources.addEntries(pendingResources);
     return result;
   }
 
@@ -39,6 +42,10 @@ class InventoryState extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..m<$core.String, $core.int>(1, _omitFieldNames ? '' : 'resources',
         entryClassName: 'InventoryState.ResourcesEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.O3)
+    ..m<$core.String, $core.int>(2, _omitFieldNames ? '' : 'pendingResources',
+        entryClassName: 'InventoryState.PendingResourcesEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
@@ -64,6 +71,9 @@ class InventoryState extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $pb.PbMap<$core.String, $core.int> get resources => $_getMap(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbMap<$core.String, $core.int> get pendingResources => $_getMap(1);
 }
 
 const $core.bool _omitFieldNames =

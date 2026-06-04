@@ -20,7 +20,7 @@ const GameState$json = {
   '1': 'GameState',
   '2': [
     {'1': 'num_levels_played', '3': 1, '4': 1, '5': 5, '10': 'numLevelsPlayed'},
-    {'1': 'xp', '3': 2, '4': 1, '5': 5, '10': 'xp'},
+    {'1': 'xp', '3': 2, '4': 1, '5': 11, '6': '.XpState', '10': 'xp'},
     {
       '1': 'inventory',
       '3': 3,
@@ -61,9 +61,9 @@ const GameState$json = {
 /// Descriptor for `GameState`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List gameStateDescriptor = $convert.base64Decode(
     'CglHYW1lU3RhdGUSKgoRbnVtX2xldmVsc19wbGF5ZWQYASABKAVSD251bUxldmVsc1BsYXllZB'
-    'IOCgJ4cBgCIAEoBVICeHASLQoJaW52ZW50b3J5GAMgASgLMg8uSW52ZW50b3J5U3RhdGVSCWlu'
-    'dmVudG9yeRIhCgxwbGF5ZXJfbGV2ZWwYBCABKAVSC3BsYXllckxldmVsEjQKDHBsYXllcl9saX'
-    'ZlcxgFIAEoCzIRLlBsYXllckxpdmVzU3RhdGVSC3BsYXllckxpdmVzEiAKBXNoaXBzGAYgAygL'
-    'MgouU2hpcFN0YXRlUgVzaGlwcxIqCghjcmFmdGluZxgHIAEoCzIOLkNyYWZ0aW5nU3RhdGVSCG'
-    'NyYWZ0aW5nEkgKFXBlcnNpc3RlZF9sZXZlbF9zdGF0ZRgIIAEoCzIULlBlcnNpc3RlZExldmVs'
-    'U3RhdGVSE3BlcnNpc3RlZExldmVsU3RhdGU=');
+    'IYCgJ4cBgCIAEoCzIILlhwU3RhdGVSAnhwEi0KCWludmVudG9yeRgDIAEoCzIPLkludmVudG9y'
+    'eVN0YXRlUglpbnZlbnRvcnkSIQoMcGxheWVyX2xldmVsGAQgASgFUgtwbGF5ZXJMZXZlbBI0Cg'
+    'xwbGF5ZXJfbGl2ZXMYBSABKAsyES5QbGF5ZXJMaXZlc1N0YXRlUgtwbGF5ZXJMaXZlcxIgCgVz'
+    'aGlwcxgGIAMoCzIKLlNoaXBTdGF0ZVIFc2hpcHMSKgoIY3JhZnRpbmcYByABKAsyDi5DcmFmdG'
+    'luZ1N0YXRlUghjcmFmdGluZxJIChVwZXJzaXN0ZWRfbGV2ZWxfc3RhdGUYCCABKAsyFC5QZXJz'
+    'aXN0ZWRMZXZlbFN0YXRlUhNwZXJzaXN0ZWRMZXZlbFN0YXRl');

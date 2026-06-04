@@ -1,8 +1,8 @@
 import 'package:protobuf/well_known_types/google/protobuf/timestamp.pb.dart';
 
 class TimeUtils {
-  static const int MINUTES_PER_HOUR = 60;
-  static const int SECONDS_PER_MINUTE = 60;
+  static const int kMinutesPerHour = 60;
+  static const int kSecondsPerMinute = 60;
   
   static DateTime now() {
     return DateTime.timestamp();
@@ -39,10 +39,10 @@ class TimeUtils {
 
       case 2:
         if (hours > 0) {
-          minutes -= hours * MINUTES_PER_HOUR;
+          minutes -= hours * kMinutesPerHour;
           return '${hours}h ${minutes}m';
         } else if (minutes > 0) {
-          seconds -= minutes * SECONDS_PER_MINUTE;
+          seconds -= minutes * kSecondsPerMinute;
           return '${minutes}m ${seconds}s';
         }
         else {
@@ -50,8 +50,8 @@ class TimeUtils {
         }
 
       case 3:
-        seconds -= minutes * SECONDS_PER_MINUTE;
-        minutes -= hours * MINUTES_PER_HOUR;
+        seconds -= minutes * kSecondsPerMinute;
+        minutes -= hours * kMinutesPerHour;
         return '${hours}h ${minutes}m ${seconds}s';
 
     }

@@ -55,4 +55,37 @@ class InventoryManager extends BaseManager
     notifyListeners();
   }
 
+  int getPendingResourceAmount(String resourceId) {
+    assert(gameDataManager.getData(resourceId)?.components.resource != null);
+    if (gameStateManager.gameState.inventory.pendingResources.containsKey(resourceId)) {
+      return gameStateManager.gameState.inventory.pendingResources[resourceId]!;
+    }
+
+    return 0;
+  }
+
+  void addPending(String resourceId, int amount) {
+    gameStateManager.gameState.inventory.pendingResources[resourceId] = getPendingResourceAmount(resourceId) + amount;
+    gameStateManager.save();
+    notifyListeners();
+  }
+
+  void removePending(String resourceId, int amount) {
+    if (!gameStateManager.gameState.inventory.pendingResources.containsKey(resourceId) || gameStateManager.gameState.inventory.pendingResources[resourceId]! < amount) {
+      throw Exception('failed to remove pending resource $resourceId:$amount, not enough in inventory!');
+    }
+    gameStateManager.gameState.inventory.pendingResources[resourceId] = max(0, gameStateManager.gameState.inventory.pendingResources[resourceId]! - amount);
+    gameStateManager.save();
+    notifyListeners();
+  }
+
+  void flushPending() {
+    for (var kvp in gameStateManager.gameState.inventory.pendingResources.entries) {
+      // migrate all resources from pending to resources inventory
+      addResource(kvp.key, kvp.value);
+    }
+    gameStateManager.gameState.inventory.pendingResources.clear();
+    gameStateManager.save();
+  }
+
 }

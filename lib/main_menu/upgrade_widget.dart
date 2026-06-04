@@ -16,8 +16,6 @@ class UpgradeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var upgradeManager = context.watch<UpgradeManager>();
     var inventoryManager = context.watch<InventoryManager>();
-
-    final backgroundImage = AssetImage('assets/icons/ui/buttonLong_blue_pressed.png');
     
     return ListenableBuilder(
       listenable: Listenable.merge([upgradeManager, inventoryManager]),
