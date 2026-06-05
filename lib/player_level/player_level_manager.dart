@@ -5,6 +5,9 @@ import 'package:basic/generated/configuration/Components/PlayerLevelCurveCompone
 import 'package:basic/generated/persistence/XpState.pb.dart';
 import 'package:basic/grants/grant_manager.dart';
 import 'package:basic/persistence/game_state_manager.dart';
+import 'package:basic/player_level/level_up_dialog.dart';
+import 'package:basic/router.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
 class PlayerLevelManager extends BaseManager {
@@ -83,11 +86,13 @@ class PlayerLevelManager extends BaseManager {
 
     logger.info('leveling up player to ${nextLevel!.level}');
 
-    grantManager.tryGrantList(nextLevel.rewards);
+    var results = grantManager.tryGrantList(nextLevel.rewards);
 
     // level up
     gameStateManager.gameState.playerLevel++;
     gameStateManager.save();
+
+    showDialog(context: navigatorKey.currentContext!, builder: (context) => LevelUpDialog(levelUpRewards: results,));
 
     return true;
   }

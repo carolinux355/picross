@@ -10,6 +10,7 @@ import 'package:basic/loading/loading_screen.dart';
 import 'package:basic/persistence/game_state_manager.dart';
 import 'package:basic/win_game/lost_game_screen.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -23,18 +24,25 @@ import 'win_game/win_game_screen.dart';
 
 /// The router describes the game's navigational hierarchy, from the main
 /// screen through settings screens all the way to each individual level.
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 final router = GoRouter(
+  navigatorKey: navigatorKey,
   initialLocation: '/loading',
   routes: [
     GoRoute(
+      parentNavigatorKey: navigatorKey,
       path: '/loading',
       builder: (context, state) => const LoadingScreen(key: Key('loading')),
     ),
     GoRoute(
+      parentNavigatorKey: navigatorKey,
       path: '/',
       builder: (context, state) => const MainMenuScreen(key: Key('main menu')),
       routes: [
         GoRoute(
+          parentNavigatorKey: navigatorKey,
           path: 'play',
           pageBuilder: (context, state) { 
             var gameStateManager = context.read<GameStateManager>();
@@ -55,6 +63,7 @@ final router = GoRouter(
           },
           routes: [
             GoRoute(
+              parentNavigatorKey: navigatorKey,
               path: 'session/:level',
               pageBuilder: (context, state) {                
                 return buildMyTransition<void>(
@@ -65,6 +74,7 @@ final router = GoRouter(
               },
             ),
             GoRoute(
+              parentNavigatorKey: navigatorKey,
               path: 'won',
               redirect: (context, state) {
                 if (state.extra == null) {
@@ -90,6 +100,7 @@ final router = GoRouter(
               },
             ),
             GoRoute(
+              parentNavigatorKey: navigatorKey,
               path: 'lost',
               redirect: (context, state) {
                 // Otherwise, do not redirect.
@@ -108,16 +119,19 @@ final router = GoRouter(
           ],
         ),
         GoRoute(
+          parentNavigatorKey: navigatorKey,
           path: 'settings',
           builder: (context, state) =>
               const SettingsScreen(key: Key('settings')),
         ),
         GoRoute(
+          parentNavigatorKey: navigatorKey,
           path: 'inventory',
           builder: (context, state) =>
               const InventoryScreen(key: Key('inventory')),
         ),
         GoRoute(
+          parentNavigatorKey: navigatorKey,
           path: 'levelgeneration',
           builder: (context, state) {
             final worldId = state.extra! as String;
@@ -125,6 +139,7 @@ final router = GoRouter(
           }
         ),
         GoRoute(
+          parentNavigatorKey: navigatorKey,
           path: 'crafting',
           builder: (context, state) =>
               const CraftingScreen(key: Key('crafting')),

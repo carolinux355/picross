@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:basic/configuration/game_data_manager.dart';
 import 'package:basic/generated/configuration/Grant.pb.dart';
 import 'package:basic/generated/configuration/Utils.pb.dart';
@@ -142,7 +144,7 @@ class LevelStateController extends ChangeNotifier {
       perfectScore = false;
     }
 
-    int xp = world!.components.world.baseXp * state.difficulty + (perfectScore ? world.components.world.baseXp * gameDataManager.getTuning().perfectScoreXpBonus : 0);
+    int xp = (world!.components.world.baseXp * log(state.difficulty) + (perfectScore ? world.components.world.baseXp * gameDataManager.getTuning().perfectScoreXpBonus : 0)).floor();
     Grant xpGrant = Grant(
       type: GrantType.GrantType_Xp,
       amount: xp
@@ -151,7 +153,7 @@ class LevelStateController extends ChangeNotifier {
     LevelCompleteState levelCompleteState = LevelCompleteState(rewards: List.from(pendingRewards), xpGrant: xpGrant, worldId: state.worldId);
 
     pendingRewards.add(xpGrant);
-    
+
     var gameState = gameStateManager.gameState;
     gameState.numLevelsPlayed++;
 

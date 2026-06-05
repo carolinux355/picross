@@ -59,7 +59,7 @@ class GameWidget extends StatelessWidget {
     var width = screenSize.width - safeAreaPadding.left - safeAreaPadding.right;
     var height = screenSize.height - safeAreaPadding.top - safeAreaPadding.bottom;
     logger.info('screen size after safe area: ${width}x$height');
-    height = height - 400; // account for top and bottom bars, this is a magic number that looks good on my screen but should be made more robust in the future
+    height = height - 410; // account for top and bottom bars, this is a magic number that looks good on my screen but should be made more robust in the future
     logger.info('new height: $height');
     int horizontalClueMaxCount = 0;
     int verticalClueMaxCount = 0;
@@ -78,8 +78,8 @@ class GameWidget extends StatelessWidget {
     }
 
     // todo: magic number feeling but looks good
-    double horizontalClueOffset = horizontalClueMaxCount * 34 + 32;
-    double verticalClueOffset = verticalClueMaxCount * 34 + 32;
+    double horizontalClueOffset = horizontalClueMaxCount * 34 + 20;
+    double verticalClueOffset = verticalClueMaxCount * 34 + 20;
 
     width = width - horizontalClueOffset;
     height = height - verticalClueOffset;

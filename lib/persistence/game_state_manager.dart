@@ -37,8 +37,15 @@ class GameStateManager extends BaseManager {
       return null;
     }
 
-    final contents = await file.readAsBytes();
-    return GameState.fromBuffer(contents);
+    try{
+      final contents = await file.readAsBytes();
+      return GameState.fromBuffer(contents);
+    } catch (exception) {
+      logger.severe('corrupted save data! deleting blob');
+      file.delete();
+    }
+    
+    return null;
   }
 
   Future<void> save() async {

@@ -3,7 +3,6 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:basic/configuration/game_data_manager.dart';
-import 'package:basic/generated/configuration/Requirement.pb.dart';
 import 'package:basic/level_selection/world_info_dialog.dart';
 import 'package:basic/player_lives/player_lives_manager.dart';
 import 'package:basic/requirements/requirement_manager.dart';

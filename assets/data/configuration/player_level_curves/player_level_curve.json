@@ -5,7 +5,7 @@
 			"levels": {
 				"2": {
 					"level": 2,
-					"min_xp": 50,
+					"min_xp": 200,
 					"rewards": [
 						{
 							"type": "GrantType_Resource",
@@ -16,7 +16,7 @@
 				},
 				"3": {
 					"level": 3,
-					"min_xp": 200,
+					"min_xp": 500,
 					"rewards": [
 						{
 							"type": "GrantType_Resource",
@@ -31,7 +31,7 @@
 				},
 				"4": {
 					"level": 4,
-					"min_xp": 400,
+					"min_xp": 1000,
 					"rewards": [
 						{
 							"type": "GrantType_Resource",

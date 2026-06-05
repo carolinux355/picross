@@ -13,6 +13,8 @@ class XPWidget extends StatelessWidget {
     final playerLevelManager = context.watch<PlayerLevelManager>();
     final image = Image.asset('assets/icons/ui/iconCircle_grey.png');
 
+    final xp = gameStateManager.gameState.xp.xp;
+
     return ListenableBuilder(
       listenable: playerLevelManager,
       builder: (context, child) { 
@@ -35,12 +37,17 @@ class XPWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(playerLevelManager.isAtMaxLevel() ? '${gameStateManager.gameState.xp.xp}' : '${gameStateManager.gameState.xp.xp} / ${playerLevelManager.getNextLevel()?.minXp}', 
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Permanent Marker',
-                    fontSize: 12
-                  ),
+                TweenAnimationBuilder(
+                  tween: Tween<double>(begin: xp.toDouble(), end: gameStateManager.gameState.xp.xp.toDouble()),
+                  duration: Duration(milliseconds: 800),
+                  curve: Curves.easeOut,
+                  builder: (context, value, child) => Text(playerLevelManager.isAtMaxLevel() ? '${value.toInt()}' : '${value.toInt()} / ${playerLevelManager.getNextLevel()?.minXp}', 
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Permanent Marker',
+                      fontSize: 12
+                    ),
+                  )
                 ),
               ],
             ),
