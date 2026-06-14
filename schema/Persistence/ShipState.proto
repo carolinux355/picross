@@ -6,4 +6,5 @@ message ShipState
 {
 	string id = 1;
 	UpgradeState upgrade_state = 2;
+	string ship_name = 3;
 }

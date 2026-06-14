@@ -36,6 +36,15 @@ class UpgradeManager extends BaseManager {
     return data.cost;
   }
 
+  bool isAtMaxLevel(String id) {
+    var data = gameDataManager.getData(id);
+    if (data == null || !data.components.hasUpgradable()) { 
+      return true;
+    }
+
+    return false;
+  }
+
   bool canAffordUpgrade(String id) {
     var data = gameDataManager.getData(id);
     if (data == null || !data.components.hasUpgradable()) { 

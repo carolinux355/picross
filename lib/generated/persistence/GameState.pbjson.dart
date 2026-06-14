@@ -38,7 +38,7 @@ const GameState$json = {
       '6': '.PlayerLivesState',
       '10': 'playerLives'
     },
-    {'1': 'ships', '3': 6, '4': 3, '5': 11, '6': '.ShipState', '10': 'ships'},
+    {'1': 'ship', '3': 6, '4': 1, '5': 11, '6': '.ShipState', '10': 'ship'},
     {
       '1': 'crafting',
       '3': 7,
@@ -63,7 +63,7 @@ final $typed_data.Uint8List gameStateDescriptor = $convert.base64Decode(
     'CglHYW1lU3RhdGUSKgoRbnVtX2xldmVsc19wbGF5ZWQYASABKAVSD251bUxldmVsc1BsYXllZB'
     'IYCgJ4cBgCIAEoCzIILlhwU3RhdGVSAnhwEi0KCWludmVudG9yeRgDIAEoCzIPLkludmVudG9y'
     'eVN0YXRlUglpbnZlbnRvcnkSIQoMcGxheWVyX2xldmVsGAQgASgFUgtwbGF5ZXJMZXZlbBI0Cg'
-    'xwbGF5ZXJfbGl2ZXMYBSABKAsyES5QbGF5ZXJMaXZlc1N0YXRlUgtwbGF5ZXJMaXZlcxIgCgVz'
-    'aGlwcxgGIAMoCzIKLlNoaXBTdGF0ZVIFc2hpcHMSKgoIY3JhZnRpbmcYByABKAsyDi5DcmFmdG'
-    'luZ1N0YXRlUghjcmFmdGluZxJIChVwZXJzaXN0ZWRfbGV2ZWxfc3RhdGUYCCABKAsyFC5QZXJz'
-    'aXN0ZWRMZXZlbFN0YXRlUhNwZXJzaXN0ZWRMZXZlbFN0YXRl');
+    'xwbGF5ZXJfbGl2ZXMYBSABKAsyES5QbGF5ZXJMaXZlc1N0YXRlUgtwbGF5ZXJMaXZlcxIeCgRz'
+    'aGlwGAYgASgLMgouU2hpcFN0YXRlUgRzaGlwEioKCGNyYWZ0aW5nGAcgASgLMg4uQ3JhZnRpbm'
+    'dTdGF0ZVIIY3JhZnRpbmcSSAoVcGVyc2lzdGVkX2xldmVsX3N0YXRlGAggASgLMhQuUGVyc2lz'
+    'dGVkTGV2ZWxTdGF0ZVITcGVyc2lzdGVkTGV2ZWxTdGF0ZQ==');

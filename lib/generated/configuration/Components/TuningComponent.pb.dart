@@ -25,7 +25,7 @@ class TuningComponent extends $pb.GeneratedMessage {
     $core.String? playerLevelCurveId,
     $core.String? xpResourceId,
     $0.Duration? lifeRefillDuration,
-    $core.Iterable<$core.String>? initialShips,
+    $core.String? shipId,
     $core.int? perfectScoreXpBonus,
   }) {
     final result = create();
@@ -37,7 +37,7 @@ class TuningComponent extends $pb.GeneratedMessage {
     if (xpResourceId != null) result.xpResourceId = xpResourceId;
     if (lifeRefillDuration != null)
       result.lifeRefillDuration = lifeRefillDuration;
-    if (initialShips != null) result.initialShips.addAll(initialShips);
+    if (shipId != null) result.shipId = shipId;
     if (perfectScoreXpBonus != null)
       result.perfectScoreXpBonus = perfectScoreXpBonus;
     return result;
@@ -61,7 +61,7 @@ class TuningComponent extends $pb.GeneratedMessage {
     ..aOS(4, _omitFieldNames ? '' : 'xpResourceId')
     ..aOM<$0.Duration>(5, _omitFieldNames ? '' : 'lifeRefillDuration',
         subBuilder: $0.Duration.create)
-    ..pPS(6, _omitFieldNames ? '' : 'initialShips')
+    ..aOS(6, _omitFieldNames ? '' : 'shipId')
     ..aI(7, _omitFieldNames ? '' : 'perfectScoreXpBonus')
     ..hasRequiredFields = false;
 
@@ -120,7 +120,13 @@ class TuningComponent extends $pb.GeneratedMessage {
   $0.Duration ensureLifeRefillDuration() => $_ensure(4);
 
   @$pb.TagNumber(6)
-  $pb.PbList<$core.String> get initialShips => $_getList(5);
+  $core.String get shipId => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set shipId($core.String value) => $_setString(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasShipId() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearShipId() => $_clearField(6);
 
   @$pb.TagNumber(7)
   $core.int get perfectScoreXpBonus => $_getIZ(6);

@@ -8,8 +8,8 @@ import 'package:basic/inventory/inventory_screen.dart';
 import 'package:basic/loading/level_generation_loading_screen.dart';
 import 'package:basic/loading/loading_screen.dart';
 import 'package:basic/persistence/game_state_manager.dart';
+import 'package:basic/upgrades/upgrade_ship_screen.dart';
 import 'package:basic/win_game/lost_game_screen.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -143,6 +143,14 @@ final router = GoRouter(
           path: 'crafting',
           builder: (context, state) =>
               const CraftingScreen(key: Key('crafting')),
+        ),
+        GoRoute(
+          parentNavigatorKey: navigatorKey,
+          path: 'upgrade_ship',
+          builder: (context, state) {
+            String oldShipId = state.extra as String;
+            return UpgradeShipScreen(key: Key('upgrade_ship'), oldShipId: oldShipId,);
+          }
         )
       ],
     ),

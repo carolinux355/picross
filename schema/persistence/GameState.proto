@@ -14,7 +14,7 @@ message GameState
 	InventoryState inventory = 3;
 	int32 player_level = 4;
 	PlayerLivesState player_lives = 5;
-	repeated ShipState ships = 6;
+	ShipState ship = 6;
 	CraftingState crafting = 7;
 	PersistedLevelState persisted_level_state = 8;
 }

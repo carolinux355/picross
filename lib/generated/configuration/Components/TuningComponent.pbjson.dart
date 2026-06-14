@@ -43,7 +43,7 @@ const TuningComponent$json = {
       '6': '.google.protobuf.Duration',
       '10': 'lifeRefillDuration'
     },
-    {'1': 'initial_ships', '3': 6, '4': 3, '5': 9, '10': 'initialShips'},
+    {'1': 'ship_id', '3': 6, '4': 1, '5': 9, '10': 'shipId'},
     {
       '1': 'perfect_score_xp_bonus',
       '3': 7,
@@ -60,6 +60,6 @@ final $typed_data.Uint8List tuningComponentDescriptor = $convert.base64Decode(
     'RvcnlfcmVzb3VyY2VzGAIgAygJUhJpbnZlbnRvcnlSZXNvdXJjZXMSMQoVcGxheWVyX2xldmVs'
     'X2N1cnZlX2lkGAMgASgJUhJwbGF5ZXJMZXZlbEN1cnZlSWQSJAoOeHBfcmVzb3VyY2VfaWQYBC'
     'ABKAlSDHhwUmVzb3VyY2VJZBJLChRsaWZlX3JlZmlsbF9kdXJhdGlvbhgFIAEoCzIZLmdvb2ds'
-    'ZS5wcm90b2J1Zi5EdXJhdGlvblISbGlmZVJlZmlsbER1cmF0aW9uEiMKDWluaXRpYWxfc2hpcH'
-    'MYBiADKAlSDGluaXRpYWxTaGlwcxIzChZwZXJmZWN0X3Njb3JlX3hwX2JvbnVzGAcgASgFUhNw'
-    'ZXJmZWN0U2NvcmVYcEJvbnVz');
+    'ZS5wcm90b2J1Zi5EdXJhdGlvblISbGlmZVJlZmlsbER1cmF0aW9uEhcKB3NoaXBfaWQYBiABKA'
+    'lSBnNoaXBJZBIzChZwZXJmZWN0X3Njb3JlX3hwX2JvbnVzGAcgASgFUhNwZXJmZWN0U2NvcmVY'
+    'cEJvbnVz');

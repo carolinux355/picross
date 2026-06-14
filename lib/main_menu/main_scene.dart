@@ -62,16 +62,16 @@ class _ShipViewState extends State<ShipView> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     _animationController.dispose();
     _rotateAnimationController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var gameDataManager = context.read<GameDataManager>();
     var shipManager = context.read<ShipManager>();
-    var upgradeManager = context.watch<UpgradeManager>();
+    var upgradeManager = context.read<UpgradeManager>();
 
     return AnimatedBuilder(
       animation: _animation,
@@ -87,9 +87,27 @@ class _ShipViewState extends State<ShipView> with TickerProviderStateMixin {
               builder: (context, value) {
                 var shipState = shipManager.getDefaultShip();
                 var shipData = gameDataManager.getData(shipState.upgradeState.currentId);
-                return Image.asset(
-                  shipData!.components.asset.sprite,
-                  fit: BoxFit.cover,
+                return Stack(
+                  children: [
+                    Image.asset(
+                      shipData!.components.asset.sprite,
+                      fit: BoxFit.cover,
+                    ),
+                    Visibility(
+                      visible: shipManager.getDefaultShip().hasShipName(),
+                      child: Positioned(
+                        bottom: 100,
+                        right: 60,
+                        child: Text(
+                          shipManager.getDefaultShip().shipName, 
+                          style: TextStyle(
+                            color: Colors.white, 
+                            fontFamily: 'Permanent Marker'),
+                            textAlign: TextAlign.right,
+                          ),
+                      ),
+                    ),
+                  ]
                 );
               },
             ),

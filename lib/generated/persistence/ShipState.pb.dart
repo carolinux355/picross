@@ -22,10 +22,12 @@ class ShipState extends $pb.GeneratedMessage {
   factory ShipState({
     $core.String? id,
     $0.UpgradeState? upgradeState,
+    $core.String? shipName,
   }) {
     final result = create();
     if (id != null) result.id = id;
     if (upgradeState != null) result.upgradeState = upgradeState;
+    if (shipName != null) result.shipName = shipName;
     return result;
   }
 
@@ -44,6 +46,7 @@ class ShipState extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOM<$0.UpgradeState>(2, _omitFieldNames ? '' : 'upgradeState',
         subBuilder: $0.UpgradeState.create)
+    ..aOS(3, _omitFieldNames ? '' : 'shipName')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -83,6 +86,15 @@ class ShipState extends $pb.GeneratedMessage {
   void clearUpgradeState() => $_clearField(2);
   @$pb.TagNumber(2)
   $0.UpgradeState ensureUpgradeState() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.String get shipName => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set shipName($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasShipName() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearShipName() => $_clearField(3);
 }
 
 const $core.bool _omitFieldNames =

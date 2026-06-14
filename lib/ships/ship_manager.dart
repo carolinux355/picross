@@ -25,17 +25,16 @@ class ShipManager extends BaseManager {
     upgradeManager = managers.firstWhere((m)=> m.runtimeType == UpgradeManager) as UpgradeManager;
 
     // init state for new users
-    if (gameStateManager.gameState.ships.isEmpty) {
-      for(String shipId in gameDataManager.getTuning().initialShips) {
-        var ship = ShipState(id: shipId);
-        ship.upgradeState = UpgradeState(currentId: shipId);
-        gameStateManager.gameState.ships.add(ship);
-      }
+    if (!gameStateManager.gameState.hasShip()) {
+      String shipId = gameDataManager.getTuning().shipId;
+      var ship = ShipState(id: shipId);
+      ship.upgradeState = UpgradeState(currentId: shipId);
+      gameStateManager.gameState.ship = ship;
       gameStateManager.save();
     }
   }
 
   ShipState getDefaultShip() {
-    return gameStateManager.gameState.ships[0];
+    return gameStateManager.gameState.ship;
   }
 }

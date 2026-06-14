@@ -5,6 +5,7 @@ import 'package:basic/inventory/inventory_manager.dart';
 import 'package:basic/style/background_frame.dart';
 import 'package:basic/upgrades/upgrade_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class UpgradeWidget extends StatelessWidget {
@@ -22,27 +23,33 @@ class UpgradeWidget extends StatelessWidget {
       builder: (context, child) {
         return Column(
           children: [
-            BackgroundFrame(
-              color: BackgroundFrameColor.blue,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  spacing: 10,
-                  children: [
-                    for (var cost in upgradeManager.getUpgradeCost(upgradeState.currentId))
-                      UpgradeCostWidget(cost: cost)
-                  ]
-                )
+            if (!upgradeManager.isAtMaxLevel(upgradeState.currentId))
+              BackgroundFrame(
+                color: BackgroundFrameColor.blue,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 10,
+                    children: [
+                      for (var cost in upgradeManager.getUpgradeCost(upgradeState.currentId))
+                        UpgradeCostWidget(cost: cost)
+                    ]
+                  )
+                ),
               ),
-            ),
             ListenableBuilder(
               listenable: inventoryManager,
               builder: (context, child) {
                 if (upgradeManager.canAffordUpgrade(upgradeState.currentId))
                 {
                   return ElevatedButton(
-                    onPressed: () => upgradeManager.executeUpgrade(upgradeState),
+                    onPressed: () {
+                      String currentShip = upgradeState.currentId;
+                      if (upgradeManager.executeUpgrade(upgradeState)) {
+                        GoRouter.of(context).go('/upgrade_ship', extra: currentShip);
+                      }
+                    },
                     child: Text('Upgrade')
                   );
                 }

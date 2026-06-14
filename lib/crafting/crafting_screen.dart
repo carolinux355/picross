@@ -75,7 +75,7 @@ class CraftingQueueWidget extends StatelessWidget {
 
     return Column(
       children: [
-        Text('Crafting Queue', style: TextStyle(fontFamily: 'Permanent Marker', fontSize: 18),),
+        Text('Crafting Queue (${gameStateManager.gameState.crafting.craftQueue.length}/${gameStateManager.gameState.crafting.maxQueueSize})', style: TextStyle(fontFamily: 'Permanent Marker', fontSize: 18),),
         for (var craftingInstance in gameStateManager.gameState.crafting.craftQueue)
           CraftingQueueElementWidget(craftingInstance: craftingInstance)
       ],

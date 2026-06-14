@@ -28,10 +28,11 @@ const ShipState$json = {
       '6': '.UpgradeState',
       '10': 'upgradeState'
     },
+    {'1': 'ship_name', '3': 3, '4': 1, '5': 9, '10': 'shipName'},
   ],
 };
 
 /// Descriptor for `ShipState`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List shipStateDescriptor = $convert.base64Decode(
     'CglTaGlwU3RhdGUSDgoCaWQYASABKAlSAmlkEjIKDXVwZ3JhZGVfc3RhdGUYAiABKAsyDS5VcG'
-    'dyYWRlU3RhdGVSDHVwZ3JhZGVTdGF0ZQ==');
+    'dyYWRlU3RhdGVSDHVwZ3JhZGVTdGF0ZRIbCglzaGlwX25hbWUYAyABKAlSCHNoaXBOYW1l');

@@ -30,7 +30,7 @@ class GameState extends $pb.GeneratedMessage {
     $1.InventoryState? inventory,
     $core.int? playerLevel,
     $2.PlayerLivesState? playerLives,
-    $core.Iterable<$3.ShipState>? ships,
+    $3.ShipState? ship,
     $4.CraftingState? crafting,
     $5.PersistedLevelState? persistedLevelState,
   }) {
@@ -40,7 +40,7 @@ class GameState extends $pb.GeneratedMessage {
     if (inventory != null) result.inventory = inventory;
     if (playerLevel != null) result.playerLevel = playerLevel;
     if (playerLives != null) result.playerLives = playerLives;
-    if (ships != null) result.ships.addAll(ships);
+    if (ship != null) result.ship = ship;
     if (crafting != null) result.crafting = crafting;
     if (persistedLevelState != null)
       result.persistedLevelState = persistedLevelState;
@@ -67,7 +67,7 @@ class GameState extends $pb.GeneratedMessage {
     ..aI(4, _omitFieldNames ? '' : 'playerLevel')
     ..aOM<$2.PlayerLivesState>(5, _omitFieldNames ? '' : 'playerLives',
         subBuilder: $2.PlayerLivesState.create)
-    ..pPM<$3.ShipState>(6, _omitFieldNames ? '' : 'ships',
+    ..aOM<$3.ShipState>(6, _omitFieldNames ? '' : 'ship',
         subBuilder: $3.ShipState.create)
     ..aOM<$4.CraftingState>(7, _omitFieldNames ? '' : 'crafting',
         subBuilder: $4.CraftingState.create)
@@ -146,7 +146,15 @@ class GameState extends $pb.GeneratedMessage {
   $2.PlayerLivesState ensurePlayerLives() => $_ensure(4);
 
   @$pb.TagNumber(6)
-  $pb.PbList<$3.ShipState> get ships => $_getList(5);
+  $3.ShipState get ship => $_getN(5);
+  @$pb.TagNumber(6)
+  set ship($3.ShipState value) => $_setField(6, value);
+  @$pb.TagNumber(6)
+  $core.bool hasShip() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearShip() => $_clearField(6);
+  @$pb.TagNumber(6)
+  $3.ShipState ensureShip() => $_ensure(5);
 
   @$pb.TagNumber(7)
   $4.CraftingState get crafting => $_getN(6);
